@@ -15,7 +15,24 @@ function makeRead(seq) {
       .text(seq[i]);
     read.attach(base); // makes the base move when the read moves
   }
+  read.bind('StopDrag', readStopDrag);
   return read;
+}
+
+// Make each read snap to the grid when the user stops moving it.
+function readStopDrag(event) {
+  this.x = snap(this._x);
+  this.y = snap(this._y);
+}
+
+// Calculate the closest grid coordinate to the given one
+function snap(coordinate) {
+  var offset = coordinate % BASE_SIZE;
+  if (offset < BASE_SIZE/2) {
+    return coordinate - offset;
+  } else {
+    return coordinate - offset + BASE_SIZE;
+  }
 }
 
 function Game_start() {
