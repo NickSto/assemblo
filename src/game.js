@@ -1,5 +1,5 @@
 var BASE_SIZE = 50;
-var COLORS = {'A':'#A48', 'C':'#8A4', 'G':'#48A', 'T':'#804'};
+var COLORS = {'A':'#A44', 'C':'#448', 'G':'#484', 'T':'#AA4'};
 
 function makeRead(seq) {
   var read = Crafty.e('2D, DOM, Color, Draggable')
