@@ -1,15 +1,17 @@
 var BLOCK_SIZE = 50;
 
 function makeRead() {
-  var last_block = Crafty.e('2D, DOM, Color, Draggable')
-    .attr({x: 0, y: 0, w: BLOCK_SIZE, h: BLOCK_SIZE})
-    .color('#8A4');
-  for (var i = 1; i < 10; i++) {
-    var this_block = Crafty.e('2D, DOM, Color, Draggable')
+  var bases = 10;
+  var read = Crafty.e('2D, DOM, Color, Draggable')
+    .attr({x: 0, y: 0, w: bases*BLOCK_SIZE, h: BLOCK_SIZE});
+  read.alpha = 0.0;
+  read.z = 10;
+  for (var i = 1; i < bases; i++) {
+    var base = Crafty.e('2D, DOM, Color, Draggable')
       .attr({x: i*BLOCK_SIZE, y: 0, w: BLOCK_SIZE, h: BLOCK_SIZE})
-      .color('#A48');
-    last_block.attach(this_block);
-    last_block = this_block;
+      .color('#A48')
+    base.z = 5;
+    read.attach(base);
   }
 }
 
