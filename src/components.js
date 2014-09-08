@@ -12,7 +12,8 @@ Crafty.c('Base', {
     this.requires('2D, DOM, Color, Text')
       .textFont({size: '43px'})
       .textColor('#FFFFFF')
-      .css('text-align', 'center');
+      .css('text-align', 'center')
+      .unselectable();
     this.z = 5; // depth = behind the read (z = 10)
   }
 });
