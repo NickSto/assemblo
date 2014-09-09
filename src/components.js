@@ -39,23 +39,24 @@ Crafty.c('Consensus', {
     this.length = undefined;
   },
   updateBases: function() {
-    // pseudo-assertion
+    // manual assertion
     if (this.length !== this.bases.length || this.length !== this.seq.length) {
-      console.log('Error: Consensus lengths disagree!');
+      console.log('Error: Consensus lengths disagree!'+
+        ' this.length = '+this.length+', this.bases.length = '+this.bases.length
+        +', this.seq.length = '+this.seq.length);
       return;
     }
     // check each base entity, and if the actual sequence disagrees, replace it
     for (var i = 0; i < this.length; i++) {
       if (this.seq[i] !== this.bases[i].letter) {
         this.bases[i].destroy();
-        var base = Crafty.e('Base')
+        this.bases[i] = Crafty.e('Base')
           .attr({x: i*BASE_SIZE, y: 0, w: BASE_SIZE, h: BASE_SIZE})
           .color(COLORS[this.seq[i]]);
         if (this.seq[i] !== 'N') {
-          base.text(this.seq[i]);
+          this.bases[i].text(this.seq[i]);
         }
-        this.bases[i] = base;
       }
     }
-  }
+  },
 });

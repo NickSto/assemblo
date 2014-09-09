@@ -24,8 +24,7 @@ function snap(coordinate) {
 // All reads must agree on the base in order for it to appear.
 // Conflicts appear as 'N', no data appears as undefined.
 function calcConsensus(baseGrid) {
-  var consensus = Crafty(Crafty('Consensus')[0]);
-  // wipe previous values
+  var consensus = Crafty('Consensus').get()[0];
   consensus.seq = new Array(consensus.length);
   // Visit each read, incorporating it into the consensus sequence.
   for (var i = 0; i < baseGrid.length; i++) {
@@ -41,15 +40,22 @@ function calcConsensus(baseGrid) {
       }
     }
   }
+  // Fill in the rest with N's
+  for (var i = 0; i < consensus.length; i++) {
+    if (consensus.seq[i] === undefined) {
+      consensus.seq[i] = 'N';
+    }
+  }
+  // Make the displayed bases match the computed data
   consensus.updateBases();
 }
 
-// fill a 2D array with all bases on the grid
+// Fill a 2D array with all bases on the grid
 function getBaseGrid() {
   var baseGrid = new Array();
-  var reads = Crafty('Read');
+  var reads = Crafty('Read').get();
   for (var i = 0; i < reads.length; i++) {
-    var bases = Crafty(reads[i]).bases;
+    var bases = reads[i].bases;
     var baseRow = new Array();
     for (var j = 0; j < bases.length; j++) {
       var index = bases[j]._x / BASE_SIZE;
@@ -60,6 +66,7 @@ function getBaseGrid() {
   return baseGrid;
 }
 
+// Draw guidelines to show where the snap-to grid is
 function drawGrid() {
   var grid = Crafty.e('2D, Canvas, Color')
     .attr({x:0, y:0, w:0, h:0})
@@ -90,6 +97,7 @@ function makeRead(seq, x, y) {
   return read;
 }
 
+// Initialize the consensus sequence at the top
 function makeConsensus() {
   var consensus = Crafty.e('Consensus');
   consensus.length = Math.floor(GAME_WIDTH/BASE_SIZE);
@@ -97,6 +105,7 @@ function makeConsensus() {
     var base = Crafty.e('Base')
       .attr({x: i*BASE_SIZE, y: 0, w: BASE_SIZE, h: BASE_SIZE})
       .color(COLORS['N']);
+    base.letter = 'N';
     consensus.bases[i] = base;
     consensus.seq[i] = 'N';
   }
