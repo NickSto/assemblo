@@ -8,6 +8,7 @@ var consensus;
 function readStopDrag(event) {
   this.x = snap(this._x);
   this.y = snap(this._y);
+  calcConsensusSeq(getBaseGrid());
 }
 
 // Calculate the closest grid coordinate to the given one
@@ -18,6 +19,28 @@ function snap(coordinate) {
   } else {
     return coordinate - offset + BASE_SIZE;
   }
+}
+
+// Calculate the consensus sequence based on the read alignment.
+// All reads must agree on the base in order for it to appear.
+// Conflicts appear as 'N', no data appears as undefined.
+function calcConsensusSeq(baseGrid) {
+  var consensusSeq = new Array();
+  // Visit each read, incorporating it into the consensus sequence.
+  for (var i = 0; i < baseGrid.length; i++) {
+    var read = baseGrid[i];
+    for (var j = 0; j < read.length; j++) {
+      // Initialize new consensus bases to the first base you see there.
+      if (consensusSeq[j] === undefined) {
+        consensusSeq[j] = read[j];
+      // If the read has a base at this position and it disagrees with the
+      // consensus, mark it 'N'.
+      } else if (read[j] !== undefined && consensusSeq[j] !== read[j]) {
+        consensusSeq[j] = 'N';
+      }
+    }
+  }
+  return consensusSeq;
 }
 
 // fill a 2D array with all bases on the grid
@@ -66,6 +89,7 @@ function makeRead(seq, x, y) {
   return read;
 }
 
+//TODO: Make consensus a real Crafty component to bundle its data and methods
 function makeConsensus() {
   var consensus = new Array(Math.floor(GAME_WIDTH/BASE_SIZE));
   for (var i = 0; i < consensus.length; i++) {
