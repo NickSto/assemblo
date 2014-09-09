@@ -2,13 +2,12 @@ var GAME_WIDTH = 1024;
 var GAME_HEIGHT = 768;
 var BASE_SIZE = 50;
 var COLORS = {'A':'#A44', 'C':'#448', 'G':'#484', 'T':'#AA4', 'N':'#DDD'};
-var consensus;
 
 // Make each read snap to the grid when the user stops moving it.
 function readStopDrag(event) {
   this.x = snap(this._x);
   this.y = snap(this._y);
-  calcConsensusSeq(getBaseGrid());
+  calcConsensus(getBaseGrid());
 }
 
 // Calculate the closest grid coordinate to the given one
@@ -24,23 +23,25 @@ function snap(coordinate) {
 // Calculate the consensus sequence based on the read alignment.
 // All reads must agree on the base in order for it to appear.
 // Conflicts appear as 'N', no data appears as undefined.
-function calcConsensusSeq(baseGrid) {
-  var consensusSeq = new Array();
+function calcConsensus(baseGrid) {
+  var consensus = Crafty(Crafty('Consensus')[0]);
+  // wipe previous values
+  consensus.seq = new Array(consensus.length);
   // Visit each read, incorporating it into the consensus sequence.
   for (var i = 0; i < baseGrid.length; i++) {
     var read = baseGrid[i];
     for (var j = 0; j < read.length; j++) {
       // Initialize new consensus bases to the first base you see there.
-      if (consensusSeq[j] === undefined) {
-        consensusSeq[j] = read[j];
+      if (consensus.seq[j] === undefined) {
+        consensus.seq[j] = read[j];
       // If the read has a base at this position and it disagrees with the
       // consensus, mark it 'N'.
-      } else if (read[j] !== undefined && consensusSeq[j] !== read[j]) {
-        consensusSeq[j] = 'N';
+      } else if (read[j] !== undefined && consensus.seq[j] !== read[j]) {
+        consensus.seq[j] = 'N';
       }
     }
   }
-  return consensusSeq;
+  consensus.updateBases();
 }
 
 // fill a 2D array with all bases on the grid
@@ -89,14 +90,15 @@ function makeRead(seq, x, y) {
   return read;
 }
 
-//TODO: Make consensus a real Crafty component to bundle its data and methods
 function makeConsensus() {
-  var consensus = new Array(Math.floor(GAME_WIDTH/BASE_SIZE));
+  var consensus = Crafty.e('Consensus');
+  consensus.length = Math.floor(GAME_WIDTH/BASE_SIZE);
   for (var i = 0; i < consensus.length; i++) {
     var base = Crafty.e('Base')
       .attr({x: i*BASE_SIZE, y: 0, w: BASE_SIZE, h: BASE_SIZE})
       .color(COLORS['N']);
-    consensus[i] = base;
+    consensus.bases[i] = base;
+    consensus.seq[i] = 'N';
   }
   return consensus;
 }
@@ -104,7 +106,10 @@ function makeConsensus() {
 function Game_start() {
   Crafty.init(GAME_WIDTH, GAME_HEIGHT);
   // drawGrid();
-  consensus = makeConsensus();
+  makeConsensus();
   makeRead('GATTACA', 0, 100);
-  makeRead('TACAGAT', 50, 150);
+  makeRead('TACACAG', 50, 150);
+  makeRead('ACACAGT', 100, 200);
+  makeRead('GTTCCGA', 150, 250);
+  calcConsensus(getBaseGrid());
 };

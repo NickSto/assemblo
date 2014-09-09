@@ -7,7 +7,6 @@ Crafty.c('Read', {
     // need to create during init so it's not shared globally
     this.bases = new Array();
   },
-  bases: null,
   addBase: function(base) {
     this.bases.push(base);
     this.attach(base); // makes the base move when the read moves
@@ -29,5 +28,34 @@ Crafty.c('Base', {
       .css('text-align', 'center')
       .unselectable();
     this.z = 5; // depth = behind the read (z = 10)
+    this.letter = undefined;
+  }
+});
+
+Crafty.c('Consensus', {
+  init: function() {
+    this.bases = new Array();
+    this.seq = new Array();
+    this.length = undefined;
+  },
+  updateBases: function() {
+    // pseudo-assertion
+    if (this.length !== this.bases.length || this.length !== this.seq.length) {
+      console.log('Error: Consensus lengths disagree!');
+      return;
+    }
+    // check each base entity, and if the actual sequence disagrees, replace it
+    for (var i = 0; i < this.length; i++) {
+      if (this.seq[i] !== this.bases[i].letter) {
+        this.bases[i].destroy();
+        var base = Crafty.e('Base')
+          .attr({x: i*BASE_SIZE, y: 0, w: BASE_SIZE, h: BASE_SIZE})
+          .color(COLORS[this.seq[i]]);
+        if (this.seq[i] !== 'N') {
+          base.text(this.seq[i]);
+        }
+        this.bases[i] = base;
+      }
+    }
   }
 });
