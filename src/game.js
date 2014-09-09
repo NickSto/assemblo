@@ -3,6 +3,18 @@ var GAME_HEIGHT = 768;
 var BASE_SIZE = 50;
 var COLORS = {'A':'#A44', 'C':'#448', 'G':'#484', 'T':'#AA4', 'N':'#DDD'};
 
+function Game_start() {
+  Crafty.init(GAME_WIDTH, GAME_HEIGHT);
+  // drawGrid();
+  makeConsensus();
+  var refLength = Math.floor(GAME_WIDTH / BASE_SIZE);
+  var reads = wgsim(randSeq(refLength), 7, 8);
+  for (var i = 0; i < reads.length; i++) {
+    makeRead(reads[i], i*BASE_SIZE, 100+i*BASE_SIZE);
+  }
+  calcConsensus(getBaseGrid());
+};
+
 // Make each read snap to the grid when the user stops moving it.
 function readStopDrag(event) {
   //TODO: keep reads from overlapping
@@ -124,14 +136,3 @@ function makeConsensus() {
   }
   return consensus;
 }
-
-function Game_start() {
-  Crafty.init(GAME_WIDTH, GAME_HEIGHT);
-  // drawGrid();
-  makeConsensus();
-  makeRead('GATTACA', 0, 100);
-  makeRead('TACACAG', 50, 150);
-  makeRead('ACACAGT', 100, 200);
-  makeRead('GTTCCGA', 150, 250);
-  calcConsensus(getBaseGrid());
-};
