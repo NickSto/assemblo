@@ -5,18 +5,31 @@ var COLORS = {'A':'#A44', 'C':'#448', 'G':'#484', 'T':'#AA4', 'N':'#DDD'};
 
 // Make each read snap to the grid when the user stops moving it.
 function readStopDrag(event) {
-  this.x = snap(this._x);
-  this.y = snap(this._y);
+  //TODO: keep reads from overlapping
+  this.x = snap(this._x, this._w, GAME_WIDTH);
+  this.y = snap(this._y, this._h, GAME_HEIGHT);
   calcConsensus(getBaseGrid());
 }
 
-// Calculate the closest grid coordinate to the given one
-function snap(coordinate) {
-  var offset = coordinate % BASE_SIZE;
-  if (offset < BASE_SIZE/2) {
-    return coordinate - offset;
+// Recalculate an x or y coordinate that is aligned with the grid and
+// within the game borders.
+// Calculates the closest grid coordinate to the given one, and makes sure
+// the entire width or height of the object fits in the game area.
+function snap(pos, size, max) {
+  // Is the left or upper side beyond the game border?
+  if (pos < 0) {
+    return 0;
+  // Is the right or lower side beyond the last grid line before the border?
+  } else if (pos + size > max - (max % BASE_SIZE)) {
+    return max - (max % BASE_SIZE) - size;
+  // Otherwise, just find the closest grid line and snap to it
   } else {
-    return coordinate - offset + BASE_SIZE;
+    var offset = pos % BASE_SIZE;
+    if (offset < BASE_SIZE/2) {
+      return pos - offset;
+    } else {
+      return pos - offset + BASE_SIZE;
+    }
   }
 }
 
