@@ -134,3 +134,17 @@ function makeConsensus() {
   }
   return consensus;
 }
+
+
+function assert(condition, message) {
+  if (! condition) {
+    if (message === undefined) {
+      message = "Assertion error";
+    }
+    if (typeof Error !== "undefined") {
+      throw new Error(message);
+    } else {
+      throw message;
+    }
+  }
+}
