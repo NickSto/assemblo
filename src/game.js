@@ -1,11 +1,8 @@
 var GAME_WIDTH = 1024;
 var GAME_HEIGHT = 768;
-// The MAIN panel is the main game area
-var MAIN_WIDTH = 1024;
-var MAIN_HEIGHT = 768;
-// MAIN_X & MAIN_Y set where the top-left corner of the main game area are.
-var MAIN_X = 0;
-var MAIN_Y = 0;
+// The MAIN panel is the main game area.
+// x and y set where the top-left corner of the panel are.
+var MAIN = {width: 1024, height: 768, x: 25, y: 75};
 var BASE_SIZE = 50;
 var READ_LENGTH = 8;
 var NUM_READS = 7;
@@ -26,8 +23,8 @@ function Game_start() {
 // Make each read snap to the grid when the user stops moving it.
 function readStopDrag(event) {
   //TODO: keep reads from overlapping
-  this.x = snap(this._x, this._w, MAIN_X, MAIN_X+MAIN_WIDTH);
-  this.y = snap(this._y, this._h, MAIN_Y, MAIN_Y+MAIN_HEIGHT);
+  this.x = snap(this._x, this._w, MAIN.x, MAIN.x+MAIN.width);
+  this.y = snap(this._y, this._h, MAIN.y, MAIN.y+MAIN.height);
   calcConsensus(getBaseGrid());
 }
 
@@ -40,11 +37,11 @@ function snap(pos, size, min, max) {
   if (pos < min) {
     return min;
   // Is the right/lower side beyond the last grid line before the border?
-  } else if (pos + size > max - (max % BASE_SIZE)) {
-    return max - (max % BASE_SIZE) - size;
+  } else if (pos + size - min > max - (max % BASE_SIZE)) {
+    return max - (max % BASE_SIZE) - size + min;
   // Otherwise, just find the closest grid line and snap to it
   } else {
-    var offset = pos % BASE_SIZE;
+    var offset = (pos - min) % BASE_SIZE;
     if (offset < BASE_SIZE/2) {
       return pos - offset;
     } else {
@@ -91,7 +88,7 @@ function getBaseGrid() {
     var bases = reads[i].bases;
     var baseRow = new Array();
     for (var j = 0; j < bases.length; j++) {
-      var index = (bases[j]._x - MAIN_X) / BASE_SIZE;
+      var index = (bases[j]._x - MAIN.x) / BASE_SIZE;
       baseRow[index] = bases[j].letter;
     }
     baseGrid.push(baseRow);
@@ -105,8 +102,8 @@ function drawGrid() {
     .attr({x:0, y:0, w:0, h:0})
     .color('#DDD');
   // draw horizontal grid lines
-  for (var y = MAIN_Y; y < MAIN_HEIGHT; y += BASE_SIZE) {
-    grid.draw(MAIN_X, y, MAIN_X+MAIN_WIDTH, 1);
+  for (var y = MAIN.y; y < MAIN.height; y += BASE_SIZE) {
+    grid.draw(MAIN.x, y, MAIN.x+MAIN.width, 1);
   }
 }
 
@@ -118,11 +115,11 @@ function makeRead(seq, x, y) {
   // be what the user actually clicks and drags. The bases will be
   // behind it and attached to it.
   var read = Crafty.e('Read')
-    .attr({x: MAIN_X+x, y: MAIN_Y+y, w: seq.length*BASE_SIZE, h: BASE_SIZE});
+    .attr({x: MAIN.x+x, y: MAIN.y+y, w: seq.length*BASE_SIZE, h: BASE_SIZE});
   // Make each base in the sequence, attach to the read
   for (var i = 0; i < seq.length; i++) {
     var base = Crafty.e('Base')
-      .attr({x: MAIN_X+x+i*BASE_SIZE, y: MAIN_Y+y, w: BASE_SIZE, h: BASE_SIZE})
+      .attr({x: MAIN.x+x+i*BASE_SIZE, y: MAIN.y+y, w: BASE_SIZE, h: BASE_SIZE})
       .color(COLORS[seq[i]])
       .text(seq[i]);
     base.letter = seq[i];
@@ -140,13 +137,13 @@ function shift(direction) {
   } else if (direction === 'left') {
     var shift_dist = -BASE_SIZE;
   } else {
-    return;
+    return false;
   }
   var reads = Crafty('Read').get();
   // Check if there's room to move everything in that direction.
   for (var i = 0; i < reads.length; i++) {
     var new_x = reads[i]._x + shift_dist;
-    var snapped_x = snap(new_x, reads[i]._w, MAIN_X, MAIN_X+MAIN_WIDTH);
+    var snapped_x = snap(new_x, reads[i]._w, MAIN.x, MAIN.x+MAIN.width);
     // If snap() says the new_x must be modified, then we must be butting up
     // against the edge of the game area. Abort shift.
     if (new_x !== snapped_x) {
@@ -164,10 +161,10 @@ function shift(direction) {
 // Initialize the consensus sequence at the top of the MAIN panel
 function makeConsensus() {
   var consensus = Crafty.e('Consensus');
-  consensus.length = Math.floor(MAIN_WIDTH/BASE_SIZE);
+  consensus.length = Math.floor(MAIN.width/BASE_SIZE);
   for (var i = 0; i < consensus.length; i++) {
     var base = Crafty.e('Base')
-      .attr({x: MAIN_X+i*BASE_SIZE, y: MAIN_Y, w: BASE_SIZE, h: BASE_SIZE})
+      .attr({x: MAIN.x+i*BASE_SIZE, y: MAIN.y, w: BASE_SIZE, h: BASE_SIZE})
       .color(COLORS['N']);
     base.letter = 'N';
     consensus.bases[i] = base;
