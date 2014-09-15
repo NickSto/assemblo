@@ -51,7 +51,7 @@ Crafty.c('Consensus', {
       if (this.seq[i] !== this.bases[i].letter) {
         this.bases[i].destroy();
         this.bases[i] = Crafty.e('Base')
-          .attr({x: i*BASE_SIZE, y: 0, w: BASE_SIZE, h: BASE_SIZE})
+          .attr({x: MAIN_X+i*BASE_SIZE, y: MAIN_Y, w: BASE_SIZE, h: BASE_SIZE})
           .color(COLORS[this.seq[i]]);
         if (this.seq[i] !== 'N') {
           this.bases[i].text(this.seq[i]);
