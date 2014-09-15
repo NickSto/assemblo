@@ -10,9 +10,6 @@ var COLORS = {'A':'#A44', 'C':'#448', 'G':'#484', 'T':'#AA4', 'N':'#DDD'};
 
 function Game_start() {
   Crafty.init(GAME_WIDTH, GAME_HEIGHT);
-  document.getElementById('cr-stage').style.clear = 'both';
-
-  document.getElementById('controls').style.width = (GAME_WIDTH - (GAME_WIDTH % BASE_SIZE)) + "px";
   // drawGrid();
   makeConsensus();
   var refLength = Math.floor(GAME_WIDTH / BASE_SIZE);
