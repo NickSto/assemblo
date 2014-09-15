@@ -3,8 +3,9 @@ function Game_start() {
   makeUI();
   // drawGrid();
   var consensus = makeConsensus();
-  var refLength = consensus.length;
-  var reads = wgsim(randSeq(refLength), NUM_READS, READ_LENGTH);
+  var reference = randSeq(consensus.length);
+  console.log("Shhh, the answer is "+reference);
+  var reads = wgsim(reference, NUM_READS, READ_LENGTH, 1);
   for (var i = 0; i < reads.length; i++) {
     makeRead(reads[i], i*BASE_SIZE, 100+i*BASE_SIZE);
   }
