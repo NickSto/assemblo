@@ -1,14 +1,22 @@
 var GAME_WIDTH = 1024;
 var GAME_HEIGHT = 768;
+// MAIN_X & MAIN_Y set where the top-left corner of the main game area are.
+var MAIN_X = 0;
+var MAIN_Y = 0;
 var BASE_SIZE = 50;
+var READ_LENGTH = 8;
+var NUM_READS = 7;
 var COLORS = {'A':'#A44', 'C':'#448', 'G':'#484', 'T':'#AA4', 'N':'#DDD'};
 
 function Game_start() {
   Crafty.init(GAME_WIDTH, GAME_HEIGHT);
+  document.getElementById('cr-stage').style.clear = 'both';
+
+  document.getElementById('controls').style.width = (GAME_WIDTH - (GAME_WIDTH % BASE_SIZE)) + "px";
   // drawGrid();
   makeConsensus();
   var refLength = Math.floor(GAME_WIDTH / BASE_SIZE);
-  var reads = wgsim(randSeq(refLength), 7, 8);
+  var reads = wgsim(randSeq(refLength), NUM_READS, READ_LENGTH);
   for (var i = 0; i < reads.length; i++) {
     makeRead(reads[i], i*BASE_SIZE, 100+i*BASE_SIZE);
   }
@@ -120,6 +128,35 @@ function makeRead(seq, x, y) {
   }
   read.bind('StopDrag', readStopDrag);
   return read;
+}
+
+
+function shift(direction) {
+  // Set the size and direction of the shift.
+  if (direction === 'right') {
+    var shift_dist = BASE_SIZE;
+  } else if (direction === 'left') {
+    var shift_dist = -BASE_SIZE;
+  } else {
+    return;
+  }
+  var reads = Crafty('Read').get();
+  // Check if there's room to move everything in that direction.
+  for (var i = 0; i < reads.length; i++) {
+    var new_x = reads[i]._x + shift_dist;
+    var snapped_x = snap(new_x, reads[i]._w, MAIN_X + GAME_WIDTH);
+    // If snap() says the new_x must be modified, then we must be butting up
+    // against the edge of the game area. Abort shift.
+    if (new_x !== snapped_x) {
+      return;
+    }
+  }
+  // Now loop again, but actually shift everything.
+  for (var i = 0; i < reads.length; i++) {
+    reads[i].x = reads[i]._x + shift_dist;
+  }
+  // And update the consensus sequence.
+  calcConsensus(getBaseGrid());
 }
 
 // Initialize the consensus sequence at the top
