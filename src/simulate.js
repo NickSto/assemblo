@@ -19,9 +19,14 @@ function wgsim(reference, numReads, readLength, minCoverage) {
   var reads = new Array(numReads);
   var starts = new Array(numReads);
   var coverage = new Array(reference.length);
-  coverage.fill(0);
+  for (var i = 0; i < coverage.length; i++) {
+    coverage[i] = 0;
+  }
   for (var i = 0; i < numReads; i++) {
-    [reads[i], starts[i], coverage] = getRandomRead(reference, readLength, coverage);
+    var read_data = getRandomRead(reference, readLength, coverage);
+    reads[i] = read_data[0];
+    starts[i] = read_data[1];
+    coverage = read_data[2];
   }
   return fixCoverage(reads, starts, coverage, minCoverage, reference, readLength);
 }
@@ -82,7 +87,7 @@ function fixCoverage(reads, starts, coverage, minCoverage, reference, readLength
       +gap.start+", "+gap.end+"]: "+coverage);
     tries++;
   }
-  console.log(tries);
+  console.log("tries to fix coverage: "+tries);
   return reads;
 }
 
