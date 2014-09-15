@@ -57,6 +57,9 @@ Crafty.c('Consensus', {
       }
     }
   },
+  seqStr: function() {
+    return this.seq.join('');
+  },
 });
 
 Crafty.c('Button', {

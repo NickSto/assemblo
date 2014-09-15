@@ -1,11 +1,17 @@
+var Game = {
+  consensus: null,
+  reference: null,
+  success: null,
+}
+
 function Game_start() {
   Crafty.init(GAME_WIDTH, GAME_HEIGHT);
   makeUI();
   // drawGrid();
-  var consensus = makeConsensus();
-  var reference = randSeq(consensus.length);
-  console.log("Shhh, the answer is "+reference);
-  var reads = wgsim(reference, NUM_READS, READ_LENGTH, 1);
+  Game.consensus = makeConsensus();
+  Game.reference = randSeq(Game.consensus.length);
+  console.log("Shhh, the answer is "+Game.reference);
+  var reads = wgsim(Game.reference, NUM_READS, READ_LENGTH, 1);
   for (var i = 0; i < reads.length; i++) {
     makeRead(reads[i], i*BASE_SIZE, 100+i*BASE_SIZE);
   }
@@ -18,6 +24,7 @@ function readStopDrag(event) {
   this.x = snap(this._x, this._w, MAIN.x, MAIN.x+MAIN.width);
   this.y = snap(this._y, this._h, MAIN.y, MAIN.y+MAIN.height);
   calcConsensus(getBaseGrid());
+  checkAnswer();
 }
 
 // Recalculate an x or y coordinate that is aligned with the grid and
@@ -46,7 +53,7 @@ function snap(pos, size, min, max) {
 // All reads must agree on the base in order for it to appear.
 // Conflicts appear as 'N', no data appears as undefined.
 function calcConsensus(baseGrid) {
-  var consensus = Crafty('Consensus').get()[0];
+  var consensus = Game.consensus;
   consensus.seq = new Array(consensus.length);
   // Visit each read, incorporating it into the consensus sequence.
   for (var i = 0; i < baseGrid.length; i++) {
@@ -134,6 +141,24 @@ function makeConsensus() {
     consensus.seq[i] = 'N';
   }
   return consensus;
+}
+
+
+function checkAnswer() {
+  if (Game.reference === Game.consensus.seqStr()) {
+    var btn_width = 50;
+    var center = HEAD.x + Math.floor(HEAD.width/2);
+    var btn_x = center - Math.floor(btn_width/2);
+    Game.success = Crafty.e('Button')
+      .attr({x: btn_x, y: HEAD.y+10, w: btn_width, h: 30})
+      .color('#15D115')
+      .text('\u2713');
+  } else {
+    if (Game.success !== null) {
+      Game.success.destroy();
+      Game.success = null;
+    }
+  }
 }
 
 
