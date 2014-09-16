@@ -4,12 +4,21 @@ var Game = {
   success: null,
 }
 
-function Game_start() {
+function startGame() {
   Crafty.init(GAME_WIDTH, GAME_HEIGHT);
   makeUI();
   // drawGrid();
-  Game.consensus = makeConsensus();
-  Game.reference = randSeq(Game.consensus.length);
+  newGame();
+}
+
+function newGame(reference) {
+  if (reference === undefined) {
+    Game.consensus = makeConsensus();
+    Game.reference = randSeq(Game.consensus.length);
+  } else {
+    Game.reference = reference;
+    Game.consensus = makeConsensus(Game.reference.length);
+  }
   console.log("Shhh, the answer is "+Game.reference);
   var reads = wgsim(Game.reference, NUM_READS, READ_LENGTH, 1);
   for (var i = 0; i < reads.length; i++) {
@@ -17,6 +26,20 @@ function Game_start() {
   }
   calcConsensus(getBaseGrid());
 };
+
+function destroyGame() {
+  Game.consensus.myDestroy();
+  Game.consensus = null;
+  Game.reference = null;
+  if (Game.success !== null) {
+    Game.success.destroy();
+    Game.success = null;
+  }
+  var reads = Crafty('Read').get();
+  for (var i = 0; i < reads.length; i++) {
+    reads[i].destroy();
+  }
+}
 
 // Make each read snap to the grid when the user stops moving it.
 function readStopDrag(event) {
@@ -129,9 +152,13 @@ function makeRead(seq, x, y) {
 }
 
 // Initialize the consensus sequence at the top of the MAIN panel
-function makeConsensus() {
+function makeConsensus(length) {
   var consensus = Crafty.e('Consensus');
-  consensus.length = Math.floor(MAIN.width/BASE_SIZE);
+  if (length === undefined) {
+    consensus.length = Math.floor(MAIN.width/BASE_SIZE);
+  } else {
+    consensus.length = length;
+  }
   for (var i = 0; i < consensus.length; i++) {
     var base = Crafty.e('Base')
       .attr({x: MAIN.x+i*BASE_SIZE, y: MAIN.y, w: BASE_SIZE, h: BASE_SIZE})

@@ -60,6 +60,14 @@ Crafty.c('Consensus', {
   seqStr: function() {
     return this.seq.join('');
   },
+  myDestroy: function() {
+    for (var i = 0; i < this.bases.length; i++) {
+      if (this.bases[i] !== undefined) {
+        this.bases[i].destroy();
+      }
+    }
+    this.destroy();
+  }
 });
 
 Crafty.c('Button', {
