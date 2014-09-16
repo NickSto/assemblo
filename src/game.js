@@ -1,9 +1,12 @@
+// Global game state
 var Game = {
   consensus: null,
   reference: null,
   success: null,
 }
 
+// Start the game:
+// Initialize Crafty game area, create UI, and generate a new game.
 function startGame() {
   Crafty.init(GAME_WIDTH, GAME_HEIGHT);
   makeUI();
@@ -11,6 +14,11 @@ function startGame() {
   newGame();
 }
 
+/* Generate a new game with a new consensus bar and new reads.
+ * If "reference" is provided, use that as a reference sequence.
+ * Otherwise, generate a new, random reference as large as can fit in the
+ * MAIN game panel.
+ */
 function newGame(reference) {
   if (reference === undefined) {
     Game.consensus = makeConsensus();
@@ -19,7 +27,7 @@ function newGame(reference) {
     Game.reference = reference;
     Game.consensus = makeConsensus(Game.reference.length);
   }
-  console.log("Shhh, the answer is "+Game.reference);
+  console.log("Shhh, the answer is "+Game.reference+"!");
   var reads = wgsim(Game.reference, NUM_READS, READ_LENGTH, 1);
   for (var i = 0; i < reads.length; i++) {
     makeRead(reads[i], i*BASE_SIZE, 100+i*BASE_SIZE);
@@ -27,6 +35,8 @@ function newGame(reference) {
   calcConsensus(getBaseGrid());
 };
 
+// Destroy all game components, but not the UI.
+// Removes reads, consensus sequence bar, etc.
 function destroyGame() {
   Game.consensus.myDestroy();
   Game.consensus = null;
@@ -182,11 +192,11 @@ function checkAnswer() {
       var btn_x = center - Math.floor(btn_width/2);
       Game.success = Crafty.e('Button')
         .attr({x: btn_x, y: HEAD.y+10, w: btn_width, h: 30})
-        .color('#15D115')
+        .color('#1D1')
         .text('\u2713');
     // If there's already a success indicator, make it show success.
     } else {
-      Game.success.color('#15D115').text('\u2713');
+      Game.success.color('#1D1').text('\u2713');
     }
   // If the consensus is full (no N's) but not correct, show a X indicator.
   } else if (Game.consensus.seqStr().indexOf('N') === -1) {
@@ -196,10 +206,10 @@ function checkAnswer() {
       var btn_x = center - Math.floor(btn_width/2);
       Game.success = Crafty.e('Button')
         .attr({x: btn_x, y: HEAD.y+10, w: btn_width, h: 30})
-        .color('#FFB0B0')
+        .color('#F77')
         .text('X');
     } else {
-      Game.success.color('#FFB0B0').text('X');
+      Game.success.color('#F77').text('X');
     }
   } else {
     // Not correct. If there's a success indicator, remove it.

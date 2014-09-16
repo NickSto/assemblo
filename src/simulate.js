@@ -1,9 +1,11 @@
 var BASES = ['A', 'C', 'G', 'T'];
 
+// Return a random integer between 0 and max-1 (inclusive).
 function randInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+// Generate a random sequence "length" bases long.
 function randSeq(length) {
   var seq = '';
   for (var i = 0; i < length; i++) {
@@ -12,12 +14,20 @@ function randSeq(length) {
   return seq;
 }
 
+// Generate "numReads" random reads of length "readLength" from a given
+// reference sequence. Ensures all bases of the reference are covered by at
+// least "minCoverage" reads (omit it to eliminate that constraint).
 function wgsim(reference, numReads, readLength, minCoverage) {
   if (minCoverage === undefined) {
     minCoverage = 0;
   }
+  // "reads" is the actual read sequences
   var reads = new Array(numReads);
+  // "starts" is the start coordinates of all the reads, using the same indices
+  // as "reads"
   var starts = new Array(numReads);
+  // "coverage" is an array of coverage values so that coverage[i] is the number
+  // of reads covering base "i" of the reference.
   var coverage = new Array(reference.length);
   for (var i = 0; i < coverage.length; i++) {
     coverage[i] = 0;
@@ -31,6 +41,9 @@ function wgsim(reference, numReads, readLength, minCoverage) {
   return fixCoverage(reads, starts, coverage, minCoverage, reference, readLength);
 }
 
+// Generate a random read of length "readLength" from the sequence "reference"
+// and increment the covered bases in the "coverage" array.
+// Returns the read sequence, its starting coordinate, and the coverage array.
 function getRandomRead(reference, readLength, coverage) {
   assert(reference.length === coverage.length);
   var start = randInt(reference.length - readLength);
@@ -91,6 +104,9 @@ function fixCoverage(reads, starts, coverage, minCoverage, reference, readLength
   return reads;
 }
 
+// Find the largest coverage peak: a contiguous set of bases with the maximum
+// coverage observed.
+// Returns the start and end coordinates of the peak, plus the coverage value.
 function getCoveragePeak(coverage) {
   var peak = {cvg:0, start:0, end:0};
   var inPeak = false;
