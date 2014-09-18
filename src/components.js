@@ -1,4 +1,5 @@
 'use strict';
+/* global Crafty, MAIN, BASE_SIZE, COLORS, assert */
 
 Crafty.c('Read', {
   init: function() {

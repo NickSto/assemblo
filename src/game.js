@@ -1,11 +1,13 @@
 'use strict';
+/* global Crafty, GAME_WIDTH, GAME_HEIGHT, MAIN, HEAD, COLORS, BASE_SIZE, NUM_READS, READ_LENGTH, randSeq, wgsim, makeUI */
+/* exported assert, startGame, newGame, destroyGame */
 
 // Global game state
 var Game = {
   consensus: null,
   reference: null,
   success: null,
-}
+};
 
 // Start the game:
 // Initialize Crafty game area, create UI, and generate a new game.
@@ -35,7 +37,7 @@ function newGame(reference) {
     makeRead(reads[i], i*BASE_SIZE, 100+i*BASE_SIZE);
   }
   calcConsensus(getBaseGrid());
-};
+}
 
 // Destroy all game components, but not the UI.
 // Removes reads, consensus sequence bar, etc.
@@ -55,6 +57,7 @@ function destroyGame() {
 
 // Make each read snap to the grid when the user stops moving it.
 function readStopDrag(event) {
+  /* jshint validthis:true */
   //TODO: keep reads from overlapping
   this.x = snap(this._x, this._w, MAIN.x, MAIN.x+MAIN.width);
   this.y = snap(this._y, this._h, MAIN.y, MAIN.y+MAIN.height);

@@ -1,4 +1,6 @@
 'use strict';
+/* global console, assert */
+/* exported randSeq, wgsim */
 
 var BASES = ['A', 'C', 'G', 'T'];
 
