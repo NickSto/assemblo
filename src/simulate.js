@@ -1,6 +1,9 @@
+'use strict';
+
 var BASES = ['A', 'C', 'G', 'T'];
 
 // Return a random integer between 0 and max-1 (inclusive).
+//TODO: Replace with Crafty.math.randomNumber()
 function randInt(max) {
   return Math.floor(Math.random() * max);
 }

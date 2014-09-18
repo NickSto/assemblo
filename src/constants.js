@@ -1,3 +1,5 @@
+'use strict';
+
 var GAME_WIDTH = 1024;
 var GAME_HEIGHT = 1024;
 // The MAIN panel is the main game area.

@@ -1,3 +1,5 @@
+'use strict';
+
 // Global game state
 var Game = {
   consensus: null,

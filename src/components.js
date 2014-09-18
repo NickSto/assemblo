@@ -1,3 +1,4 @@
+'use strict';
 
 Crafty.c('Read', {
   init: function() {

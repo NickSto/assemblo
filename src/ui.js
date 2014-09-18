@@ -1,3 +1,5 @@
+'use strict';
+
 // Make buttons, icons, controls, etc.
 function makeUI() {
   // The shift buttons
