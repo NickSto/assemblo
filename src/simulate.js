@@ -4,17 +4,43 @@
 
 var BASES = ['A', 'C', 'G', 'T'];
 
-// Return a random integer between 0 and max-1 (inclusive).
-//TODO: Replace with Crafty.math.randomNumber()
-function randInt(max) {
-  return Math.floor(Math.random() * max);
+// A simple, seedable pseudo-random number generator.
+// Very easy to reverse engineer. DO NOT USE FOR ANYTHING SECURE!
+// Taken from https://stackoverflow.com/a/19303725/726773
+function ToyPrng(seed) {
+  if (seed === undefined) {
+    this._seed = 1;
+  } else {
+    this._seed = seed;
+  }
+  // Set the seed.
+  // The seed can't be a multiple of pi (including 0).
+  this.seed = function(seed) {
+    if (seed/Math.PI === Math.floor(seed/Math.PI)) {
+      console.log('Error: PRNG seed cannot be 0 or multiple of pi.');
+      return false;
+    } else {
+      this._seed = seed;
+    }
+  };
+  // Return a random float between 0 and 1 (including 0, not including 1).
+  this.random = function() {
+    this._seed++;
+    var x = Math.sin(this._seed) * 10000;
+    return x - Math.floor(x);
+  };
+  // Return a random integer between 0 and max-1 (inclusive).
+  this.randInt = function(max) {
+    return Math.floor(this.random() * max);
+  };
 }
+var prng = new ToyPrng();
 
 // Generate a random sequence "length" bases long.
 function randSeq(length) {
   var seq = '';
   for (var i = 0; i < length; i++) {
-    seq += BASES[randInt(BASES.length)];
+    seq += BASES[prng.randInt(BASES.length)];
   }
   return seq;
 }
@@ -51,7 +77,7 @@ function wgsim(reference, numReads, readLength, minCoverage) {
 // Returns the read sequence, its starting coordinate, and the coverage array.
 function getRandomRead(reference, readLength, coverage) {
   assert(reference.length === coverage.length);
-  var start = randInt(reference.length - readLength);
+  var start = prng.randInt(reference.length - readLength);
   var read = reference.substring(start, start+readLength);
   // keep track of which bases of the reference are covered by reads
   for (var i = 0; i < readLength; i++) {
@@ -81,7 +107,7 @@ function fixCoverage(reads, starts, coverage, minCoverage, reference, readLength
       }
     }
     // Randomly choose a read to replace and delete it from the coverage array.
-    var r = peakReads[randInt(peakReads.length)];
+    var r = peakReads[prng.randInt(peakReads.length)];
     var start = starts[r];
     for (var i = 0; i < readLength; i++) {
       coverage[start+i]--;
@@ -95,7 +121,7 @@ function fixCoverage(reads, starts, coverage, minCoverage, reference, readLength
     if (max + readLength - 1 > reference.length) {
       max = reference.length - readLength;
     }
-    var start = min + randInt(max - min + 1);
+    var start = min + prng.randInt(max - min + 1);
     starts[r] = start;
     reads[r] = reference.substring(start, start+readLength);
     for (var i = 0; i < readLength; i++) {
