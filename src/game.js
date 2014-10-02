@@ -1,5 +1,6 @@
 'use strict';
-/* global Crafty, GAME_WIDTH, GAME_HEIGHT, MAIN, HEAD, COLORS, BASE_SIZE, NUM_READS, READ_LENGTH, randSeq, wgsim, makeUI */
+/* global Crafty, GAME_WIDTH, GAME_HEIGHT, MAIN, HEAD, COLORS, BASE_SIZE,
+          NUM_READS, READ_LENGTH, randSeq, wgsim, makeUI */
 /* exported assert, startGame, newGame, destroyGame */
 
 // Global game state
@@ -124,11 +125,11 @@ function calcConsensus(baseGrid) {
 
 // Fill a 2D array with all bases on the grid
 function getBaseGrid() {
-  var baseGrid = new Array();
+  var baseGrid = [];
   var reads = Crafty('Read').get();
   for (var i = 0; i < reads.length; i++) {
     var bases = reads[i].bases;
-    var baseRow = new Array();
+    var baseRow = [];
     for (var j = 0; j < bases.length; j++) {
       var index = (bases[j]._x - MAIN.x) / BASE_SIZE;
       baseRow[index] = bases[j].letter;

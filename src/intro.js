@@ -1,3 +1,5 @@
+'use strict';
+/* global Crafty, Game, MAIN, BASE_SIZE, COLORS, destroyGame, makeRead */
 
 function runIntro() {
   var DELAY = 1000;    // milliseconds
@@ -31,11 +33,6 @@ function runIntro() {
   }
   // Animate the reads coming from the reference
   var animate = function() {
-    // Make the reads line up like normal
-    // for (var i = 0; i < reads.length; i++) {
-    //   reads[i].tween({x: MAIN.x+i*BASE_SIZE, y: MAIN.y+100+i*BASE_SIZE},
-    //     DURATION);
-    // }
     reads[0].tween({x: MAIN.x+BASE_SIZE*5,  y: MAIN.y+BASE_SIZE*5}, DURATION);
     reads[1].tween({x: MAIN.x+BASE_SIZE*0,  y: MAIN.y+BASE_SIZE*3}, DURATION);
     reads[2].tween({x: MAIN.x+BASE_SIZE*3,  y: MAIN.y+BASE_SIZE*7}, DURATION);

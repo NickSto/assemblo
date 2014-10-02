@@ -7,7 +7,7 @@ Crafty.c('Read', {
     this.alpha = 0.0; // opacity = transparent
     this.z = 10; // depth = in front of the bases (whose z = 5)
     // need to create during init so it's not shared globally
-    this.bases = new Array();
+    this.bases = [];
   },
   addBase: function(base) {
     this.bases.push(base);
@@ -36,15 +36,15 @@ Crafty.c('Base', {
 
 Crafty.c('Consensus', {
   init: function() {
-    this.bases = new Array();
-    this.seq = new Array();
+    this.bases = [];
+    this.seq = [];
     this.length = undefined;
   },
   updateBases: function() {
     assert(this.length === this.bases.length && this.length === this.seq.length,
-      'Error: Consensus lengths disagree! this.length = '+this.length
-      +', this.bases.length = '+this.bases.length+', this.seq.length = '
-      +this.seq.length
+      'Error: Consensus lengths disagree! this.length = '+this.length+
+      ', this.bases.length = '+this.bases.length+', this.seq.length = '+
+      this.seq.length
     );
     // check each base entity, and if the actual sequence disagrees, replace it
     for (var i = 0; i < this.length; i++) {

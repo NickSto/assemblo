@@ -71,7 +71,7 @@ function fixCoverage(reads, starts, coverage, minCoverage, reference, readLength
       break;
     }
     // Get a list of reads which cover the highest peak.
-    var peakReads = new Array();
+    var peakReads = [];
     for (var i = 0; i < reads.length; i++) {
       var start = starts[i];
       var end = start + readLength - 1;
@@ -101,8 +101,8 @@ function fixCoverage(reads, starts, coverage, minCoverage, reference, readLength
     for (var i = 0; i < readLength; i++) {
       coverage[start+i]++;
     }
-    console.log("subtracted from ["+peak.start+", "+peak.end+"], added to ["
-      +gap.start+", "+gap.end+"]: "+coverage);
+    console.log("subtracted from ["+peak.start+", "+peak.end+"], added to ["+
+      gap.start+", "+gap.end+"]: "+coverage);
     tries++;
   }
   console.log("tries to fix coverage: "+tries);
