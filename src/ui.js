@@ -21,6 +21,13 @@ function makeUI() {
     .color('#ACC')
     .text('New Game')
     .bind('Click', restartGame);
+  // Run the intro animation
+  //TODO: Make it happen at the beginning!
+  Crafty.e('Button')
+    .attr({x: HEAD.x + 215, y: HEAD.y+10, w: 70, h: 30})
+    .color('#CAC')
+    .text('Intro')
+    .bind('Click', runIntro);
 }
 
 // Shift left by one grid increment
