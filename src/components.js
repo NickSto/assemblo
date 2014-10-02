@@ -75,7 +75,7 @@ Crafty.c('Consensus', {
 Crafty.c('Button', {
   init: function() {
     this.requires('2D, DOM, Color, Text, Mouse')
-      .textFont({size: '25px'})
+      .textFont({size: '24px'})
       .textColor('#FFFFFF')
       .css('text-align', 'center')
       .unselectable();

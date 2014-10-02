@@ -55,6 +55,11 @@ function destroyGame() {
   }
 }
 
+function restartGame() {
+  destroyGame();
+  newGame();
+}
+
 // Make each read snap to the grid when the user stops moving it.
 function readStopDrag(event) {
   /* jshint validthis:true */

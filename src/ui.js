@@ -5,16 +5,22 @@
 // Make buttons, icons, controls, etc.
 function makeUI() {
   // The shift buttons
-  var shiftLeftButton = Crafty.e('Button')
+  Crafty.e('Button')
     .attr({x: HEAD.x, y: HEAD.y+10, w: 50, h: 30})
     .color('#CCC')
-    .text('<');
-  shiftLeftButton.bind('Click', shiftLeft);
-  var shiftRightButton = Crafty.e('Button')
+    .text('<')
+    .bind('Click', shiftLeft);
+  Crafty.e('Button')
     .attr({x: HEAD.width - 50, y: HEAD.y+10, w: 50, h: 30})
     .color('#CCC')
-    .text('>');
-  shiftRightButton.bind('Click', shiftRight);
+    .text('>')
+    .bind('Click', shiftRight);
+  // Restart the game
+  Crafty.e('Button')
+    .attr({x: HEAD.x + 60, y: HEAD.y+10, w: 145, h: 30})
+    .color('#ACC')
+    .text('New Game')
+    .bind('Click', restartGame);
 }
 
 // Shift left by one grid increment
