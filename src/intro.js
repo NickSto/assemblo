@@ -1,9 +1,17 @@
 'use strict';
 /* global Crafty, Game, MAIN, BASE_SIZE, COLORS, destroyGame, makeRead */
+/* exported runIntro */
 
 function runIntro() {
-  var DELAY = 1000;    // milliseconds
-  var DURATION = 2000; // milliseconds
+  var TIMING = {
+    // pause before animation starts
+    startDelay: 1000,
+    // time between each read starting to move
+    interval: 500,
+    // how long each read is in flight
+    travelTime: 1000,
+  };
+  // var prng = new ToyPrng();
   destroyGame();
   // Make the reference sequence
   Game.reference = 'ATCTATTACTGTTATTCGCA';
@@ -32,14 +40,46 @@ function runIntro() {
     reads[i].addComponent('Tween');
   }
   // Animate the reads coming from the reference
-  var animate = function() {
-    reads[0].tween({x: MAIN.x+BASE_SIZE*5,  y: MAIN.y+BASE_SIZE*5}, DURATION);
-    reads[1].tween({x: MAIN.x+BASE_SIZE*0,  y: MAIN.y+BASE_SIZE*3}, DURATION);
-    reads[2].tween({x: MAIN.x+BASE_SIZE*3,  y: MAIN.y+BASE_SIZE*7}, DURATION);
-    reads[3].tween({x: MAIN.x+BASE_SIZE*8,  y: MAIN.y+BASE_SIZE*6}, DURATION);
-    reads[4].tween({x: MAIN.x+BASE_SIZE*12, y: MAIN.y+BASE_SIZE*4}, DURATION);
-    reads[5].tween({x: MAIN.x+BASE_SIZE*10, y: MAIN.y+BASE_SIZE*2}, DURATION);
-    reads[6].tween({x: MAIN.x+BASE_SIZE*12, y: MAIN.y+BASE_SIZE*8}, DURATION);
-  };
-  window.setTimeout(animate, DELAY);
+  // animator is an array of functions, each one moving one read
+  var animator = [
+    function() {
+      reads[4].z = 20;
+      reads[4].tween({x: MAIN.x+BASE_SIZE*12, y: MAIN.y+BASE_SIZE*4},
+        TIMING.travelTime);
+    },
+    function() {
+      reads[2].z = 20;
+      reads[2].tween({x: MAIN.x+BASE_SIZE*3,  y: MAIN.y+BASE_SIZE*7},
+        TIMING.travelTime);
+    },
+    function() {
+      reads[1].z = 20;
+      reads[1].tween({x: MAIN.x+BASE_SIZE*0,  y: MAIN.y+BASE_SIZE*3},
+        TIMING.travelTime);
+    },
+    function() {
+      reads[3].z = 20;
+      reads[3].tween({x: MAIN.x+BASE_SIZE*8,  y: MAIN.y+BASE_SIZE*6},
+        TIMING.travelTime);
+    },
+    function() {
+      reads[0].z = 20;
+      reads[0].tween({x: MAIN.x+BASE_SIZE*5,  y: MAIN.y+BASE_SIZE*5},
+        TIMING.travelTime);
+    },
+    function() {
+      reads[6].z = 20;
+      reads[6].tween({x: MAIN.x+BASE_SIZE*12, y: MAIN.y+BASE_SIZE*8},
+        TIMING.travelTime);
+    },
+    function() {
+      reads[5].z = 20;
+      reads[5].tween({x: MAIN.x+BASE_SIZE*10, y: MAIN.y+BASE_SIZE*2},
+        TIMING.travelTime);
+    },
+  ];
+  for (var i = 0; i < animator.length; i++) {
+    console.log('scheduling animator['+i+'] for '+(TIMING.startDelay+i*TIMING.interval)+'ms');
+    window.setTimeout(animator[i], TIMING.startDelay + i*TIMING.interval);
+  }
 }
