@@ -8,8 +8,8 @@ var reads_data = [
   {seq:'TACTGTTA', start:6, x:3, y:7},
   {seq:'ACTGTTAT', start:7, x:8, y:6},
   {seq:'TGTTATTC', start:9, x:12, y:4},
-  {seq:'TTATTCGC', start:11, x:10, y:2},
-  {seq:'TATTCGCA', start:12, x:12, y:8},
+  {seq:'TTATTCGC', start:11, x:12, y:8},
+  {seq:'TATTCGCA', start:12, x:10, y:2},
 ];
 
 // Pythagorean distance between (xa, ya) and (xb, yb)
