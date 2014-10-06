@@ -8,6 +8,7 @@ var Game = {
   consensus: null,
   reference: null,
   success: null,
+  prng: new ToyPrng(),
 };
 
 // Start the game:
@@ -23,8 +24,16 @@ function startGame() {
  * If "reference" is provided, use that as a reference sequence.
  * Otherwise, generate a new, random reference as large as can fit in the
  * MAIN game panel.
+ * If a "seed" number is provided, use that as the random number generator seed.
+ * This can recreate a past game exactly. To give a seed without a reference,
+ * just give "undefined" as the reference, i.e. "newGame(undefined, 15);"
  */
-function newGame(reference) {
+function newGame(reference, seed) {
+  if (seed === undefined) {
+    seed = Date.now();
+  }
+  console.log('seed: '+seed);
+  Game.prng = new ToyPrng(seed);
   if (reference === undefined) {
     Game.consensus = makeConsensus();
     Game.reference = randSeq(Game.consensus.length);
@@ -203,11 +212,11 @@ function checkAnswer() {
       var btn_x = center - Math.floor(btn_width/2);
       Game.success = Crafty.e('Button')
         .attr({x: btn_x, y: HEAD.y+10, w: btn_width, h: 30})
-        .color('#1D1')
+        .color('#1A1')
         .text('\u2713');
     // If there's already a success indicator, make it show success.
     } else {
-      Game.success.color('#1D1').text('\u2713');
+      Game.success.color('#1A1').text('\u2713');
     }
   // If the consensus is full (no N's) but not correct, show a X indicator.
   } else if (Game.consensus.seqStr().indexOf('N') === -1) {
