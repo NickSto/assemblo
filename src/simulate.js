@@ -46,7 +46,7 @@ function ToyPrng(seed) {
     return arr;
   };
 }
-var prng = new ToyPrng();
+var prng = new ToyPrng(Date.now());
 
 // Generate a random sequence "length" bases long.
 function randSeq(length) {
