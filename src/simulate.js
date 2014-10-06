@@ -33,6 +33,18 @@ function ToyPrng(seed) {
   this.randInt = function(max) {
     return Math.floor(this.random() * max);
   };
+  // Shuffle an array
+  // From https://stackoverflow.com/a/6274381/726773
+  this.shuffle = function(arr) {
+    var j, x, i = arr.length;
+    while (i) {
+      j = this.randInt(i);
+      x = arr[--i];
+      arr[i] = arr[j];
+      arr[j] = x;
+    }
+    return arr;
+  };
 }
 var prng = new ToyPrng();
 

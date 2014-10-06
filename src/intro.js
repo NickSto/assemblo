@@ -1,6 +1,23 @@
 'use strict';
-/* global Crafty, Game, MAIN, BASE_SIZE, COLORS, destroyGame, makeRead */
+/* global Crafty, Game, MAIN, BASE_SIZE, COLORS, ToyPrng, destroyGame, makeRead */
 /* exported runIntro */
+
+var reads_data = [
+  {seq:'ATCTATTA', start:0, x:5, y:5},
+  {seq:'TATTACTG', start:3, x:0, y:3},
+  {seq:'TACTGTTA', start:6, x:3, y:7},
+  {seq:'ACTGTTAT', start:7, x:8, y:6},
+  {seq:'TGTTATTC', start:9, x:12, y:4},
+  {seq:'TTATTCGC', start:11, x:10, y:2},
+  {seq:'TATTCGCA', start:12, x:12, y:8},
+];
+
+// Pythagorean distance between (xa, ya) and (xb, yb)
+function distance(xa, ya, xb, yb) {
+  var x_dist = Math.abs(xa - xb);
+  var y_dist = Math.abs(ya - yb);
+  return Math.sqrt(x_dist*x_dist + y_dist*y_dist);
+}
 
 function runIntro() {
   var TIMING = {
@@ -11,8 +28,8 @@ function runIntro() {
     // how long each read is in flight
     travelTime: 1000,
   };
-  // var prng = new ToyPrng();
   destroyGame();
+
   // Make the reference sequence
   Game.reference = 'ATCTATTACTGTTATTCGCA';
   Game.consensus = Crafty.e('Consensus');
@@ -26,60 +43,39 @@ function runIntro() {
     Game.consensus.bases[i] = base;
     Game.consensus.seq[i] = base.letter;
   }
+
   // Make the reads
-  var reads = [];
-  reads.push(makeRead('ATCTATTA', 0, 0));
-  reads.push(makeRead('TATTACTG', 3*BASE_SIZE, 0));
-  reads.push(makeRead('TACTGTTA', 6*BASE_SIZE, 0));
-  reads.push(makeRead('ACTGTTAT', 7*BASE_SIZE, 0));
-  reads.push(makeRead('TGTTATTC', 9*BASE_SIZE, 0));
-  reads.push(makeRead('TTATTCGC', 11*BASE_SIZE, 0));
-  reads.push(makeRead('TATTCGCA', 12*BASE_SIZE, 0));
+  var reads = new Array(reads_data.length);
+  for (var i = 0; i < reads_data.length; i++) {
+    reads[i] = makeRead(reads_data[i].seq, reads_data[i].start*BASE_SIZE, 0);
+  }
   for (var i = 0; i < reads.length; i++) {
     reads[i].removeComponent('Draggable', false);
     reads[i].addComponent('Tween');
+    reads[i].unbind('StopDrag');
   }
+
   // Animate the reads coming from the reference
-  // animator is an array of functions, each one moving one read
-  var animator = [
-    function() {
-      reads[4].z = 20;
-      reads[4].tween({x: MAIN.x+BASE_SIZE*12, y: MAIN.y+BASE_SIZE*4},
-        TIMING.travelTime);
-    },
-    function() {
-      reads[2].z = 20;
-      reads[2].tween({x: MAIN.x+BASE_SIZE*3,  y: MAIN.y+BASE_SIZE*7},
-        TIMING.travelTime);
-    },
-    function() {
-      reads[1].z = 20;
-      reads[1].tween({x: MAIN.x+BASE_SIZE*0,  y: MAIN.y+BASE_SIZE*3},
-        TIMING.travelTime);
-    },
-    function() {
-      reads[3].z = 20;
-      reads[3].tween({x: MAIN.x+BASE_SIZE*8,  y: MAIN.y+BASE_SIZE*6},
-        TIMING.travelTime);
-    },
-    function() {
-      reads[0].z = 20;
-      reads[0].tween({x: MAIN.x+BASE_SIZE*5,  y: MAIN.y+BASE_SIZE*5},
-        TIMING.travelTime);
-    },
-    function() {
-      reads[6].z = 20;
-      reads[6].tween({x: MAIN.x+BASE_SIZE*12, y: MAIN.y+BASE_SIZE*8},
-        TIMING.travelTime);
-    },
-    function() {
-      reads[5].z = 20;
-      reads[5].tween({x: MAIN.x+BASE_SIZE*10, y: MAIN.y+BASE_SIZE*2},
-        TIMING.travelTime);
-    },
-  ];
-  for (var i = 0; i < animator.length; i++) {
-    console.log('scheduling animator['+i+'] for '+(TIMING.startDelay+i*TIMING.interval)+'ms');
-    window.setTimeout(animator[i], TIMING.startDelay + i*TIMING.interval);
+  // Randomize the order the reads are animated in
+  var index = new Array(reads.length);
+  for (var i = 0; i < reads.length; i++) {
+    index[i] = i;
+  }
+  var prng = new ToyPrng(3);
+  index = prng.shuffle(index);
+  // Animate each read
+  var j = 0;
+  var animator = function() {
+    var x_orig = reads_data[j].start*BASE_SIZE;
+    var x_dest = MAIN.x + BASE_SIZE*reads_data[index[j]].x;
+    var y_dest = MAIN.y + BASE_SIZE*reads_data[index[j]].y;
+    // Calculate flight time based on distance to keep speed constant
+    var dist = distance(x_orig, 0, x_dest, y_dest);
+    reads[index[j]].tween({x: x_dest, y: y_dest}, 5*Math.floor(dist));
+    j++;
+  };
+  // Schedule the animations
+  for (var i = 0; i < reads.length; i++) {
+    window.setTimeout(animator, TIMING.startDelay + i*TIMING.interval);
   }
 }
