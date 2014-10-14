@@ -81,3 +81,25 @@ Crafty.c('Button', {
       .unselectable();
   }
 });
+
+Crafty.c('Video', {
+  init: function() {
+    this.requires('HTML')
+      .attr({x: MAIN.x, y: MAIN.y});
+  },
+  // Center the video along the given dimensions
+  center: function(dimensions) {
+    if (dimensions === undefined) {
+      dimensions = 'x';
+    }
+    var x = this.x;
+    var y = this.y;
+    if (dimensions.indexOf('x') !== -1) {
+      var x = (MAIN.width - this.w)/2;
+    }
+    if (dimensions.indexOf('y') !== -1) {
+      var y = (MAIN.height - this.h)/2;
+    }
+    this.attr({x: x, y: y});
+  }
+});

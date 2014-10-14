@@ -20,6 +20,12 @@ function distance(xa, ya, xb, yb) {
 }
 
 function runIntro() {
+  // Cancel any videos that are currently running
+  var videos = Crafty('Video').get();
+  for (var i = 0; i < videos.length; i++) {
+    videos[i].destroy();
+  }
+  
   if (Game.consensus === null) {
     var seed = Date.now();
     console.log('seed: '+seed);
@@ -90,9 +96,10 @@ function runIntro() {
 }
 
 function startVideo() {
-  Crafty.e("HTML")
-   .attr({x:192, y:100, w:640, h:400})
-   .append("<video id='intro' autoplay src='assets/cbios_animation_1.mp4'></video>");
+  Crafty.e("Video")
+   .attr({w:640, h:400})
+   .append("<video id='intro' autoplay src='assets/cbios_animation_1.mp4'></video>")
+   .center();
   var video = document.getElementById('intro');
   // video.onended = runIntro;
   window.setTimeout(runIntro, 25000);
