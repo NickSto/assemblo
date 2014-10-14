@@ -3,13 +3,13 @@
 /* exported runIntro startVideo */
 
 var reads_data = [
-  {seq:'ATCTATTA', start:0, x:5, y:5},
-  {seq:'TATTACTG', start:3, x:0, y:3},
-  {seq:'TACTGTTA', start:6, x:3, y:7},
-  {seq:'ACTGTTAT', start:7, x:8, y:6},
-  {seq:'TGTTATTC', start:9, x:12, y:4},
-  {seq:'TTATTCGC', start:11, x:12, y:8},
-  {seq:'TATTCGCA', start:12, x:10, y:2},
+  {seq:'ATCTATTA', start:0, x:5, y:3},
+  {seq:'TATTACTG', start:3, x:0, y:1},
+  {seq:'TACTGTTA', start:6, x:3, y:5},
+  {seq:'ACTGTTAT', start:7, x:8, y:4},
+  {seq:'TGTTATTC', start:9, x:12, y:2},
+  {seq:'TTATTCGC', start:11, x:12, y:6},
+  {seq:'TATTCGCA', start:12, x:10, y:0},
 ];
 
 // Pythagorean distance between (xa, ya) and (xb, yb)
@@ -44,7 +44,7 @@ function runIntro() {
   Game.consensus.length = Game.reference.length;
   for (var i = 0; i < Game.consensus.length; i++) {
     var base = Crafty.e('Base')
-      .attr({x: MAIN.x+i*BASE_SIZE, y: MAIN.y, w: BASE_SIZE, h: BASE_SIZE})
+      .attr({x: CONSENSUS.x+i*BASE_SIZE, y: CONSENSUS.y, w: BASE_SIZE, h: BASE_SIZE})
       .color(COLORS[Game.reference[i]])
       .text(Game.reference[i]);
     base.letter = Game.reference[i];
@@ -55,7 +55,7 @@ function runIntro() {
   // Make the reads
   var reads = new Array(reads_data.length);
   for (var i = 0; i < reads_data.length; i++) {
-    reads[i] = makeRead(reads_data[i].seq, reads_data[i].start*BASE_SIZE, 0);
+    reads[i] = makeRead(reads_data[i].seq, reads_data[i].start*BASE_SIZE, CONSENSUS.y-MAIN.y);
   }
   for (var i = 0; i < reads.length; i++) {
     reads[i].removeComponent('Draggable', false);
@@ -96,4 +96,5 @@ function startVideo() {
   var video = document.getElementById('intro');
   // video.onended = runIntro;
   window.setTimeout(runIntro, 25000);
+  //TODO: destroy video element afterward
 }

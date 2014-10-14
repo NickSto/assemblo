@@ -14,7 +14,7 @@ var Game = {
 // Start the game:
 // Initialize Crafty game area, create UI, and generate a new game.
 function startGame() {
-  Crafty.init(GAME_WIDTH, GAME_HEIGHT);
+  Crafty.init(GAME.width, GAME.height);
   makeUI();
   // drawGrid();
   startVideo();
@@ -45,7 +45,7 @@ function newGame(reference, seed) {
   console.log("Shhh, the answer is "+Game.reference+"!");
   var reads = wgsim(Game.reference, NUM_READS, READ_LENGTH, 1);
   for (var i = 0; i < reads.length; i++) {
-    makeRead(reads[i], i*BASE_SIZE, 100+i*BASE_SIZE);
+    makeRead(reads[i], i*BASE_SIZE, i*BASE_SIZE);
   }
   calcConsensus(getBaseGrid());
 }
@@ -182,17 +182,17 @@ function makeRead(seq, x, y) {
   return read;
 }
 
-// Initialize the consensus sequence at the top of the MAIN panel
+// Initialize the consensus sequence at the top of the CONSENSUS panel
 function makeConsensus(length) {
   var consensus = Crafty.e('Consensus');
   if (length === undefined) {
-    consensus.length = Math.floor(MAIN.width/BASE_SIZE);
+    consensus.length = Math.floor(CONSENSUS.width/BASE_SIZE);
   } else {
     consensus.length = length;
   }
   for (var i = 0; i < consensus.length; i++) {
     var base = Crafty.e('Base')
-      .attr({x: MAIN.x+i*BASE_SIZE, y: MAIN.y, w: BASE_SIZE, h: BASE_SIZE})
+      .attr({x: CONSENSUS.x+i*BASE_SIZE, y: CONSENSUS.y, w: BASE_SIZE, h: BASE_SIZE})
       .color(COLORS['N']);
     base.letter = 'N';
     consensus.bases[i] = base;
