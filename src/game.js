@@ -30,6 +30,11 @@ function startGame() {
  * just give "undefined" as the reference, i.e. "newGame(undefined, 15);"
  */
 function newGame(reference, seed) {
+  // Cancel any videos that are currently running
+  var videos = Crafty('Video').get();
+  for (var i = 0; i < videos.length; i++) {
+    videos[i].destroy();
+  }
   if (seed === undefined) {
     seed = Date.now();
   }
