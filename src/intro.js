@@ -11,6 +11,14 @@ var reads_data = [
   {seq:'TTATTCGC', start:11, x:12, y:6},
   {seq:'TATTCGCA', start:12, x:10, y:0},
 ];
+var TIMING = {
+  // pause before animation starts
+  startDelay: 1000,
+  // time between each read starting to move
+  interval: 500,
+  // how long each read is in flight
+  travelTime: 1000,
+};
 
 // Pythagorean distance between (xa, ya) and (xb, yb)
 function distance(xa, ya, xb, yb) {
@@ -25,23 +33,6 @@ function runIntro() {
   for (var i = 0; i < videos.length; i++) {
     videos[i].destroy();
   }
-  
-  if (Game.consensus === null) {
-    var seed = Date.now();
-    console.log('seed: '+seed);
-    Game.prng = new ToyPrng(seed);
-    Game.consensus = makeConsensus();
-    Game.reference = randSeq(Game.consensus.length);
-  }
-
-  var TIMING = {
-    // pause before animation starts
-    startDelay: 1000,
-    // time between each read starting to move
-    interval: 500,
-    // how long each read is in flight
-    travelTime: 1000,
-  };
   destroyGame();
 
   // Make the reference sequence

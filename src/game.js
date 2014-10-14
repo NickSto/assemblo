@@ -53,7 +53,9 @@ function newGame(reference, seed) {
 // Destroy all game components, but not the UI.
 // Removes reads, consensus sequence bar, etc.
 function destroyGame() {
-  Game.consensus.myDestroy();
+  if (Game.consensus !== null) {
+    Game.consensus.myDestroy();
+  }
   Game.consensus = null;
   Game.reference = null;
   if (Game.success !== null) {
