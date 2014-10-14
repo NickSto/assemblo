@@ -17,7 +17,8 @@ function startGame() {
   Crafty.init(GAME_WIDTH, GAME_HEIGHT);
   makeUI();
   // drawGrid();
-  newGame();
+  startVideo();
+  // newGame();
 }
 
 /* Generate a new game with a new consensus bar and new reads.

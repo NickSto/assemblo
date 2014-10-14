@@ -1,6 +1,6 @@
 'use strict';
 /* global Crafty, Game, MAIN, BASE_SIZE, COLORS, ToyPrng, destroyGame, makeRead */
-/* exported runIntro */
+/* exported runIntro startVideo */
 
 var reads_data = [
   {seq:'ATCTATTA', start:0, x:5, y:5},
@@ -20,6 +20,14 @@ function distance(xa, ya, xb, yb) {
 }
 
 function runIntro() {
+  if (Game.consensus === null) {
+    var seed = Date.now();
+    console.log('seed: '+seed);
+    Game.prng = new ToyPrng(seed);
+    Game.consensus = makeConsensus();
+    Game.reference = randSeq(Game.consensus.length);
+  }
+
   var TIMING = {
     // pause before animation starts
     startDelay: 1000,
@@ -78,4 +86,13 @@ function runIntro() {
   for (var i = 0; i < reads.length; i++) {
     window.setTimeout(animator, TIMING.startDelay + i*TIMING.interval);
   }
+}
+
+function startVideo() {
+  Crafty.e("HTML")
+   .attr({x:192, y:100, w:640, h:400})
+   .append("<video id='intro' autoplay src='assets/cbios_animation_1.mp4'></video>");
+  var video = document.getElementById('intro');
+  // video.onended = runIntro;
+  window.setTimeout(runIntro, 25000);
 }
