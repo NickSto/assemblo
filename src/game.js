@@ -45,7 +45,7 @@ function newGame(reference, seed) {
   console.log("Shhh, the answer is "+Game.reference+"!");
   var reads = wgsim(Game.reference, NUM_READS, READ_LENGTH, 1);
   for (var i = 0; i < reads.length; i++) {
-    makeRead(reads[i], i*BASE_SIZE, i*BASE_SIZE);
+    makeRead(reads[i], MAIN.x+i*BASE_SIZE, MAIN.y+i*BASE_SIZE);
   }
   calcConsensus(getBaseGrid());
 }
@@ -162,17 +162,17 @@ function drawGrid() {
 
 // Make a Read entity with sequence "seq" at a position defined by "x" and "y".
 // "x" and "y" are the distance of the top-left corner from the origin of the
-// MAIN panel.
+// Crafty game (absolute position).
 function makeRead(seq, x, y) {
   // Make an invisible entity the size of the entire read, which will
   // be what the user actually clicks and drags. The bases will be
   // behind it and attached to it.
   var read = Crafty.e('Read')
-    .attr({x: MAIN.x+x, y: MAIN.y+y, w: seq.length*BASE_SIZE, h: BASE_SIZE});
+    .attr({x: x, y: y, w: seq.length*BASE_SIZE, h: BASE_SIZE});
   // Make each base in the sequence, attach to the read
   for (var i = 0; i < seq.length; i++) {
     var base = Crafty.e('Base')
-      .attr({x: MAIN.x+x+i*BASE_SIZE, y: MAIN.y+y, w: BASE_SIZE, h: BASE_SIZE})
+      .attr({x: x+i*BASE_SIZE, y: y, w: BASE_SIZE, h: BASE_SIZE})
       .color(COLORS[seq[i]])
       .text(seq[i]);
     base.letter = seq[i];

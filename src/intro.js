@@ -55,7 +55,7 @@ function runIntro() {
   // Make the reads
   var reads = new Array(reads_data.length);
   for (var i = 0; i < reads_data.length; i++) {
-    reads[i] = makeRead(reads_data[i].seq, reads_data[i].start*BASE_SIZE, CONSENSUS.y-MAIN.y);
+    reads[i] = makeRead(reads_data[i].seq, CONSENSUS.x+reads_data[i].start*BASE_SIZE, CONSENSUS.y);
   }
   for (var i = 0; i < reads.length; i++) {
     reads[i].removeComponent('Draggable', false);
