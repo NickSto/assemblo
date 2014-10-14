@@ -86,6 +86,7 @@ function runIntro() {
   for (var i = 0; i < reads.length; i++) {
     window.setTimeout(animator, TIMING.startDelay + i*TIMING.interval);
   }
+  window.setTimeout(restartGame, 10000);
 }
 
 function startVideo() {
