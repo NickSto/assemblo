@@ -92,7 +92,7 @@ function runIntro() {
   for (var i = 0; i < reads.length; i++) {
     window.setTimeout(animator, TIMING.startDelay + i*TIMING.interval);
   }
-  window.setTimeout(restartGame, 10000);
+  window.setTimeout(restartGame, 9500);
 }
 
 function startVideo() {
@@ -101,7 +101,5 @@ function startVideo() {
    .append("<video id='intro' autoplay src='assets/cbios_animation_1.mp4'></video>")
    .center();
   var video = document.getElementById('intro');
-  // video.onended = runIntro;
-  window.setTimeout(runIntro, 25000);
-  //TODO: destroy video element afterward
+  video.onplay = function() { window.setTimeout(runIntro, 25000); };
 }
