@@ -1,7 +1,7 @@
 'use strict';
-/* global Crafty, GAME_WIDTH, GAME_HEIGHT, MAIN, HEAD, COLORS, BASE_SIZE,
-          NUM_READS, READ_LENGTH, randSeq, wgsim, makeUI */
-/* exported assert, startGame, newGame, destroyGame */
+/* global Crafty, GAME, HEAD, MAIN, CONSENSUS, COLORS, BASE_SIZE, NUM_READS,
+          READ_LENGTH, randSeq, wgsim, makeUI, startVideo, ToyPrng */
+/* exported assert, startGame, newGame, destroyGame, restartGame, drawGrid */
 
 // Global game state
 var Game = {
@@ -10,6 +10,7 @@ var Game = {
   success: null,
   prng: new ToyPrng(),
   timeout: null,
+  baseGrid: new BaseGrid(),
 };
 
 // Start the game:
@@ -54,7 +55,8 @@ function newGame(reference, seed) {
   for (var i = 0; i < reads.length; i++) {
     makeRead(reads[i], MAIN.x+i*BASE_SIZE, MAIN.y+i*BASE_SIZE);
   }
-  calcConsensus(getBaseGrid());
+  Game.baseGrid.update();
+  calcConsensus(Game.baseGrid);
 }
 
 // Destroy all game components, but not the UI.
@@ -86,7 +88,8 @@ function readStopDrag(event) {
   //TODO: keep reads from overlapping
   this.x = snap(this._x, this._w, MAIN.x, MAIN.x+MAIN.width);
   this.y = snap(this._y, this._h, MAIN.y, MAIN.y+MAIN.height);
-  calcConsensus(getBaseGrid());
+  Game.baseGrid.update();
+  calcConsensus(Game.baseGrid);
   checkAnswer();
 }
 
@@ -114,13 +117,13 @@ function snap(pos, size, min, max) {
 
 // Calculate the consensus sequence based on the read alignment.
 // All reads must agree on the base in order for it to appear.
-// Conflicts appear as 'N', no data appears as undefined.
+// Conflicts appear as 'N', "no data" appears as undefined.
 function calcConsensus(baseGrid) {
   var consensus = Game.consensus;
   consensus.seq = new Array(consensus.length);
   // Visit each read, incorporating it into the consensus sequence.
-  for (var i = 0; i < baseGrid.length; i++) {
-    var read = baseGrid[i];
+  for (var i = 0; i < baseGrid.rows.length; i++) {
+    var read = baseGrid.rows[i];
     for (var j = 0; j < read.length; j++) {
       // Initialize new consensus bases to the first base you see there.
       if (consensus.seq[j] === undefined) {
@@ -140,22 +143,6 @@ function calcConsensus(baseGrid) {
   }
   // Make the displayed bases match the computed data
   consensus.updateBases();
-}
-
-// Fill a 2D array with all bases on the grid
-function getBaseGrid() {
-  var baseGrid = [];
-  var reads = Crafty('Read').get();
-  for (var i = 0; i < reads.length; i++) {
-    var bases = reads[i].bases;
-    var baseRow = [];
-    for (var j = 0; j < bases.length; j++) {
-      var index = (bases[j]._x - MAIN.x) / BASE_SIZE;
-      baseRow[index] = bases[j].letter;
-    }
-    baseGrid.push(baseRow);
-  }
-  return baseGrid;
 }
 
 // Draw guidelines to show where the snap-to grid is
@@ -248,6 +235,35 @@ function checkAnswer() {
       Game.success = null;
     }
   }
+}
+
+// Encapsulates a 2D array storing the locations of all bases in all reads on
+// the grid.
+function BaseGrid() {
+  // The actual array
+  this.rows = [];
+  Object.defineProperty(this, 'length', {
+    get: function() { return this.rows.length; },
+  });
+  // Fill a 2D array with all bases on the grid
+  this.update = function() {
+    this.rows = [];
+    var reads = Crafty('Read').get();
+    for (var i = 0; i < reads.length; i++) {
+      var bases = reads[i].bases;
+      var baseRow = [];
+      for (var j = 0; j < bases.length; j++) {
+        var index = (bases[j]._x - MAIN.x) / BASE_SIZE;
+        baseRow[index] = bases[j].letter;
+      }
+      this.rows.push(baseRow);
+    }
+    return this;
+  };
+  this.addRead = function (read) {
+    //TODO
+  };
+
 }
 
 
