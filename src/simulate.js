@@ -8,8 +8,8 @@ var BASES = ['A', 'C', 'G', 'T'];
 // Very easy to reverse engineer. DO NOT USE FOR ANYTHING SECURE!
 // Taken from https://stackoverflow.com/a/19303725/726773
 function ToyPrng(seed) {
-  // Set the seed.
-  this.seed = function(seed) {
+  // Seed setter.
+  this.setSeed = function(seed) {
     // Convert to number, or NaN if not a number (or undefined)
     seed = +seed;
     // Check for invalid seeds. Includes 0 and multiples of pi.
@@ -21,15 +21,19 @@ function ToyPrng(seed) {
       this._seed = seed;
     }
   };
+  Object.defineProperty(this, 'seed', {
+    set: this.setSeed,
+    get: function() { return this._seed; },
+  });
   // Set the seed on construction
-  this._seed = 1;
+  this.seed = 1;
   if (seed !== undefined) {
-    this.seed(seed);
+    this.seed = seed;
   }
   // Return a random float between 0 and 1 (including 0, not including 1).
   this.random = function() {
-    this._seed++;
-    var x = Math.sin(this._seed) * 10000;
+    this.seed++;
+    var x = Math.sin(this.seed) * 10000;
     return x - Math.floor(x);
   };
   // Return a random integer between 0 and max-1 (inclusive).
