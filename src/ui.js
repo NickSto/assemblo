@@ -58,5 +58,6 @@ function shift(shiftDist) {
     reads[i].x = reads[i]._x + shiftDist;
   }
   // And update the consensus sequence.
-  calcConsensus(getBaseGrid());
+  Game.baseGrid.update();
+  calcConsensus(Game.baseGrid);
 }
