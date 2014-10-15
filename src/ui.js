@@ -28,7 +28,7 @@ function makeUI() {
     .attr({x: HEAD.x + 215, y: HEAD.y+10, w: 70, h: 30})
     .color('#CAC')
     .text('Intro')
-    .bind('Click', runIntro);
+    .bind('Click', startVideo);
 }
 
 // Shift left by one grid increment

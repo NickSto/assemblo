@@ -1,5 +1,6 @@
 'use strict';
-/* global Crafty, Game, MAIN, BASE_SIZE, COLORS, ToyPrng, destroyGame, makeRead */
+/* global Crafty, Game, MAIN, CONSENSUS, BASE_SIZE, COLORS, ToyPrng,
+          destroyGame, restartGame, makeRead */
 /* exported runIntro startVideo */
 
 var reads_data = [
@@ -28,12 +29,12 @@ function distance(xa, ya, xb, yb) {
 }
 
 function runIntro() {
-  // Cancel any videos that are currently running
+  // Cancel any videos or animations that are currently running
+  window.clearTimeout(Game.timeout);
   var videos = Crafty('Video').get();
   for (var i = 0; i < videos.length; i++) {
     videos[i].destroy();
   }
-  destroyGame();
 
   // Make the reference sequence
   Game.reference = 'ATCTATTACTGTTATTCGCA';
@@ -83,14 +84,20 @@ function runIntro() {
   for (var i = 0; i < reads.length; i++) {
     window.setTimeout(animator, TIMING.startDelay + i*TIMING.interval);
   }
-  window.setTimeout(restartGame, 9500);
+  //TODO: Keep from firing if user clicks "New Game" or "Intro" (generally, if
+  //      the animation has already been cancelled).
+  Game.timeout = window.setTimeout(restartGame, 9500);
 }
 
 function startVideo() {
+  destroyGame();
+  window.clearTimeout(Game.timeout);
   Crafty.e("Video")
    .attr({w:640, h:400})
    .append("<video id='intro' autoplay src='assets/cbios_animation_1.mp4'></video>")
    .center();
   var video = document.getElementById('intro');
-  video.onplay = function() { window.setTimeout(runIntro, 25000); };
+  video.onplay = function() {
+    Game.timeout = window.setTimeout(runIntro, 25000);
+  };
 }

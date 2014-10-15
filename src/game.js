@@ -9,6 +9,7 @@ var Game = {
   reference: null,
   success: null,
   prng: new ToyPrng(),
+  timeout: null,
 };
 
 // Start the game:
@@ -30,7 +31,8 @@ function startGame() {
  * just give "undefined" as the reference, i.e. "newGame(undefined, 15);"
  */
 function newGame(reference, seed) {
-  // Cancel any videos that are currently running
+  // Cancel any videos or animations that are currently running
+  window.clearTimeout(Game.timeout);
   var videos = Crafty('Video').get();
   for (var i = 0; i < videos.length; i++) {
     videos[i].destroy();
