@@ -1,6 +1,6 @@
 'use strict';
 /* global Crafty, MAIN, HEAD, BASE_SIZE, snap, calcConsensus, getBaseGrid,
-          restartGame, runIntro */
+          restartGame, startVideo */
 /* exported makeUI */
 
 // Make buttons, icons, controls, etc.

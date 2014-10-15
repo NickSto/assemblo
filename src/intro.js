@@ -1,7 +1,7 @@
 'use strict';
 /* global Crafty, Game, MAIN, CONSENSUS, BASE_SIZE, COLORS, ToyPrng,
           destroyGame, restartGame, makeRead */
-/* exported runIntro startVideo */
+/* exported runIntroAnimation, startVideo */
 
 var reads_data = [
   {seq:'ATCTATTA', start:0, x:5, y:3},
@@ -21,14 +21,18 @@ var TIMING = {
   travelTime: 1000,
 };
 
-// Pythagorean distance between (xa, ya) and (xb, yb)
-function distance(xa, ya, xb, yb) {
-  var x_dist = Math.abs(xa - xb);
-  var y_dist = Math.abs(ya - yb);
-  return Math.sqrt(x_dist*x_dist + y_dist*y_dist);
+function startVideo() {
+  window.clearTimeout(Game.timeout);
+  destroyGame();
+  Crafty.e("Video")
+   .attr({w:640, h:400})
+   .append("<video id='intro' autoplay src='assets/intro.mp4'></video>")
+   .center();
+  var video = document.getElementById('intro');
+  video.onended = runIntroAnimation;
 }
 
-function runIntro() {
+function runIntroAnimation() {
   // Cancel any videos or animations that are currently running
   window.clearTimeout(Game.timeout);
   var videos = Crafty('Video').get();
@@ -89,13 +93,9 @@ function runIntro() {
   Game.timeout = window.setTimeout(restartGame, 9500);
 }
 
-function startVideo() {
-  destroyGame();
-  window.clearTimeout(Game.timeout);
-  Crafty.e("Video")
-   .attr({w:640, h:400})
-   .append("<video id='intro' autoplay src='assets/intro.mp4'></video>")
-   .center();
-  var video = document.getElementById('intro');
-  video.onended = runIntro;
+// Pythagorean distance between (xa, ya) and (xb, yb)
+function distance(xa, ya, xb, yb) {
+  var x_dist = Math.abs(xa - xb);
+  var y_dist = Math.abs(ya - yb);
+  return Math.sqrt(x_dist*x_dist + y_dist*y_dist);
 }
