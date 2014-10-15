@@ -94,10 +94,8 @@ function startVideo() {
   window.clearTimeout(Game.timeout);
   Crafty.e("Video")
    .attr({w:640, h:400})
-   .append("<video id='intro' autoplay src='assets/cbios_animation_1.mp4'></video>")
+   .append("<video id='intro' autoplay src='assets/intro.mp4'></video>")
    .center();
   var video = document.getElementById('intro');
-  video.onplay = function() {
-    Game.timeout = window.setTimeout(runIntro, 25000);
-  };
+  video.onended = runIntro;
 }
