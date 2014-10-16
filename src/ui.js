@@ -82,6 +82,10 @@ function shift(shiftDist) {
   // Check if there's room to move everything in that direction.
   //TODO: optimize if necessary by combining this check and the actual move loop
   for (var i = 0; i < reads.length; i++) {
+    // Skip if the read is below the MAIN panel.
+    if (reads[i]._y >= MAIN.y+MAIN.height) {
+      continue;
+    }
     var new_x = reads[i]._x + shiftDist;
     var snapped_x = snap(new_x, reads[i]._w, MAIN.x, MAIN.x+MAIN.width);
     // If snap() says the new_x must be modified, then we must be butting up
@@ -92,6 +96,10 @@ function shift(shiftDist) {
   }
   // Now loop again, but actually shift everything.
   for (var i = 0; i < reads.length; i++) {
+    // Skip if the read is below the MAIN panel.
+    if (reads[i]._y >= MAIN.y+MAIN.height) {
+      continue;
+    }
     reads[i].x = reads[i]._x + shiftDist;
   }
   // And update the consensus sequence.
