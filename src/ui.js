@@ -1,7 +1,7 @@
 'use strict';
-/* global Crafty, MAIN, HEAD, BASE_SIZE, snap, calcConsensus, getBaseGrid,
-          restartGame, startVideo, assert */
-/* exported makeUI */
+/* global Crafty, Game, HEAD, CONSENSUS, MAIN, BANK, BASE_SIZE, snap,
+          calcConsensus, restartGame, startVideo, assert */
+/* exported makeUI, drawPanel, drawLine */
 
 // Make buttons, icons, controls, etc.
 function makeUI() {
@@ -29,7 +29,10 @@ function makeUI() {
     .color('#CAC')
     .text('Intro')
     .bind('Click', startVideo);
+  // Draw panels, plus a box where the consensus display will be.
+  drawPanel({x: CONSENSUS.x, y: CONSENSUS.y, height: BASE_SIZE, width: CONSENSUS.width});
   drawPanel(MAIN);
+  drawPanel(BANK);
 }
 
 function drawPanel(panel) {
