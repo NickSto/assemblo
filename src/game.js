@@ -1,6 +1,7 @@
 'use strict';
-/* global Crafty, GAME, HEAD, MAIN, COLORS, BASE_SIZE, READ_LENGTH, NUM_READS,
-          CONSENSUS, randSeq, wgsim, makeUI, startVideo, ToyPrng, destroyAll */
+/* global Crafty, GAME, HEAD, CONSENSUS, MAIN, BANK, COLORS, BASE_SIZE,
+          READ_LENGTH, NUM_READS, randSeq, wgsim, makeUI, startVideo, ToyPrng,
+          destroyAll */
 /* exported startGame, newGame, destroyGame, restartGame, drawGrid */
 
 // Global game state
@@ -81,7 +82,7 @@ function readStopDrag(event) {
   /* jshint validthis:true */
   //TODO: keep reads from overlapping
   this.x = snap(this._x, this._w, MAIN.x, MAIN.x+MAIN.width);
-  this.y = snap(this._y, this._h, MAIN.y, MAIN.y+MAIN.height);
+  this.y = snap(this._y, this._h, MAIN.y, BANK.y+BANK.height);
   Game.baseGrid.update();
   calcConsensus(Game.baseGrid);
   checkAnswer();
@@ -116,7 +117,7 @@ function calcConsensus(baseGrid) {
   var consensus = Game.consensus;
   consensus.seq = new Array(consensus.length);
   // Visit each read, incorporating it into the consensus sequence.
-  for (var i = 0; i < baseGrid.rows.length; i++) {
+  for (var i = 0; i < baseGrid.rows.length && i < MAIN.height/BASE_SIZE; i++) {
     var read = baseGrid.rows[i];
     for (var j = 0; j < read.length; j++) {
       // Initialize new consensus bases to the first base you see there.
@@ -244,16 +245,20 @@ function BaseGrid() {
   });
   // Fill a 2D array with all bases on the grid
   this.update = function() {
-    this.rows = [];
+    // Initialize this.rows
+    var total_rows = Math.floor((MAIN.height+BANK.height) / BASE_SIZE);
+    this.rows = new Array(total_rows);
+    for (var i = 0; i < this.rows.length; i++) {
+      this.rows[i] = [];
+    }
     var reads = Crafty('Read').get();
     for (var i = 0; i < reads.length; i++) {
       var bases = reads[i].bases;
-      var baseRow = [];
+      var row = (reads[i]._y-MAIN.y) / BASE_SIZE;
       for (var j = 0; j < bases.length; j++) {
-        var index = (bases[j]._x - MAIN.x) / BASE_SIZE;
-        baseRow[index] = bases[j].letter;
+        var column = (bases[j]._x - MAIN.x) / BASE_SIZE;
+        this.rows[row][column] = bases[j].letter;
       }
-      this.rows.push(baseRow);
     }
     return this;
   };
