@@ -46,15 +46,8 @@ function runIntroAnimation() {
   // Make the reference sequence
   Game.reference = 'ATCTATTACTGTTATTCGCA';
   Game.consensus = Crafty.e('Consensus');
-  Game.consensus.length = Game.reference.length;
-  for (var i = 0; i < Game.consensus.length; i++) {
-    var base = Crafty.e('Base')
-      .attr({x: CONSENSUS.x+i*BASE_SIZE, y: CONSENSUS.y, w: BASE_SIZE, h: BASE_SIZE})
-      .color(COLORS[Game.reference[i]])
-      .text(Game.reference[i]);
-    base.letter = Game.reference[i];
-    Game.consensus.bases[i] = base;
-    Game.consensus.seq[i] = base.letter;
+  for (var i = 0; i < Game.reference.length; i++) {
+    Game.consensus.add(Game.reference[i], i);
   }
 
   // Make the reads
@@ -91,8 +84,7 @@ function runIntroAnimation() {
   for (var i = 0; i < reads.length; i++) {
     window.setTimeout(animator, TIMING.startDelay + i*TIMING.interval);
   }
-  //TODO: Keep from firing if user clicks "New Game" or "Intro" (generally, if
-  //      the animation has already been cancelled).
+  // After a pause, exit the animation and start the game.
   Game.timeout = window.setTimeout(restartGame, 9500);
 }
 

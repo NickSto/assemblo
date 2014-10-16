@@ -41,12 +41,12 @@ function newGame(reference, seed) {
   console.log('seed: '+seed);
   Game.prng = new ToyPrng(seed);
   if (reference === undefined) {
-    Game.consensus = makeConsensus();
-    Game.reference = randSeq(Game.consensus.length);
+    // Generate a reference as long as the panel is wide
+    Game.reference = randSeq(Math.floor(CONSENSUS.width/BASE_SIZE));
   } else {
     Game.reference = reference;
-    Game.consensus = makeConsensus(Game.reference.length);
   }
+  Game.consensus = makeConsensus(Game.reference.length);
   console.log("Shhh, the answer is "+Game.reference+"!");
   var reads = wgsim(Game.reference, NUM_READS, READ_LENGTH, 1);
   for (var i = 0; i < reads.length; i++) {
@@ -60,7 +60,7 @@ function newGame(reference, seed) {
 // Removes reads, consensus sequence bar, grid, etc.
 function destroyGame() {
   if (Game.consensus !== null) {
-    Game.consensus.myDestroy();
+    Game.consensus.destroy();
   }
   Game.consensus = null;
   Game.reference = null;
@@ -170,7 +170,7 @@ function makeRead(seq, x, y) {
       .color(COLORS[seq[i]])
       .text(seq[i]);
     base.letter = seq[i];
-    read.addBase(base);
+    read.add(base);
   }
   read.bind('StopDrag', readStopDrag);
   return read;
@@ -179,18 +179,8 @@ function makeRead(seq, x, y) {
 // Initialize the consensus sequence at the top of the CONSENSUS panel
 function makeConsensus(length) {
   var consensus = Crafty.e('Consensus');
-  if (length === undefined) {
-    consensus.length = Math.floor(CONSENSUS.width/BASE_SIZE);
-  } else {
-    consensus.length = length;
-  }
-  for (var i = 0; i < consensus.length; i++) {
-    var base = Crafty.e('Base')
-      .attr({x: CONSENSUS.x+i*BASE_SIZE, y: CONSENSUS.y, w: BASE_SIZE, h: BASE_SIZE})
-      .color(COLORS['N']);
-    base.letter = 'N';
-    consensus.bases[i] = base;
-    consensus.seq[i] = 'N';
+  for (var i = 0; i < length; i++) {
+    consensus.add('N', i);
   }
   return consensus;
 }
@@ -265,5 +255,4 @@ function BaseGrid() {
   this.addRead = function (read) {
     //TODO
   };
-
 }

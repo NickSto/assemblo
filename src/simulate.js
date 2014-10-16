@@ -94,7 +94,8 @@ function wgsim(reference, numReads, readLength, minCoverage) {
 // and increment the covered bases in the "coverage" array.
 // Returns the read sequence, its starting coordinate, and the coverage array.
 function getRandomRead(reference, readLength, coverage) {
-  assert(reference.length === coverage.length);
+  assert(reference.length === coverage.length, reference.length+' !== '+
+    coverage.length+' (simulate.js line '+(new Error().lineNumber)+')');
   var start = Game.prng.randInt(reference.length - readLength);
   var read = reference.substring(start, start+readLength);
   // keep track of which bases of the reference are covered by reads
