@@ -13,5 +13,5 @@ var CONSENSUS = {width: 1000, height: 100, x: 0, y: 50};
 var MAIN = {width: 1000, height: 500, x: 0, y: 150};
 var BANK = {width: 1000, height: NUM_READS*BASE_SIZE};
 // Size of entire Crafty game area
-var GAME = {width: 1000, height: HEAD.height+CONSENSUS.height+MAIN.height+BANK.height};
+var GAME = {width: 1001, height: 1+HEAD.height+CONSENSUS.height+MAIN.height+BANK.height};
 var COLORS = {'A':'#A44', 'C':'#448', 'G':'#484', 'T':'#AA4', 'N':'#DDD'};

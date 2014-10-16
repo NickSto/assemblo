@@ -1,6 +1,6 @@
 'use strict';
 /* global Crafty, MAIN, HEAD, BASE_SIZE, snap, calcConsensus, getBaseGrid,
-          restartGame, startVideo */
+          restartGame, startVideo, assert */
 /* exported makeUI */
 
 // Make buttons, icons, controls, etc.
@@ -29,6 +29,40 @@ function makeUI() {
     .color('#CAC')
     .text('Intro')
     .bind('Click', startVideo);
+  drawPanel(MAIN);
+}
+
+function drawPanel(panel) {
+  // top
+  drawLine(panel.x, panel.y, panel.x+panel.width, panel.y);
+  // bottom
+  drawLine(panel.x, panel.y+panel.height, panel.x+panel.width, panel.y+panel.height);
+  // left
+  drawLine(panel.x, panel.y, panel.x, panel.y+panel.height);
+  // right
+  drawLine(panel.x+panel.width, panel.y, panel.x+panel.width, panel.y+panel.height);
+}
+
+// Use Canvas to draw a 1px wide line from (x1, y1) to (x2, y2).
+// The line must be horizontal or vertical, no diagonals.
+function drawLine(x1, y1, x2, y2, color) {
+  if (color === undefined) {
+    color = '#DDD';
+  }
+  var line = Crafty.e('2D, Canvas, Color').color(color);
+  if (x1 === x2) {
+    var y = Math.min(y1, y2);
+    var height = Math.abs(y1 - y2);
+    line.attr({x: x1, y: y, w: 1, h: height});
+  } else if (y1 === y2) {
+    var x = Math.min(x1, x2);
+    var width = Math.abs(x1 - x2);
+    line.attr({x: x, y: y1, w: width, h: 1});
+  } else {
+    line.destroy();
+    assert(false, 'Error: Cannot draw a diagonal line.');
+  }
+  return line;
 }
 
 // Shift left by one grid increment
