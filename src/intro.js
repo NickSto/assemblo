@@ -27,7 +27,7 @@ function startVideo() {
   Crafty.e("Video")
    .attr({w:640, h:400})
    .append("<video id='intro' autoplay src='assets/intro.mp4'></video>")
-   .center();
+   .center('xy');
   var video = document.getElementById('intro');
   video.onended = runIntroAnimation;
 }

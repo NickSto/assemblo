@@ -95,10 +95,10 @@ Crafty.c('Video', {
     var x = this.x;
     var y = this.y;
     if (dimensions.indexOf('x') !== -1) {
-      var x = (MAIN.width - this.w)/2;
+      var x = MAIN.x+(MAIN.width - this.w)/2;
     }
     if (dimensions.indexOf('y') !== -1) {
-      var y = (MAIN.height - this.h)/2;
+      var y = MAIN.y+(MAIN.height - this.h)/2;
     }
     this.attr({x: x, y: y});
   }
