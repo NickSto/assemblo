@@ -10,7 +10,7 @@ var NUM_READS = 7;
 // x and y set where the top-left corner of the panel are.
 var HEAD = {width: 1000, height: 50, x: 0, y: 0};
 var CONSENSUS = {width: 1000, height: 100, x: 0, y: 50};
-var MAIN = {width: 1000, height: 800, x: 0, y: 150};
+var MAIN = {width: 1000, height: 500, x: 0, y: 150};
 var BANK = {width: 1000, height: NUM_READS*BASE_SIZE};
 // Size of entire Crafty game area
 var GAME = {width: 1000, height: HEAD.height+CONSENSUS.height+MAIN.height+BANK.height};
