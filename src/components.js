@@ -103,3 +103,10 @@ Crafty.c('Video', {
     this.attr({x: x, y: y});
   }
 });
+
+Crafty.c('Grid', {
+  init: function() {
+    this.requires('2D, Canvas, Color')
+      .color('#DDD');
+    },
+});

@@ -147,12 +147,15 @@ function calcConsensus(baseGrid) {
 
 // Draw guidelines to show where the snap-to grid is
 function drawGrid() {
-  var grid = Crafty.e('2D, Canvas, Color')
-    .attr({x:0, y:0, w:0, h:0})
-    .color('#DDD');
+  // draw vertical grid lines
+  for (var x = MAIN.x+BASE_SIZE; x < MAIN.x+MAIN.width; x += BASE_SIZE) {
+    Crafty.e('Grid')
+      .attr({x: x, y: MAIN.y, w: 1, h: MAIN.height});
+  }
   // draw horizontal grid lines
-  for (var y = MAIN.y; y < MAIN.height; y += BASE_SIZE) {
-    grid.draw(MAIN.x, y, MAIN.x+MAIN.width, 1);
+  for (var y = MAIN.y+BASE_SIZE; y < MAIN.y+MAIN.height; y += BASE_SIZE) {
+    Crafty.e('Grid')
+      .attr({x: MAIN.x, y: y, w: MAIN.width, h: 1});
   }
 }
 
@@ -265,7 +268,6 @@ function BaseGrid() {
   };
 
 }
-
 
 function assert(condition, message) {
   if (! condition) {
