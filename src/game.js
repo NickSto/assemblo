@@ -18,7 +18,6 @@ var Game = {
 function startGame() {
   Crafty.init(GAME.width, GAME.height);
   makeUI();
-  // drawGrid();
   startVideo();
   // newGame();
 }
@@ -32,6 +31,7 @@ function startGame() {
  * just give "undefined" as the reference, i.e. "newGame(undefined, 15);"
  */
 function newGame(reference, seed) {
+  drawGrid();
   // Cancel any videos or animations that are currently running
   window.clearTimeout(Game.timeout);
   var videos = Crafty('Video').get();
@@ -60,7 +60,7 @@ function newGame(reference, seed) {
 }
 
 // Destroy all game components, but not the UI.
-// Removes reads, consensus sequence bar, etc.
+// Removes reads, consensus sequence bar, grid, etc.
 function destroyGame() {
   if (Game.consensus !== null) {
     Game.consensus.myDestroy();
@@ -74,6 +74,10 @@ function destroyGame() {
   var reads = Crafty('Read').get();
   for (var i = 0; i < reads.length; i++) {
     reads[i].destroy();
+  }
+  var gridLines = Crafty('Grid').get();
+  for (var i = 0; i < gridLines.length; i++) {
+    gridLines[i].destroy();
   }
 }
 

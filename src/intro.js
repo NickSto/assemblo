@@ -40,6 +40,12 @@ function runIntroAnimation() {
     videos[i].destroy();
   }
 
+  // Draw grid, if necessary
+  var gridLines = Crafty('Grid').get();
+  if (gridLines.length === 0) {
+    drawGrid();
+  }
+
   // Make the reference sequence
   Game.reference = 'ATCTATTACTGTTATTCGCA';
   Game.consensus = Crafty.e('Consensus');
