@@ -1,7 +1,7 @@
 'use strict';
-/* global Crafty, GAME, HEAD, MAIN, CONSENSUS, COLORS, BASE_SIZE, NUM_READS,
-          READ_LENGTH, randSeq, wgsim, makeUI, startVideo, ToyPrng */
-/* exported assert, startGame, newGame, destroyGame, restartGame, drawGrid */
+/* global Crafty, GAME, HEAD, MAIN, COLORS, BASE_SIZE, READ_LENGTH, NUM_READS,
+          CONSENSUS, randSeq, wgsim, makeUI, startVideo, ToyPrng, destroyAll */
+/* exported startGame, newGame, destroyGame, restartGame, drawGrid */
 
 // Global game state
 var Game = {
@@ -19,7 +19,6 @@ function startGame() {
   Crafty.init(GAME.width, GAME.height);
   makeUI();
   startVideo();
-  // newGame();
 }
 
 /* Generate a new game with a new consensus bar and new reads.
@@ -34,10 +33,7 @@ function newGame(reference, seed) {
   drawGrid();
   // Cancel any videos or animations that are currently running
   window.clearTimeout(Game.timeout);
-  var videos = Crafty('Video').get();
-  for (var i = 0; i < videos.length; i++) {
-    videos[i].destroy();
-  }
+  destroyAll('Video');
   if (seed === undefined) {
     seed = Date.now();
   }
@@ -71,14 +67,8 @@ function destroyGame() {
     Game.success.destroy();
     Game.success = null;
   }
-  var reads = Crafty('Read').get();
-  for (var i = 0; i < reads.length; i++) {
-    reads[i].destroy();
-  }
-  var gridLines = Crafty('Grid').get();
-  for (var i = 0; i < gridLines.length; i++) {
-    gridLines[i].destroy();
-  }
+  destroyAll('Read');
+  destroyAll('Grid');
 }
 
 function restartGame() {
@@ -271,17 +261,4 @@ function BaseGrid() {
     //TODO
   };
 
-}
-
-function assert(condition, message) {
-  if (! condition) {
-    if (message === undefined) {
-      message = "Assertion error";
-    }
-    if (typeof Error !== "undefined") {
-      throw new Error(message);
-    } else {
-      throw message;
-    }
-  }
 }

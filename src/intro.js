@@ -1,6 +1,6 @@
 'use strict';
 /* global Crafty, Game, MAIN, CONSENSUS, BASE_SIZE, COLORS, ToyPrng,
-          destroyGame, restartGame, makeRead */
+          destroyGame, restartGame, makeRead, drawGrid, destroyAll */
 /* exported runIntroAnimation, startVideo */
 
 var reads_data = [
@@ -35,10 +35,7 @@ function startVideo() {
 function runIntroAnimation() {
   // Cancel any videos or animations that are currently running
   window.clearTimeout(Game.timeout);
-  var videos = Crafty('Video').get();
-  for (var i = 0; i < videos.length; i++) {
-    videos[i].destroy();
-  }
+  destroyAll('Video');
 
   // Draw grid, if necessary
   var gridLines = Crafty('Grid').get();
