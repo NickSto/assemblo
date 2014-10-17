@@ -44,6 +44,7 @@ Crafty.c('Consensus', {
       set: function() { assert(0, "Error: Can't assign to consensus.length.") },
     });
   },
+  // Make sure the .bases match the letters in .seq
   updateBases: function() {
     assert(this.bases.length === this.seq.length,
       'Error: Consensus lengths disagree! this.bases.length = '+
@@ -57,6 +58,7 @@ Crafty.c('Consensus', {
       }
     }
   },
+  // Add a base of "letter" to position "coord".
   add: function(letter, coord) {
     var base = Crafty.e('Base')
       .attr({x: CONSENSUS.x+coord*BASE_SIZE, y: CONSENSUS.y, w: BASE_SIZE, h: BASE_SIZE})
@@ -103,12 +105,44 @@ Crafty.c('Video', {
       var y = MAIN.y+(MAIN.height - this.h)/2;
     }
     this.attr({x: x, y: y});
-  }
+  },
+  // Draw a bounding box around the video. Must set its height and width first.
+  addBorder: function(color, width) {
+    assert(this._w !== 0 && this._h !== 0, "Error: 'Video'.addBorder() called "+
+      " before video size set.");
+    assert(false, "'Video'.addBorder() not yet implemented.");
+    //TODO
+  },
+});
+
+Crafty.c('Line', {
+  init: function() {
+    this.requires('2D, Canvas, Color')
+      .color('#DDD');
+  },
+  // Draw the line from (x1, y1) to (x2, y2) (sets x, y, w, h).
+  // The line must be horizontal or vertical, no diagonals.
+  place: function(x1, y1, x2, y2, lineWidth) {
+    if (lineWidth === undefined) {
+      lineWidth = 1;
+    }
+    if (x1 === x2) {
+      var y = Math.min(y1, y2);
+      var height = Math.abs(y1 - y2);
+      this.attr({x: x1, y: y, w: lineWidth, h: height});
+    } else if (y1 === y2) {
+      var x = Math.min(x1, x2);
+      var width = Math.abs(x1 - x2);
+      this.attr({x: x, y: y1, w: width, h: lineWidth});
+    } else {
+      assert(false, 'Error: Cannot draw a diagonal line.');
+    }
+    return this;
+  },
 });
 
 Crafty.c('Grid', {
   init: function() {
-    this.requires('2D, Canvas, Color')
-      .color('#DDD');
-    },
+    this.requires('Line');
+  },
 });

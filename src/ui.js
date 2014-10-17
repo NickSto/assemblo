@@ -22,8 +22,7 @@ function makeUI() {
     .color('#ACC')
     .text('New Game')
     .bind('Click', restartGame);
-  // Run the intro animation
-  //TODO: Make it happen at the beginning!
+  // Run the intro
   Crafty.e('Button')
     .attr({x: HEAD.x + 215, y: HEAD.y+10, w: 70, h: 30})
     .color('#CAC')
@@ -36,36 +35,14 @@ function makeUI() {
 }
 
 function drawPanel(panel) {
-  // top
-  drawLine(panel.x, panel.y, panel.x+panel.width, panel.y);
-  // bottom
-  drawLine(panel.x, panel.y+panel.height, panel.x+panel.width, panel.y+panel.height);
-  // left
-  drawLine(panel.x, panel.y, panel.x, panel.y+panel.height);
-  // right
-  drawLine(panel.x+panel.width, panel.y, panel.x+panel.width, panel.y+panel.height);
-}
-
-// Use Canvas to draw a 1px wide line from (x1, y1) to (x2, y2).
-// The line must be horizontal or vertical, no diagonals.
-function drawLine(x1, y1, x2, y2, color) {
-  if (color === undefined) {
-    color = '#DDD';
-  }
-  var line = Crafty.e('2D, Canvas, Color').color(color);
-  if (x1 === x2) {
-    var y = Math.min(y1, y2);
-    var height = Math.abs(y1 - y2);
-    line.attr({x: x1, y: y, w: 1, h: height});
-  } else if (y1 === y2) {
-    var x = Math.min(x1, x2);
-    var width = Math.abs(x1 - x2);
-    line.attr({x: x, y: y1, w: width, h: 1});
-  } else {
-    line.destroy();
-    assert(false, 'Error: Cannot draw a diagonal line.');
-  }
-  return line;
+  Crafty.e('Line') // top
+    .place(panel.x, panel.y, panel.x+panel.width, panel.y);
+  Crafty.e('Line') // bottom
+    .place(panel.x, panel.y+panel.height, panel.x+panel.width, panel.y+panel.height);
+  Crafty.e('Line') // left
+    .place(panel.x, panel.y, panel.x, panel.y+panel.height);
+  Crafty.e('Line') // right
+    .place(panel.x+panel.width, panel.y, panel.x+panel.width, panel.y+panel.height);
 }
 
 // Shift left by one grid increment
