@@ -83,9 +83,15 @@ function readStopDrag(event) {
   //TODO: keep reads from overlapping
   this.x = snap(this._x, this._w, MAIN.x, MAIN.x+MAIN.width);
   this.y = snap(this._y, this._h, MAIN.y, BANK.y+BANK.height);
+  this.defaultDepth();
   Game.baseGrid.update();
   calcConsensus(Game.baseGrid);
   checkAnswer();
+}
+
+function readStartDrag(event) {
+  /* jshint validthis:true */
+  this.foreground();
 }
 
 // Recalculate an x or y coordinate that is aligned with the grid and
@@ -173,6 +179,7 @@ function makeRead(seq, x, y) {
     read.add(base);
   }
   read.bind('StopDrag', readStopDrag);
+  read.bind('StartDrag', readStartDrag);
   return read;
 }
 

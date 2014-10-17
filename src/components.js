@@ -5,7 +5,7 @@ Crafty.c('Read', {
   init: function() {
     this.requires('2D, Draggable');
     this.alpha = 0.0; // opacity = transparent
-    this.z = 10; // depth = in front of the bases (whose z = 5)
+    this.z = Z_READ; // depth = in front of the bases
     // need to create during init so it's not shared globally
     this.bases = [];
   },
@@ -20,6 +20,22 @@ Crafty.c('Read', {
     }
     return sequence;
   },
+  // Bring the read to the top of the z-dimension (foreground).
+  foreground: function() {
+    // The z values are chosen so that the bases' z's are still below all the
+    // reads' z's, to make sure you never can click a base instead of a read.
+    this.z = Z_READ_FG;
+    for (var i = 0; i < this.bases.length; i++) {
+      this.bases[i].z = Z_BASE_FG;
+    }
+  },
+  // Reset the z values to the defaults
+  defaultDepth: function() {
+    this.z = Z_READ;
+    for (var i = 0; i < this.bases.length; i++) {
+      this.bases[i].z = Z_BASE;
+    }
+  },
 });
 
 Crafty.c('Base', {
@@ -30,7 +46,7 @@ Crafty.c('Base', {
       .textColor('#FFFFFF')
       .css('text-align', 'center')
       .unselectable();
-    this.z = 5; // depth = behind the read (z = 10)
+    this.z = Z_BASE; // depth = behind the read
     this.letter = undefined;
   }
 });
