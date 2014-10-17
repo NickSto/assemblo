@@ -105,13 +105,25 @@ Crafty.c('Video', {
       var y = MAIN.y+(MAIN.height - this.h)/2;
     }
     this.attr({x: x, y: y});
+    return this;
   },
   // Draw a bounding box around the video. Must set its height and width first.
-  addBorder: function(color, width) {
+  addBorder: function() {
     assert(this._w !== 0 && this._h !== 0, "Error: 'Video'.addBorder() called "+
       " before video size set.");
-    assert(false, "'Video'.addBorder() not yet implemented.");
-    //TODO
+    var top = Crafty.e('Line')
+      .place(this._x, this._y-1, this._x+this._w, this._y-1);
+    this.attach(top);
+    var bottom = Crafty.e('Line')
+      .place(this._x, this._y+this._h, this._x+this._w, this._y+this._h);
+    this.attach(bottom);
+    var left = Crafty.e('Line')
+      .place(this._x-1, this._y, this._x-1, this._y+this._h);
+    this.attach(left);
+    var right = Crafty.e('Line')
+      .place(this._x+this._w, this._y, this._x+this._w, this._y+this._h);
+    this.attach(right);
+    return this;
   },
 });
 
