@@ -24,8 +24,9 @@ Crafty.c('Read', {
 
 Crafty.c('Base', {
   init: function() {
+    var textSize = Math.round(BASE_SIZE*0.86);
     this.requires('2D, DOM, Color, Text')
-      .textFont({size: '43px'})
+      .textFont({size: textSize+'px'})
       .textColor('#FFFFFF')
       .css('text-align', 'center')
       .unselectable();
