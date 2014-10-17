@@ -82,10 +82,10 @@ function wgsim(reference, numReads, readLength, minCoverage) {
     coverage[i] = 0;
   }
   for (var i = 0; i < numReads; i++) {
-    var read_data = getRandomRead(reference, readLength, coverage);
-    reads[i] = read_data[0];
-    starts[i] = read_data[1];
-    coverage = read_data[2];
+    var readData = getRandomRead(reference, readLength, coverage);
+    reads[i] = readData[0];
+    starts[i] = readData[1];
+    coverage = readData[2];
   }
   return fixCoverage(reads, starts, coverage, minCoverage, reference, readLength);
 }

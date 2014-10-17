@@ -199,11 +199,11 @@ function checkAnswer() {
   if (Game.reference === Game.consensus.seqStr()) {
     // If there's no success indicator showing yet, make one.
     if (Game.success === null) {
-      var btn_width = 50;
+      var btnWidth = 50;
       var center = HEAD.x + Math.floor(HEAD.width/2);
-      var btn_x = center - Math.floor(btn_width/2);
+      var btn_x = center - Math.floor(btnWidth/2);
       Game.success = Crafty.e('Button')
-        .attr({x: btn_x, y: HEAD.y+10, w: btn_width, h: 30})
+        .attr({x: btn_x, y: HEAD.y+10, w: btnWidth, h: 30})
         .color('#1A1')
         .text('\u2713');
     // If there's already a success indicator, make it show success.
@@ -213,11 +213,11 @@ function checkAnswer() {
   // If the consensus is full (no N's) but not correct, show a X indicator.
   } else if (Game.consensus.seqStr().indexOf('N') === -1) {
     if (Game.success === null) {
-      var btn_width = 50;
+      var btnWidth = 50;
       var center = HEAD.x + Math.floor(HEAD.width/2);
-      var btn_x = center - Math.floor(btn_width/2);
+      var btn_x = center - Math.floor(btnWidth/2);
       Game.success = Crafty.e('Button')
-        .attr({x: btn_x, y: HEAD.y+10, w: btn_width, h: 30})
+        .attr({x: btn_x, y: HEAD.y+10, w: btnWidth, h: 30})
         .color('#F77')
         .text('X');
     } else {
@@ -243,8 +243,8 @@ function BaseGrid() {
   // Fill a 2D array with all bases on the grid
   this.update = function() {
     // Initialize this.rows
-    var total_rows = Math.floor((MAIN.height+BANK.height) / BASE_SIZE);
-    this.rows = new Array(total_rows);
+    var totalRows = Math.floor((MAIN.height+BANK.height) / BASE_SIZE);
+    this.rows = new Array(totalRows);
     for (var i = 0; i < this.rows.length; i++) {
       this.rows[i] = [];
     }
@@ -262,4 +262,5 @@ function BaseGrid() {
   this.addRead = function (read) {
     //TODO
   };
+
 }

@@ -3,7 +3,7 @@
           destroyGame, restartGame, makeRead, drawGrid, destroyAll */
 /* exported runIntroAnimation, startVideo */
 
-var reads_data = [
+var readsData = [
   {seq:'ATCTATTA', start:0, x:5, y:3},
   {seq:'TATTACTG', start:3, x:0, y:1},
   {seq:'TACTGTTA', start:6, x:3, y:5},
@@ -52,9 +52,9 @@ function runIntroAnimation() {
   }
 
   // Make the reads
-  var reads = new Array(reads_data.length);
-  for (var i = 0; i < reads_data.length; i++) {
-    reads[i] = makeRead(reads_data[i].seq, CONSENSUS.x+reads_data[i].start*BASE_SIZE, CONSENSUS.y);
+  var reads = new Array(readsData.length);
+  for (var i = 0; i < readsData.length; i++) {
+    reads[i] = makeRead(readsData[i].seq, CONSENSUS.x+readsData[i].start*BASE_SIZE, CONSENSUS.y);
   }
   for (var i = 0; i < reads.length; i++) {
     reads[i].removeComponent('Draggable', false);
@@ -73,9 +73,9 @@ function runIntroAnimation() {
   // Animate each read
   var j = 0;
   var animator = function() {
-    var x_orig = reads_data[j].start*BASE_SIZE;
-    var x_dest = MAIN.x + BASE_SIZE*reads_data[index[j]].x;
-    var y_dest = MAIN.y + BASE_SIZE*reads_data[index[j]].y;
+    var x_orig = readsData[j].start*BASE_SIZE;
+    var x_dest = MAIN.x + BASE_SIZE*readsData[index[j]].x;
+    var y_dest = MAIN.y + BASE_SIZE*readsData[index[j]].y;
     // Calculate flight time based on distance to keep speed constant
     var dist = distance(x_orig, 0, x_dest, y_dest);
     reads[index[j]].tween({x: x_dest, y: y_dest}, 5*Math.floor(dist));
