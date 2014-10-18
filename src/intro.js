@@ -57,9 +57,8 @@ function runIntroAnimation() {
     reads[i] = makeRead(readsData[i].seq, CONSENSUS.x+readsData[i].start*BASE_SIZE, CONSENSUS.y);
   }
   for (var i = 0; i < reads.length; i++) {
-    reads[i].removeComponent('Draggable', false);
+    reads[i].disableDrag();
     reads[i].addComponent('Tween');
-    reads[i].unbind('StopDrag');
   }
 
   // Animate the reads coming from the reference
