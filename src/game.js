@@ -17,6 +17,8 @@ var Game = {
 // Start the game:
 // Initialize Crafty game area, create UI, and generate a new game.
 function startGame() {
+  assert(HEAD.x === CONSENSUS.x && CONSENSUS.x === MAIN.x && MAIN.x === BANK.x,
+    "Error: panels are not horizontally aligned.");
   Crafty.init(GAME.width, GAME.height);
   makeUI();
   startVideo();
@@ -52,7 +54,7 @@ function newGame(reference, seed) {
   for (var i = 0; i < reads.length; i++) {
     makeRead(reads[i], MAIN.x+i*BASE_SIZE, BANK.y+i*BASE_SIZE);
   }
-  Game.baseGrid.update();
+  Game.baseGrid.fill();
   calcConsensus(Game.baseGrid);
 }
 
@@ -82,9 +84,13 @@ function readStopDrag(event) {
   /* jshint validthis:true */
   //TODO: keep reads from overlapping
   this.x = snap(this._x, this._w, MAIN.x, MAIN.x+MAIN.width);
-  this.y = snap(this._y, this._h, MAIN.y, BANK.y+BANK.height);
+  if (this._y < (MAIN.y+MAIN.height+BANK.y-BASE_SIZE)/2) {
+    this.y = snap(this._y, this._h, MAIN.y, MAIN.y+MAIN.height);
+  } else {
+    this.y = snap(this._y, this._h, BANK.y, BANK.y+BANK.height);
+  }
   this.defaultDepth();
-  Game.baseGrid.update();
+  Game.baseGrid.fill();
   calcConsensus(Game.baseGrid);
   checkAnswer();
 }
@@ -195,7 +201,7 @@ function makeConsensus(length) {
 
 function checkAnswer() {
   // Did the user reconstruct the reference perfectly?
-  // N.B.: This assumes the entire reference is covered by the reads!
+  //TODO: Check that all the reads are on the board (in the MAIN panel).
   if (Game.reference === Game.consensus.seqStr()) {
     // If there's no success indicator showing yet, make one.
     if (Game.success === null) {
@@ -241,7 +247,7 @@ function BaseGrid() {
     get: function() { return this.rows.length; },
   });
   // Fill a 2D array with all bases on the grid
-  this.update = function() {
+  this.fill = function() {
     // Initialize this.rows
     var totalRows = Math.floor((MAIN.height+BANK.height) / BASE_SIZE);
     this.rows = new Array(totalRows);
@@ -251,7 +257,14 @@ function BaseGrid() {
     var reads = Crafty('Read').get();
     for (var i = 0; i < reads.length; i++) {
       var bases = reads[i].bases;
-      var row = (reads[i]._y-MAIN.y) / BASE_SIZE;
+      // Determine the row the read is in.
+      if (reads[i]._y < BANK.y) {
+        // It's in the MAIN panel
+        var row = (reads[i]._y-MAIN.y) / BASE_SIZE;
+      } else {
+        // It's in the BANK panel
+        var row = ((reads[i]._y-BANK.y) / BASE_SIZE) + (MAIN.height/BASE_SIZE);
+      }
       for (var j = 0; j < bases.length; j++) {
         var column = (bases[j]._x - MAIN.x) / BASE_SIZE;
         this.rows[row][column] = bases[j].letter;
@@ -259,8 +272,10 @@ function BaseGrid() {
     }
     return this;
   };
-  this.addRead = function (read) {
+  this.addRead = function(read) {
     //TODO
   };
-
+  this.removeRead = function(read) {
+    //TODO
+  };
 }

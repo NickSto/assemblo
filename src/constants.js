@@ -11,7 +11,7 @@ var NUM_READS = 7;
 var HEAD = {width: 1000, height: 50, x: 0, y: 0};
 var CONSENSUS = {width: 1000, height: 2*BASE_SIZE, x: 0, y: HEAD.y+HEAD.height};
 var MAIN = {width: 1000, height: (NUM_READS+1)*BASE_SIZE, x: 0, y: CONSENSUS.y+CONSENSUS.height};
-var BANK = {width: 1000, height: NUM_READS*BASE_SIZE, x: 0, y: MAIN.y+MAIN.height};
+var BANK = {width: 1000, height: NUM_READS*BASE_SIZE, x: 0, y: MAIN.y+MAIN.height+BASE_SIZE};
 // Size of entire Crafty game area
 var GAME = {width: 1001, height: 1+BANK.y+BANK.height};
 var COLORS = {'A':'#A44', 'C':'#448', 'G':'#484', 'T':'#AA4', 'N':'#DDD'};
