@@ -15,7 +15,9 @@ var BANK = {width: 1000, height: NUM_READS*BASE_SIZE, x: 0, y: MAIN.y+MAIN.heigh
 // Size of entire Crafty game area
 var GAME = {width: 1001, height: 1+BANK.y+BANK.height};
 var COLORS = {'A':'#A44', 'C':'#448', 'G':'#484', 'T':'#AA4', 'N':'#DDD'};
-var Z_READ = 10;
-var Z_BASE = 5;
-var Z_READ_FG = 15;
-var Z_BASE_FG = 7;
+var Z_READ = 20;
+var Z_BASE = 10;
+var Z_BORDER = 15;
+var Z_READ_FG = 30;
+var Z_BASE_FG = 17;
+var Z_BORDER_FG = 22;

@@ -24,6 +24,9 @@ Crafty.c('Read', {
     // The z values are chosen so that the bases' z's are still below all the
     // reads' z's, to make sure you never can click a base instead of a read.
     this.z = Z_READ_FG;
+    for (var i = 0; i < this.borders; i++) {
+      this.borders[i].z = Z_BORDER_FG;
+    }
     for (var i = 0; i < this.bases.length; i++) {
       this.bases[i].z = Z_BASE_FG;
     }
@@ -31,9 +34,42 @@ Crafty.c('Read', {
   // Reset the z values to the defaults
   defaultDepth: function() {
     this.z = Z_READ;
+    for (var i = 0; i < this.borders; i++) {
+      this.borders[i].z = Z_BORDER;
+    }
     for (var i = 0; i < this.bases.length; i++) {
       this.bases[i].z = Z_BASE;
     }
+  },
+  addBorders: function(color, width) {
+    if (color === undefined) {
+      color = '#DDD';
+    }
+    if (width === undefined) {
+      width = 1;
+    }
+    var left = Crafty.e('2D, Color, DOM')
+      .attr({x: this._x-1, y: this._y, h: this._h, w: width})
+      .color(color);
+    var right = Crafty.e('2D, Color, DOM')
+      .attr({x: this._x+this._w-1, y: this._y, h: this._h, w: width})
+      .color(color);
+    var top = Crafty.e('2D, Color, DOM')
+      .attr({x: this._x, y: this._y-1, h: width, w: this._w})
+      .color(color);
+    var bottom = Crafty.e('2D, Color, DOM')
+      .attr({x: this._x, y: this._y+this._h-1, h: width, w: this._w})
+      .color(color);
+    left.z = Z_BORDER;
+    right.z = Z_BORDER;
+    top.z = Z_BORDER;
+    bottom.z = Z_BORDER;
+    this.attach(left);
+    this.attach(right);
+    this.attach(top);
+    this.attach(bottom);
+    this.borders = [left, right, top, bottom];
+    return this;
   },
 });
 

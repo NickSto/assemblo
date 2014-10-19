@@ -52,7 +52,8 @@ function newGame(reference, seed) {
   console.log("Shhh, the answer is "+Game.reference+"!");
   var reads = wgsim(Game.reference, NUM_READS, READ_LENGTH, 1);
   for (var i = 0; i < reads.length; i++) {
-    makeRead(reads[i], MAIN.x+i*BASE_SIZE, BANK.y+i*BASE_SIZE);
+    var read = makeRead(reads[i], MAIN.x+i*BASE_SIZE, BANK.y+i*BASE_SIZE);
+    read.addBorders('#FFF');
   }
   Game.baseGrid.fill();
   calcConsensus(Game.baseGrid);
