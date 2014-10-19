@@ -79,10 +79,11 @@ function restartGame() {
   newGame();
 }
 
-// Make each read snap to the grid when the user stops moving it.
+// Everything that needs to happen once the user has moved a read.
+// This is bound to each read's 'StopDrag' event.
 function readStopDrag(event) {
   /* jshint validthis:true */
-  //TODO: keep reads from overlapping
+  // Make each read snap to the grid when the user stops moving it.
   this.x = snap(this._x, this._w, MAIN.x, MAIN.x+MAIN.width);
   if (this._y < (MAIN.y+MAIN.height+BANK.y-BASE_SIZE)/2) {
     this.y = snap(this._y, this._h, MAIN.y, MAIN.y+MAIN.height);
@@ -90,13 +91,25 @@ function readStopDrag(event) {
     this.y = snap(this._y, this._h, BANK.y, BANK.y+BANK.height);
   }
   this.defaultDepth();
+  // If it's overlapping a read already at that position, undo the dragging
+  if (this.hit('Read')) {
+    this.x = this.x_last;
+    this.y = this.y_last;
+    return;
+  }
+  // Recalculate the consensus and check if it's correct
   Game.baseGrid.fill();
   calcConsensus(Game.baseGrid);
   checkAnswer();
 }
 
+// This is bound to each read's 'StartDrag' event.
 function readStartDrag(event) {
   /* jshint validthis:true */
+  // Record its original position before dragging.
+  this.x_last = this._x;
+  this.y_last = this._y;
+  // Bring the read above all other reads as it's being dragged.
   this.foreground();
 }
 

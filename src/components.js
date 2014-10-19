@@ -3,10 +3,9 @@
 
 Crafty.c('Read', {
   init: function() {
-    this.requires('2D, Draggable');
+    this.requires('2D, Draggable, Collision');
     this.alpha = 0.0; // opacity = transparent
     this.z = Z_READ; // depth = in front of the bases
-    // need to create during init so it's not shared globally
     this.bases = [];
   },
   add: function(base) {
