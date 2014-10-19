@@ -1,6 +1,6 @@
 'use strict';
-/* global Crafty, Game, MAIN, CONSENSUS, BASE_SIZE, COLORS, ToyPrng,
-          destroyGame, restartGame, makeRead, drawGrid, destroyAll */
+/* global Crafty, Game, MAIN, CONSENSUS, BASE_SIZE, ToyPrng, makeRead,
+          destroyGame, restartGame, drawGrid, destroyAll */
 /* exported runIntroAnimation, startVideo */
 
 var readsData = [

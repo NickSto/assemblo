@@ -1,7 +1,7 @@
 'use strict';
 /* global Crafty, GAME, HEAD, CONSENSUS, MAIN, BANK, COLORS, BASE_SIZE,
           READ_LENGTH, NUM_READS, randSeq, wgsim, makeUI, startVideo, ToyPrng,
-          destroyAll */
+          destroyAll, assert */
 /* exported startGame, newGame, destroyGame, restartGame, drawGrid */
 
 // Global game state

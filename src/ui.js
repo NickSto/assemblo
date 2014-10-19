@@ -1,6 +1,6 @@
 'use strict';
 /* global Crafty, Game, HEAD, CONSENSUS, MAIN, BANK, BASE_SIZE, snap,
-          calcConsensus, restartGame, startVideo, assert */
+          calcConsensus, restartGame, startVideo */
 /* exported makeUI, drawPanel, drawLine */
 
 // Make buttons, icons, controls, etc.

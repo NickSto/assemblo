@@ -1,6 +1,6 @@
 'use strict';
-/* exported GAME_WIDTH, GAME_HEIGHT, MAIN, HEAD, BASE_SIZE, READ_LENGTH,
-            NUM_READS, COLORS */
+/* exported GAME, MAIN, HEAD, BASE_SIZE, READ_LENGTH, NUM_READS, COLORS, Z_READ,
+            Z_BASE, Z_BORDER, Z_READ_FG, Z_BASE_FG, Z_BORDER_FG */
 
 // Defines the size of each square in the grid.
 var BASE_SIZE = 50;

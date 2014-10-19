@@ -1,5 +1,6 @@
 'use strict';
-/* global Crafty, MAIN, BASE_SIZE, COLORS, assert */
+/* global Crafty, MAIN, CONSENSUS, BASE_SIZE, COLORS, Z_BASE, Z_READ, Z_BORDER,
+          Z_BASE_FG, Z_READ_FG, Z_BORDER_FG, assert */
 
 Crafty.c('Read', {
   init: function() {
@@ -93,7 +94,7 @@ Crafty.c('Consensus', {
     this.seq = [];
     Object.defineProperty(this, 'length', {
       get: function() { return this.bases.length; },
-      set: function() { assert(0, "Error: Can't assign to consensus.length.") },
+      set: function() { assert(0, "Error: Can't assign to consensus.length."); },
     });
   },
   // Make sure the .bases match the letters in .seq

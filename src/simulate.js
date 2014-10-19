@@ -1,6 +1,6 @@
 'use strict';
-/* global console, assert */
-/* exported randSeq, wgsim */
+/* global Game, console, assert */
+/* exported ToyPrng, randSeq, wgsim */
 
 var BASES = ['A', 'C', 'G', 'T'];
 
