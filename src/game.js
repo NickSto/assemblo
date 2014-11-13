@@ -228,14 +228,14 @@ function makeConsensus(length) {
 function checkAnswer() {
   // Did the user reconstruct the reference perfectly?
   //TODO: Check that all the reads are on the board (in the MAIN panel).
+  var boxWidth = 250;
+  var center = HEAD.x + Math.floor(HEAD.width/2);
+  var box_x = center - Math.floor(boxWidth/2);
   if (Game.reference === Game.consensus.seqStr()) {
     // If there's no success indicator showing yet, make one.
     if (Game.success === null) {
-      var btnWidth = 50;
-      var center = HEAD.x + Math.floor(HEAD.width/2);
-      var btn_x = center - Math.floor(btnWidth/2);
       Game.success = Crafty.e('Button')
-        .attr({x: btn_x, y: HEAD.y+10, w: btnWidth, h: 30})
+        .attr({x: box_x, y: HEAD.y+10, w: boxWidth, h: 30})
         .color('#1A1')
         .text('\u2713');
     // If there's already a success indicator, make it show success.
@@ -245,11 +245,8 @@ function checkAnswer() {
   // If the consensus is full (no N's) but not correct, show a X indicator.
   } else if (Game.consensus.seqStr().indexOf('N') === -1) {
     if (Game.success === null) {
-      var btnWidth = 50;
-      var center = HEAD.x + Math.floor(HEAD.width/2);
-      var btn_x = center - Math.floor(btnWidth/2);
       Game.success = Crafty.e('Button')
-        .attr({x: btn_x, y: HEAD.y+10, w: btnWidth, h: 30})
+        .attr({x: box_x, y: HEAD.y+10, w: boxWidth, h: 30})
         .color('#F77')
         .text('X');
     } else {
