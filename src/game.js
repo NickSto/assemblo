@@ -12,6 +12,7 @@ var Game = {
   prng: new ToyPrng(),
   timeout: null,
   baseGrid: new BaseGrid(),
+  snpRate: 0,
 };
 
 // Start the game:
@@ -50,7 +51,7 @@ function newGame(reference, seed) {
   }
   Game.consensus = makeConsensus(Game.reference.length);
   console.log("Shhh, the answer is "+Game.reference+"!");
-  var reads = wgsim(Game.reference, NUM_READS, READ_LENGTH, 1);
+  var reads = wgsim(Game.reference, NUM_READS, READ_LENGTH, 1, Game.snpRate);
   for (var i = 0; i < reads.length; i++) {
     var read = makeRead(reads[i], MAIN.x+i*BASE_SIZE, BANK.y+i*BASE_SIZE);
     // var read = Crafty.e('Read')

@@ -3,6 +3,7 @@
 /* exported assert, destroyAll */
 
 
+// Destroy all entities with a particular component.
 function destroyAll(component) {
   var entities = Crafty(component).get();
   for (var i = 0; i < entities.length; i++) {
@@ -10,6 +11,14 @@ function destroyAll(component) {
   }
 }
 
+
+// Replace a character at a given index in a string.
+function replaceChar(string, index, char) {
+  return string.slice(0, index) + char + string.slice(index+char.length);
+}
+
+
+// Assert condition, or throw an Error with the given message.
 function assert(condition, message) {
   if (! condition) {
     if (message === undefined) {
