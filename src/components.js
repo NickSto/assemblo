@@ -5,20 +5,59 @@
 Crafty.c('Read', {
   init: function() {
     this.requires('2D, Draggable, Collision');
+    this.h = BASE_SIZE;
     this.alpha = 0.0; // opacity = transparent
     this.z = Z_READ; // depth = in front of the bases
     this.bases = [];
+    this.bind('StopDrag', readStopDrag);
+    this.bind('StartDrag', readStartDrag);
+    Object.defineProperty(this, 'seq', {
+      get: this.getSeq,
+      set: this.setSeq,
+    });
   },
   add: function(base) {
     this.bases.push(base);
     this.attach(base); // makes the base move when the read moves
   },
-  getSequence: function() {
+  getSeq: function() {
     var sequence = '';
     for (var i = 0; i < this.bases.length; i++) {
       sequence += this.bases[i].letter;
     }
     return sequence;
+  },
+  // Set the read sequence and create all the bases.
+  // The x and y must be set first.
+  // If any bases are currently present, they will be destroyed.
+  //TODO: Finish.
+  setSeq: function(seq) {
+    assert(0, "Error: 'Read'.setSeq() not yet implemented.");
+    // If the sequence is already correct, do nothing.
+    if (this.seq === seq) {
+      return this;
+    }
+    // Destroy any bases that are currently present.
+    // for (var i = 0; i < this.bases.length; i++) {
+    //   if (this.bases[i] !== undefined) {
+    //     this.bases[i].destroy();
+    //   }
+    // }
+    // Make each base in the sequence, attach to the read
+    console.log('making bases for '+seq);
+    for (var i = 0; i < seq.length; i++) {
+      var base = Crafty.e('Base');
+      console.log('made base '+i+' of '+seq.length+': '+base.getId());
+      //   .attr({x: this._x+i*BASE_SIZE, y: this._y, w: BASE_SIZE, h: BASE_SIZE})
+      //   .color(COLORS[seq[i]])
+      //   .text(seq[i]);
+      // base.letter = seq[i];
+      this.bases.push(base);
+      // this.attach(base);
+    }
+    console.log('made bases');
+    // Resize the read to be the correct length.
+    this.w = seq.length * BASE_SIZE;
   },
   // Bring the read to the top of the z-dimension (foreground).
   foreground: function() {
@@ -83,7 +122,6 @@ Crafty.c('Base', {
       .css('text-align', 'center')
       .unselectable();
     this.z = Z_BASE; // depth = behind the read
-    this.letter = undefined;
   }
 });
 
@@ -94,13 +132,13 @@ Crafty.c('Consensus', {
     this.seq = [];
     Object.defineProperty(this, 'length', {
       get: function() { return this.bases.length; },
-      set: function() { assert(0, "Error: Can't assign to consensus.length."); },
+      set: function() { assert(0, "Can't assign to consensus.length."); },
     });
   },
   // Make sure the .bases match the letters in .seq
   updateBases: function() {
     assert(this.bases.length === this.seq.length,
-      'Error: Consensus lengths disagree! this.bases.length = '+
+      'Consensus lengths disagree! this.bases.length = '+
       this.bases.length+', this.seq.length = '+this.seq.length
     );
     // check each base entity, and if the actual sequence disagrees, replace it
@@ -162,8 +200,8 @@ Crafty.c('Video', {
   },
   // Draw a bounding box around the video. Must set its height and width first.
   addBorder: function() {
-    assert(this._w !== 0 && this._h !== 0, "Error: 'Video'.addBorder() called "+
-      " before video size set.");
+    assert(this._w !== 0 && this._h !== 0,
+      "'Video'.addBorder() called before video size set.");
     var top = Crafty.e('Line')
       .place(this._x, this._y-1, this._x+this._w, this._y-1);
     this.attach(top);
@@ -200,7 +238,7 @@ Crafty.c('Line', {
       var width = Math.abs(x1 - x2);
       this.attr({x: x, y: y1, w: width, h: lineWidth});
     } else {
-      assert(false, 'Error: Cannot draw a diagonal line.');
+      assert(false, 'Cannot draw a diagonal line.');
     }
     return this;
   },

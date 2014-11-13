@@ -53,6 +53,9 @@ function newGame(reference, seed) {
   var reads = wgsim(Game.reference, NUM_READS, READ_LENGTH, 1);
   for (var i = 0; i < reads.length; i++) {
     var read = makeRead(reads[i], MAIN.x+i*BASE_SIZE, BANK.y+i*BASE_SIZE);
+    // var read = Crafty.e('Read')
+    //   .attr({x: BANK.x+i*BASE_SIZE, y: BANK.y+i*BASE_SIZE})
+    // read.setSeq(reads[i]);
     read.addBorders('#FFF');
   }
   Game.baseGrid.fill();
