@@ -141,30 +141,38 @@ function snap(pos, size, min, max) {
 }
 
 // Calculate the consensus sequence based on the read alignment.
-// All reads must agree on the base in order for it to appear.
-// Conflicts appear as 'N', "no data" appears as undefined.
+// Uses a vote system, calculating the most common base at a given position.
+// Ties currently go toward the base occurring earliest in BASES.
+//TODO: Tie-break better.
 function calcConsensus(baseGrid) {
   var consensus = Game.consensus;
   consensus.seq = new Array(consensus.length);
-  // Visit each read, incorporating it into the consensus sequence.
+  // Create array containing the base counts at each coordinate in the consensus.
+  var baseVotes = new Array(consensus.length);
+  for (var i = 0; i < baseVotes.length; i++) {
+    baseVotes[i] = {};
+    for (var j = 0; j < BASES.length; j++) {
+      baseVotes[i][BASES[j]] = 0;
+    }
+  }
+  // Visit each read, tallying the base counts.
   for (var i = 0; i < baseGrid.rows.length && i < MAIN.height/BASE_SIZE; i++) {
     var read = baseGrid.rows[i];
     for (var j = 0; j < read.length; j++) {
-      // Initialize new consensus bases to the first base you see there.
-      if (consensus.seq[j] === undefined) {
-        consensus.seq[j] = read[j];
-      // If the read has a base at this position and it disagrees with the
-      // consensus, mark it 'N'.
-      } else if (read[j] !== undefined && consensus.seq[j] !== read[j]) {
-        consensus.seq[j] = 'N';
-      }
+      baseVotes[j][read[j]]++;
     }
   }
-  // Fill in the rest with N's
-  for (var i = 0; i < consensus.length; i++) {
-    if (consensus.seq[i] === undefined) {
-      consensus.seq[i] = 'N';
+  // Determine the winning base for each coordinate.
+  for (var i = 0; i < baseVotes.length; i++) {
+    var bestCount = 0;
+    var bestBase = 'N';
+    for (var j = 0; j < BASES.length; j++) {
+      if (baseVotes[i][BASES[j]] > bestCount) {
+        bestCount = baseVotes[i][BASES[j]];
+        bestBase = BASES[j];
+      }
     }
+    consensus.seq[i] = bestBase;
   }
   // Make the displayed bases match the computed data
   consensus.updateBases();
