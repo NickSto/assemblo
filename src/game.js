@@ -1,7 +1,7 @@
 'use strict';
 /* global Crafty, GAME, HEAD, CONSENSUS, MAIN, BANK, COLORS, BASE_SIZE,
-          READ_LENGTH, NUM_READS, randSeq, wgsim, makeUI, startVideo, ToyPrng,
-          destroyAll, assert */
+          READ_LENGTH, NUM_READS, BASES, randSeq, wgsim, makeUI, startVideo,
+          ToyPrng, destroyAll, assert */
 /* exported startGame, newGame, destroyGame, restartGame, drawGrid */
 
 // Global game state
@@ -145,37 +145,39 @@ function snap(pos, size, min, max) {
 // Ties currently go toward the base occurring earliest in BASES.
 //TODO: Tie-break better.
 function calcConsensus(baseGrid) {
-  var consensus = Game.consensus;
-  consensus.seq = new Array(consensus.length);
+  // New consensus sequence
+  var seq = new Array(Game.consensus.length);
   // Create array containing the base counts at each coordinate in the consensus.
-  var baseVotes = new Array(consensus.length);
-  for (var i = 0; i < baseVotes.length; i++) {
-    baseVotes[i] = {};
+  var counts = new Array(Game.consensus.length);
+  for (var i = 0; i < counts.length; i++) {
+    counts[i] = {};
     for (var j = 0; j < BASES.length; j++) {
-      baseVotes[i][BASES[j]] = 0;
+      counts[i][BASES[j]] = 0;
     }
   }
   // Visit each read, tallying the base counts.
   for (var i = 0; i < baseGrid.rows.length && i < MAIN.height/BASE_SIZE; i++) {
     var read = baseGrid.rows[i];
     for (var j = 0; j < read.length; j++) {
-      baseVotes[j][read[j]]++;
+      counts[j][read[j]]++;
     }
   }
   // Determine the winning base for each coordinate.
-  for (var i = 0; i < baseVotes.length; i++) {
+  for (var i = 0; i < counts.length; i++) {
     var bestCount = 0;
     var bestBase = 'N';
-    for (var j = 0; j < BASES.length; j++) {
-      if (baseVotes[i][BASES[j]] > bestCount) {
-        bestCount = baseVotes[i][BASES[j]];
-        bestBase = BASES[j];
+    for (var base in counts[i]) {
+      if (counts[i][base] > bestCount) {
+        bestCount = counts[i][base];
+        bestBase = base;
       }
     }
-    consensus.seq[i] = bestBase;
+    seq[i] = bestBase;
   }
+  Game.consensus.counts = counts;
+  Game.consensus.seq = seq;
   // Make the displayed bases match the computed data
-  consensus.updateBases();
+  Game.consensus.updateBases();
 }
 
 // Draw guidelines to show where the snap-to grid is
