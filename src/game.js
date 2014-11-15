@@ -128,7 +128,7 @@ function snap(pos, size, min, max) {
     return min;
   // Is the right/lower side beyond the last grid line before the border?
   } else if (pos + size > max - (max % BASE_SIZE)) {
-    return max - (max % BASE_SIZE) - size;
+    return max - ((max-min) % BASE_SIZE) - size;
   // Otherwise, just find the closest grid line and snap to it
   } else {
     var offset = (pos - min) % BASE_SIZE;
