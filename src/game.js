@@ -230,7 +230,7 @@ function makeConsensus(length) {
 function checkAnswer() {
   // Did the user reconstruct the reference perfectly?
   //TODO: Check that all the reads are on the board (in the MAIN panel).
-  var boxWidth = 250;
+  var boxWidth = 200;
   var center = HEAD.x + Math.floor(HEAD.width/2);
   var box_x = center - Math.floor(boxWidth/2);
   if (Game.reference === Game.consensus.seqStr()) {
