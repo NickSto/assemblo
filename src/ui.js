@@ -12,7 +12,7 @@ function makeUI() {
     .text('<')
     .bind('Click', shiftLeft);
   Crafty.e('Button')
-    .attr({x: HEAD.width - 50, y: HEAD.y+10, w: 50, h: 30})
+    .attr({x: HEAD.w - 50, y: HEAD.y+10, w: 50, h: 30})
     .color('#CCC')
     .text('>')
     .bind('Click', shiftRight);
@@ -29,30 +29,24 @@ function makeUI() {
     .text('Intro')
     .bind('Click', startVideo);
   // Draw panels, plus a box where the consensus display will be.
-  drawPanel({x: CONSENSUS.x, y: CONSENSUS.y, height: BASE_SIZE, width: CONSENSUS.width});
+  drawPanel({x: CONSENSUS.x, y: CONSENSUS.y, h: BASE_SIZE, w: CONSENSUS.w});
   drawPanel(MAIN);
   drawPanel(BANK);
 }
 
+
 function drawPanel(panel) {
   Crafty.e('Line') // top
-    .place(panel.x, panel.y, panel.x+panel.width, panel.y);
+    .place(panel.x, panel.y, panel.x+panel.w, panel.y);
   Crafty.e('Line') // bottom
-    .place(panel.x, panel.y+panel.height, panel.x+panel.width, panel.y+panel.height);
+    .place(panel.x, panel.y+panel.h, panel.x+panel.w, panel.y+panel.h);
   Crafty.e('Line') // left
-    .place(panel.x, panel.y, panel.x, panel.y+panel.height);
+    .place(panel.x, panel.y, panel.x, panel.y+panel.h);
   Crafty.e('Line') // right
-    .place(panel.x+panel.width, panel.y, panel.x+panel.width, panel.y+panel.height);
+    .place(panel.x+panel.w, panel.y, panel.x+panel.w, panel.y+panel.h);
 }
 
-// Shift left by one grid increment
-function shiftLeft() {
-  shift(-BASE_SIZE);
-}
-// Shift right by one grid increment
-function shiftRight() {
-  shift(BASE_SIZE);
-}
+
 // Shift all reads "shiftDist" pixels
 function shift(shiftDist) {
   var reads = Crafty('Read').get();
@@ -60,11 +54,11 @@ function shift(shiftDist) {
   //TODO: optimize if necessary by combining this check and the actual move loop
   for (var i = 0; i < reads.length; i++) {
     // Skip if the read is below the MAIN panel.
-    if (reads[i]._y >= MAIN.y+MAIN.height) {
+    if (reads[i]._y >= MAIN.y+MAIN.h) {
       continue;
     }
     var new_x = reads[i]._x + shiftDist;
-    var snapped_x = snap(new_x, reads[i]._w, MAIN.x, MAIN.x+MAIN.width);
+    var snapped_x = snap(new_x, reads[i]._w, MAIN.x, MAIN.x+MAIN.w);
     // If snap() says the new_x must be modified, then we must be butting up
     // against the edge of the game area. Abort shift.
     if (new_x !== snapped_x) {
@@ -74,7 +68,7 @@ function shift(shiftDist) {
   // Now loop again, but actually shift everything.
   for (var i = 0; i < reads.length; i++) {
     // Skip if the read is below the MAIN panel.
-    if (reads[i]._y >= MAIN.y+MAIN.height) {
+    if (reads[i]._y >= MAIN.y+MAIN.h) {
       continue;
     }
     reads[i].x = reads[i]._x + shiftDist;
@@ -82,4 +76,12 @@ function shift(shiftDist) {
   // And update the consensus sequence.
   Game.baseGrid.fill();
   calcConsensus(Game.baseGrid);
+}
+// Shift left by one grid increment
+function shiftLeft() {
+  shift(-BASE_SIZE);
+}
+// Shift right by one grid increment
+function shiftRight() {
+  shift(BASE_SIZE);
 }

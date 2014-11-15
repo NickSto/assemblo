@@ -20,7 +20,7 @@ var Game = {
 function startGame() {
   assert(HEAD.x === CONSENSUS.x && CONSENSUS.x === MAIN.x && MAIN.x === BANK.x,
     "Error: panels are not horizontally aligned.");
-  Crafty.init(GAME.width, GAME.height);
+  Crafty.init(GAME.w, GAME.h);
   makeUI();
   startVideo();
 }
@@ -45,7 +45,7 @@ function newGame(reference, seed) {
   Game.prng = new ToyPrng(seed);
   if (reference === undefined) {
     // Generate a reference as long as the panel is wide
-    Game.reference = randSeq(Math.floor(CONSENSUS.width/BASE_SIZE));
+    Game.reference = randSeq(Math.floor(CONSENSUS.w/BASE_SIZE));
   } else {
     Game.reference = reference;
   }
@@ -89,11 +89,11 @@ function restartGame() {
 function readStopDrag(event) {
   /* jshint validthis:true */
   // Make each read snap to the grid when the user stops moving it.
-  this.x = snap(this._x, this._w, MAIN.x, MAIN.x+MAIN.width);
-  if (this._y < (MAIN.y+MAIN.height+BANK.y-BASE_SIZE)/2) {
-    this.y = snap(this._y, this._h, MAIN.y, MAIN.y+MAIN.height);
+  this.x = snap(this._x, this._w, MAIN.x, MAIN.x+MAIN.w);
+  if (this._y < (MAIN.y+MAIN.h+BANK.y-BASE_SIZE)/2) {
+    this.y = snap(this._y, this._h, MAIN.y, MAIN.y+MAIN.h);
   } else {
-    this.y = snap(this._y, this._h, BANK.y, BANK.y+BANK.height);
+    this.y = snap(this._y, this._h, BANK.y, BANK.y+BANK.h);
   }
   this.defaultDepth();
   // If it's overlapping a read already at that position, undo the dragging
@@ -156,7 +156,7 @@ function calcConsensus(baseGrid) {
     }
   }
   // Visit each read, tallying the base counts.
-  for (var i = 0; i < baseGrid.rows.length && i < MAIN.height/BASE_SIZE; i++) {
+  for (var i = 0; i < baseGrid.rows.length && i < MAIN.h/BASE_SIZE; i++) {
     var read = baseGrid.rows[i];
     for (var j = 0; j < read.length; j++) {
       counts[j][read[j]]++;
@@ -183,14 +183,14 @@ function calcConsensus(baseGrid) {
 // Draw guidelines to show where the snap-to grid is
 function drawGrid() {
   // draw vertical grid lines
-  for (var x = MAIN.x+BASE_SIZE; x < MAIN.x+MAIN.width; x += BASE_SIZE) {
+  for (var x = MAIN.x+BASE_SIZE; x < MAIN.x+MAIN.w; x += BASE_SIZE) {
     Crafty.e('Grid')
-      .attr({x: x, y: MAIN.y, w: 1, h: MAIN.height});
+      .attr({x: x, y: MAIN.y, w: 1, h: MAIN.h});
   }
   // draw horizontal grid lines
-  for (var y = MAIN.y+BASE_SIZE; y < MAIN.y+MAIN.height; y += BASE_SIZE) {
+  for (var y = MAIN.y+BASE_SIZE; y < MAIN.y+MAIN.h; y += BASE_SIZE) {
     Crafty.e('Grid')
-      .attr({x: MAIN.x, y: y, w: MAIN.width, h: 1});
+      .attr({x: MAIN.x, y: y, w: MAIN.w, h: 1});
   }
 }
 
@@ -231,7 +231,7 @@ function checkAnswer() {
   // Did the user reconstruct the reference perfectly?
   //TODO: Check that all the reads are on the board (in the MAIN panel).
   var boxWidth = 200;
-  var center = HEAD.x + Math.floor(HEAD.width/2);
+  var center = HEAD.x + Math.floor(HEAD.w/2);
   var box_x = center - Math.floor(boxWidth/2);
   if (Game.reference === Game.consensus.seqStr()) {
     // If there's no success indicator showing yet, make one.
@@ -274,7 +274,7 @@ function BaseGrid() {
   // Fill a 2D array with all bases on the grid
   this.fill = function() {
     // Initialize this.rows
-    var totalRows = Math.floor((MAIN.height+BANK.height) / BASE_SIZE);
+    var totalRows = Math.floor((MAIN.h+BANK.h) / BASE_SIZE);
     this.rows = new Array(totalRows);
     for (var i = 0; i < this.rows.length; i++) {
       this.rows[i] = [];
@@ -288,7 +288,7 @@ function BaseGrid() {
         var row = (reads[i]._y-MAIN.y) / BASE_SIZE;
       } else {
         // It's in the BANK panel
-        var row = ((reads[i]._y-BANK.y) / BASE_SIZE) + (MAIN.height/BASE_SIZE);
+        var row = ((reads[i]._y-BANK.y) / BASE_SIZE) + (MAIN.h/BASE_SIZE);
       }
       for (var j = 0; j < bases.length; j++) {
         var column = (bases[j]._x - MAIN.x) / BASE_SIZE;
