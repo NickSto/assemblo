@@ -175,7 +175,70 @@ Crafty.c('Button', {
       .textColor('#FFFFFF')
       .css('text-align', 'center')
       .unselectable();
-  }
+  },
+});
+
+Crafty.c('Input', {
+  init: function() {
+    this.requires('HTML');
+    this._attrs = ['type', 'id', 'size', 'value'];
+    for (var i = 0; i < this._attrs.length; i++) {
+      this._makeSetGet(this._attrs[i]);
+    }
+    this.type = 'text';
+    this.size = 1;
+    this.value = 0;
+    Object.defineProperty(this, 'width', {
+      get: function() { return this._width; },
+      set: function(width) { this.setWidth(width); },
+    });
+    Object.defineProperty(this, 'html', {
+      get: function() { return this._html; },
+      set: function(html) { this.setHtml(html); },
+    });
+    this.update();
+  },
+  // Make setters and getters for the HTML attributes so the HTML is updated
+  // whenever an attribute is changed. Technique from:
+  // https://stackoverflow.com/questions/17764795/create-getter-and-setter-in-javascript/17765019#17765019
+  _makeSetGet: function(attr) {
+    Object.defineProperty(this, attr, {
+      get: function() {
+        return this['_'+attr];
+      },
+      set: function(value) {
+        this['_'+attr] = value;
+        this.update();
+      },
+    });
+  },
+  setWidth: function(width) {
+    this._width = width;
+    this.update();
+  },
+  setHtml: function(html) {
+    this._html = html;
+    this.replace(this._html);
+  },
+  // Update the HTML to include the current values of the attributes.
+  update: function() {
+    // Start building the HTML for the tag as a string.
+    this._html = '<input ';
+    // Concatenate all attribute/value combinations, e.g. 'attr="value" '.
+    for (var i = 0; i < this._attrs.length; i++) {
+      var value = this[this._attrs[i]];
+      if (value !== undefined) {
+        this._html += this._attrs[i]+'="'+value+'" ';
+      }
+    }
+    // Put width into a style attribute, since it doesn't seem to work to set it
+    // via this.css().
+    if (this._width !== undefined) {
+      this._html += 'style="width: '+this._width+'px;"'
+    }
+    this._html += '>';
+    this.replace(this._html);
+  },
 });
 
 Crafty.c('Video', {

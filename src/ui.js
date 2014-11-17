@@ -1,5 +1,5 @@
 'use strict';
-/* global Crafty, Game, HEAD, CONSENSUS, MAIN, BANK, BASE_SIZE, snap,
+/* global Crafty, Game, HEAD, CONSENSUS, MAIN, BANK, PARAM, BASE_SIZE, snap,
           calcConsensus, restartGame, startVideo */
 /* exported makeUI, drawPanel, drawLine */
 
@@ -44,6 +44,14 @@ function drawPanel(panel) {
     .place(panel.x, panel.y, panel.x, panel.y+panel.h);
   Crafty.e('Line') // right
     .place(panel.x+panel.w, panel.y, panel.x+panel.w, panel.y+panel.h);
+}
+
+
+function makeParamPanel() {
+  drawPanel(PARAM);
+  var snps = Crafty.e('Input')
+    .attr({h: 30, w:40, x:PARAM.x+10, y:PARAM.y+80})
+    .attr({id:'snps', value:'0.0', width:25});
 }
 
 
