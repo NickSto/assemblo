@@ -49,9 +49,13 @@ function drawPanel(panel) {
 
 function makeParamPanel() {
   drawPanel(PARAM);
-  var snps = Crafty.e('Input')
+  Crafty.e('Input')
     .attr({h: 30, w:40, x:PARAM.x+10, y:PARAM.y+80})
     .attr({id:'snps', value:'0.0', width:25});
+  Crafty.e('Writing')
+    .attr({x:PARAM.x+12, y:PARAM.y+65, string:'SNP', color:'#0000DD'});
+  Crafty.e('Writing')
+    .attr({x:PARAM.x+40, y:PARAM.y+65, string:'rate'});
 }
 
 

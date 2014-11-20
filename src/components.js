@@ -178,6 +178,37 @@ Crafty.c('Button', {
   },
 });
 
+Crafty.c('Writing', {
+  init: function() {
+    this.requires('DOM, Text')
+      .attr({h: 15, w:35});
+    Object.defineProperty(this, 'string', {
+      get: function() { return this.text(); },
+      set: function(string) { this.setString(string); },
+    });
+    Object.defineProperty(this, 'size', {
+      get: function() { return this._size; },
+      set: function(size) { this.setSize(size); },
+    });
+    Object.defineProperty(this, 'color', {
+      get: function() { return this._color; },
+      set: function(color) { this._color = color; this.textColor(color); },
+    });
+    this.color = '#888';
+    this.size = 12;
+  },
+  setString: function(string) {
+    this.text(string);
+    this.w = 0.8 * this._size * string.length;
+  },
+  setSize: function(size) {
+    this.textFont({size: size+'px'});
+    this._size = size;
+    this.h = 1.25 * size;
+    this.w = 0.8 * size * this.string.length;
+  },
+});
+
 Crafty.c('Input', {
   init: function() {
     this.requires('HTML');
