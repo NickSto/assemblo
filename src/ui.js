@@ -39,7 +39,7 @@ function makeUI() {
   drawPanel({x: CONSENSUS.x, y: CONSENSUS.y, h: BASE_SIZE, w: CONSENSUS.w});
   drawPanel(MAIN);
   drawPanel(BANK);
-  // makeParamPanel();
+  makeParamPanel();
 }
 
 
