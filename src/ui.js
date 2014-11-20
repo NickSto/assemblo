@@ -3,11 +3,18 @@
           calcConsensus, restartGame, startVideo */
 /* exported makeUI, drawPanel, drawLine */
 
+/* User-adjustable parameters. Will fill PARAM panel.
+ * text1+text2 form the parameter label. "text1" will be highlighted in blue and
+ * clickable for a glossary definition. "text2" will be in the default color
+ * (black). "default" is the starting value of the parameter. "w1" is the width
+ * of "text1", to tell makeParams() where to draw "text2".
+ */
 var paramData = [
-  {text1:'read length', default:'8'},
+  {text1:'read length', default:READ_LENGTH},
   {text1:'error', w1:33, text2:'rate', default:'0.0'},
   {text1:'SNP', w1:28, text2:'rate', default:'0.0'},
   {text1:'population size', default:'1'},
+  {text1:'genome length', default:'20'},
 ];
 
 // Make buttons, icons, controls, etc.
@@ -61,6 +68,7 @@ function makeParamPanel() {
   // Title/logo
   Crafty.e('Writing')
     .attr({x:PARAM.x+8, y:PARAM.y+13, string:'Assemblo', size:21, color:'#6600CC'});
+  // Parameters section header
   Crafty.e('Writing')
     .attr({x:PARAM.x+8, y:PARAM.y+110, string:'Parameters', size:14});
 }
