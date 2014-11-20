@@ -8,7 +8,7 @@
 var Game = {
   consensus: null,
   reference: null,
-  success: null,
+  success: undefined,
   prng: new ToyPrng(),
   timeout: null,
   baseGrid: new BaseGrid(),
@@ -71,10 +71,7 @@ function destroyGame() {
   }
   Game.consensus = null;
   Game.reference = null;
-  if (Game.success !== null) {
-    Game.success.destroy();
-    Game.success = null;
-  }
+  setSuccessIndicator(undefined);
   destroyAll('Read');
   destroyAll('Grid');
 }
@@ -105,7 +102,7 @@ function readStopDrag(event) {
   // Recalculate the consensus and check if it's correct
   Game.baseGrid.fill();
   calcConsensus(Game.baseGrid);
-  checkAnswer();
+  setSuccessIndicator(checkAnswer());
 }
 
 // This is bound to each read's 'StartDrag' event.
@@ -227,41 +224,40 @@ function makeConsensus(length) {
 }
 
 
+// Did the user reconstruct the reference perfectly?
 function checkAnswer() {
-  // Did the user reconstruct the reference perfectly?
   //TODO: Check that all the reads are on the board (in the MAIN panel).
-  var boxWidth = 200;
-  var center = HEAD.x + Math.floor(HEAD.w/2);
-  var box_x = center - Math.floor(boxWidth/2);
+  // Does the consensus match the actual (reference) sequence?
   if (Game.reference === Game.consensus.seqStr()) {
-    // If there's no success indicator showing yet, make one.
-    if (Game.success === null) {
-      Game.success = Crafty.e('Button')
-        .attr({x: box_x, y: HEAD.y+10, w: boxWidth, h: 30})
-        .color('#1A1')
-        .text('\u2713');
-    // If there's already a success indicator, make it show success.
-    } else {
-      Game.success.color('#1A1').text('\u2713');
-    }
-  // If the consensus is full (no N's) but not correct, show a X indicator.
+    return true;
+  // Is the consensus full, but incorrect?
   } else if (Game.consensus.seqStr().indexOf('N') === -1) {
-    if (Game.success === null) {
-      Game.success = Crafty.e('Button')
-        .attr({x: box_x, y: HEAD.y+10, w: boxWidth, h: 30})
-        .color('#F77')
-        .text('X');
-    } else {
-      Game.success.color('#F77').text('X');
-    }
+    return false;
   } else {
-    // Not correct. If there's a success indicator, remove it.
-    if (Game.success !== null) {
-      Game.success.destroy();
-      Game.success = null;
-    }
+    return undefined;
   }
 }
+
+
+// Show an indicator of success or failure.
+function setSuccessIndicator(success) {
+  // Create success indicator if it doesn't exist yet.
+  if (Game.success === undefined) {
+    Game.success = Crafty.e('Button')
+      .attr({x: PARAM.x+10, y: CONSENSUS.y+5, w: PARAM.w-20, h: 30});
+  }
+  // When there is no result, show a neutral indicator.
+  if (success === undefined) {
+    Game.success.color('#CCC').text('...');
+  // On success, show a green checkmark.
+  } else if (success) {
+    Game.success.color('#1A1').text('\u2713');
+  // If incorrect, show a red X.
+  } else {
+    Game.success.color('#F77').text('X');
+  }
+}
+
 
 // Encapsulates a 2D array storing the locations of all bases in all reads on
 // the grid.
