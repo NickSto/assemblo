@@ -3,6 +3,13 @@
           calcConsensus, restartGame, startVideo */
 /* exported makeUI, drawPanel, drawLine */
 
+var paramData = [
+  {text1:'read length', default:'8'},
+  {text1:'error', w1:33, text2:'rate', default:'0.0'},
+  {text1:'SNP', w1:28, text2:'rate', default:'0.0'},
+  {text1:'population size', default:'1'},
+];
+
 // Make buttons, icons, controls, etc.
 function makeUI() {
   // The shift buttons
@@ -32,6 +39,7 @@ function makeUI() {
   drawPanel({x: CONSENSUS.x, y: CONSENSUS.y, h: BASE_SIZE, w: CONSENSUS.w});
   drawPanel(MAIN);
   drawPanel(BANK);
+  // makeParamPanel();
 }
 
 
@@ -49,13 +57,30 @@ function drawPanel(panel) {
 
 function makeParamPanel() {
   drawPanel(PARAM);
-  Crafty.e('Input')
-    .attr({h: 30, w:40, x:PARAM.x+10, y:PARAM.y+80})
-    .attr({id:'snps', value:'0.0', width:25});
-  Crafty.e('Writing')
-    .attr({x:PARAM.x+12, y:PARAM.y+65, string:'SNP', color:'#0000DD'});
-  Crafty.e('Writing')
-    .attr({x:PARAM.x+40, y:PARAM.y+65, string:'rate'});
+  makeParams(paramData);
+}
+
+
+function makeParams(paramData) {
+  var xMargin = 12;
+  var ySpace = 50;
+  var wBox = 25;
+  var y = MAIN.y;
+  for (var i = 0; i < paramData.length; i++) {
+    var param = paramData[i];
+    if (param.text1 !== undefined) {
+      Crafty.e('Writing')
+        .attr({x:PARAM.x+xMargin, y:y, string:param.text1, color:'#0000DD'});
+    }
+    if (param.text2 !== undefined) {
+      Crafty.e('Writing')
+        .attr({x:PARAM.x+xMargin+param.w1, y:y, string:param.text2});
+    }
+    Crafty.e('Input')
+      .attr({h: 30, w:40, x:PARAM.x+10, y:y+15})
+      .attr({id:param.id, value:param.default, width:wBox});
+    y += ySpace;
+  }
 }
 
 
