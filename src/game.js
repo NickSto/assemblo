@@ -5,12 +5,13 @@
 /* exported startGame, newGame, destroyGame, restartGame, drawGrid */
 
 // Global game state
+// Explicitly enumerate all attributes, even when undefined, for clarity.
 var Game = {
-  consensus: null,
-  reference: null,
+  consensus: undefined,
+  reference: undefined,
   success: undefined,
   prng: new ToyPrng(),
-  timeout: null,
+  timeout: undefined,
   baseGrid: new BaseGrid(),
   snpRate: 0,
 };
@@ -66,11 +67,11 @@ function newGame(reference, seed) {
 // Destroy all game components, but not the UI.
 // Removes reads, consensus sequence bar, grid, etc.
 function destroyGame() {
-  if (Game.consensus !== null) {
+  if (Game.consensus !== undefined) {
     Game.consensus.destroy();
   }
-  Game.consensus = null;
-  Game.reference = null;
+  Game.consensus = undefined;
+  Game.reference = undefined;
   setSuccessIndicator(undefined);
   destroyAll('Read');
   destroyAll('Grid');
