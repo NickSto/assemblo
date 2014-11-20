@@ -58,6 +58,11 @@ function drawPanel(panel) {
 function makeParamPanel() {
   drawPanel(PARAM);
   makeParams(paramData);
+  // Title/logo
+  Crafty.e('Writing')
+    .attr({x:PARAM.x+8, y:PARAM.y+13, string:'Assemblo', size:21, color:'#6600CC'});
+  Crafty.e('Writing')
+    .attr({x:PARAM.x+8, y:PARAM.y+110, string:'Parameters', size:14});
 }
 
 
@@ -65,7 +70,7 @@ function makeParams(paramData) {
   var xMargin = 12;
   var ySpace = 50;
   var wBox = 25;
-  var y = MAIN.y;
+  var y = MAIN.y+5;
   for (var i = 0; i < paramData.length; i++) {
     var param = paramData[i];
     if (param.text1 !== undefined) {
