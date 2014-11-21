@@ -25,9 +25,9 @@ function startVideo() {
   window.clearTimeout(Game.timeout);
   destroyGame();
   Crafty.e("Video")
-   .attr({w:640, h:400})
+   .attr({w:640, h:400, y:MAIN.y-(BASE_SIZE/2)})
    .append("<video id='intro' autoplay src='assets/intro.mp4'></video>")
-   .center('xy')
+   .center('x')
    .addBorder();
   var video = document.getElementById('intro');
   video.onended = runIntroAnimation;
