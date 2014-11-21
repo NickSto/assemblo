@@ -10,7 +10,7 @@ var NUM_READS = 7;
 // x and y set where the top-left corner of the panel are.
 var HEAD = {w: 800, h: 50, x: 0, y: 0};
 var CONSENSUS = {w: HEAD.w, h: 2*BASE_SIZE, x: 0, y: HEAD.y+HEAD.h};
-var MAIN = {w: HEAD.w, h: (NUM_READS+1)*BASE_SIZE, x: 0, y: CONSENSUS.y+CONSENSUS.h};
+var MAIN = {w: HEAD.w, h: NUM_READS*BASE_SIZE, x: 0, y: CONSENSUS.y+CONSENSUS.h};
 var BANK = {w: HEAD.w, h: NUM_READS*BASE_SIZE, x: 0, y: MAIN.y+MAIN.h+BASE_SIZE};
 var PARAM = {w: 115, h: MAIN.y+MAIN.h, x: 10+HEAD.x+HEAD.w, y: 0}
 // Size of entire Crafty game area
