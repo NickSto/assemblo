@@ -1,6 +1,6 @@
 'use strict';
 /* global Crafty, MAIN, CONSENSUS, BASE_SIZE, COLORS, Z_BASE, Z_READ, Z_BORDER,
-          Z_BASE_FG, Z_READ_FG, Z_BORDER_FG, assert */
+          Z_BASE_FG, Z_READ_FG, Z_BORDER_FG */
 
 Crafty.c('Read', {
   init: function() {
@@ -32,7 +32,7 @@ Crafty.c('Read', {
   // If any bases are currently present, they will be destroyed.
   //TODO: Finish.
   setSeq: function(seq) {
-    assert(0, "Error: 'Read'.setSeq() not yet implemented.");
+    console.assert(false, "Error: 'Read'.setSeq() not yet implemented.");
     // If the sequence is already correct, do nothing.
     if (this.seq === seq) {
       return this;
@@ -133,12 +133,14 @@ Crafty.c('Consensus', {
     this.seq = [];
     Object.defineProperty(this, 'length', {
       get: function() { return this.bases.length; },
-      set: function() { assert(0, "Can't assign to consensus.length."); },
+      set: function() {
+        console.assert(false, "Can't assign to consensus.length.");
+      },
     });
   },
   // Make sure the .bases match the letters in .seq
   updateBases: function() {
-    assert(this.bases.length === this.seq.length,
+    console.assert(this.bases.length === this.seq.length,
       'Consensus lengths disagree! this.bases.length = '+
       this.bases.length+', this.seq.length = '+this.seq.length
     );
@@ -295,7 +297,7 @@ Crafty.c('Video', {
   },
   // Draw a bounding box around the video. Must set its height and width first.
   addBorder: function() {
-    assert(this._w !== 0 && this._h !== 0,
+    console.assert(this._w !== 0 && this._h !== 0,
       "'Video'.addBorder() called before video size set.");
     var top = Crafty.e('Line')
       .place(this._x, this._y-1, this._x+this._w, this._y-1);
@@ -333,7 +335,7 @@ Crafty.c('Line', {
       var width = Math.abs(x1 - x2);
       this.attr({x: x, y: y1, w: width, h: lineWidth});
     } else {
-      assert(false, 'Cannot draw a diagonal line.');
+      console.assert(false, 'Cannot draw a diagonal line.');
     }
     return this;
   },

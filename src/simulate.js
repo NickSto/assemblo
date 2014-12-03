@@ -1,5 +1,5 @@
 'use strict';
-/* global Game, console */
+/* global Game, replaceChar */
 /* exported ToyPrng, randSeq, wgsim */
 
 var BASES = ['A', 'C', 'G', 'T'];
@@ -111,8 +111,8 @@ function wgsim(reference, numReads, readLength, minCoverage, snpRate) {
  * ("coverage").
  */
 function getRead(reference, start, readLength, coverage, snpRate, indelRate) {
-  assert(indelRate === undefined, "Error: indelRate not yet supported in "+
-         "getRead().")
+  console.assert(indelRate === undefined, "Error: indelRate not yet supported "+
+         "in getRead().");
   var read = reference.substring(start, start+readLength);
   // actualLength can be different, once indels are implemented.
   var actualLength = readLength;

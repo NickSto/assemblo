@@ -1,7 +1,7 @@
 'use strict';
 /* global Crafty, GAME, HEAD, CONSENSUS, MAIN, BANK, COLORS, BASE_SIZE,
           READ_LENGTH, NUM_READS, BASES, randSeq, wgsim, makeUI, startVideo,
-          ToyPrng, destroyAll, assert */
+          ToyPrng, destroyAll */
 /* exported startGame, newGame, destroyGame, restartGame, drawGrid */
 
 // Global game state
@@ -19,8 +19,8 @@ var Game = {
 // Start the game:
 // Initialize Crafty game area, create UI, and generate a new game.
 function startGame() {
-  assert(HEAD.x === CONSENSUS.x && CONSENSUS.x === MAIN.x && MAIN.x === BANK.x,
-    "Error: panels are not horizontally aligned.");
+  console.assert(HEAD.x === CONSENSUS.x && CONSENSUS.x === MAIN.x &&
+    MAIN.x === BANK.x, "Error: panels are not horizontally aligned.");
   Crafty.init(GAME.w, GAME.h);
   makeUI();
   startVideo();
