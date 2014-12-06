@@ -120,6 +120,7 @@ Crafty.c('Base', {
       .textFont({size: textSize+'px'})
       .textColor('#FFFFFF')
       .css('text-align', 'center')
+      .css('cursor', 'default')
       .unselectable();
     this.z = Z_BASE; // depth = behind the read
   }
@@ -176,6 +177,7 @@ Crafty.c('Button', {
       .textFont({size: '24px'})
       .textColor('#FFFFFF')
       .css('text-align', 'center')
+      .css('cursor', 'pointer')
       .unselectable();
   },
 });

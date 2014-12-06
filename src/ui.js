@@ -83,7 +83,8 @@ function makeParams(paramData) {
     var param = paramData[i];
     if (param.text1 !== undefined) {
       Crafty.e('Writing')
-        .attr({x:PARAM.x+xMargin, y:y, string:param.text1, color:'#0000DD'});
+        .attr({x:PARAM.x+xMargin, y:y, string:param.text1, color:'#0000DD'})
+        .css('cursor', 'pointer');
     }
     if (param.text2 !== undefined) {
       Crafty.e('Writing')

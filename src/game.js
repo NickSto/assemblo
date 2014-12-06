@@ -59,6 +59,9 @@ function newGame(reference, seed) {
     //   .attr({x: BANK.x+i*BASE_SIZE, y: BANK.y+i*BASE_SIZE})
     // read.setSeq(reads[i]);
     read.addBorders('#FFF');
+    for (var j = 0; j < read.bases.length; j++) {
+      read.bases[j].css('cursor', 'grab');
+    }
   }
   Game.baseGrid.fill();
   calcConsensus(Game.baseGrid);
@@ -245,7 +248,8 @@ function setSuccessIndicator(success) {
   // Create success indicator if it doesn't exist yet.
   if (Game.success === undefined) {
     Game.success = Crafty.e('Button')
-      .attr({x: PARAM.x+10, y: CONSENSUS.y+5, w: PARAM.w-20, h: 30});
+      .attr({x: PARAM.x+10, y: CONSENSUS.y+5, w: PARAM.w-20, h: 30})
+      .css('cursor', 'default');
   }
   // When there is no result, show a neutral indicator.
   if (success === undefined) {
