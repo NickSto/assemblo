@@ -1,6 +1,6 @@
 'use strict';
 /* global Crafty, Game, HEAD, CONSENSUS, MAIN, BANK, PARAM, BASE_SIZE, GLOSSARY,
-          snap, calcConsensus, restartGame, startVideo */
+          snap, calcConsensus, restartGame, startVideo, capitalize */
 /* exported makeUI, drawPanel, drawLine */
 
 /* User-adjustable parameters. Will fill PARAM panel.
@@ -103,7 +103,9 @@ function makeParams(paramData) {
 // Create a pop-up box giving a glossary definition for a term.
 function define(term) {
   var popup = Crafty.e('Popup');
-  popup.writing.string = GLOSSARY[term];
+  popup.title.string = capitalize(term);
+  popup.body.string = GLOSSARY[term];
+  popup.body.w = POPUP.w - popup.margin;
 }
 
 

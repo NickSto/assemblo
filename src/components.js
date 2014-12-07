@@ -219,22 +219,30 @@ Crafty.c('Popup', {
       .attr(POPUP)
       .color('#D49A6A')
       .z = Z.popup;
+    this.margin = 10;
     // Add a close button
     this.closeButton = Crafty.e('Button')
       .textFont({size: '16px'})
       .textColor('#806020')
-      .attr({x:POPUP.x+POPUP.w-18-7, y:POPUP.y+5, w:18, h:18})
+      .attr({x:POPUP.x+POPUP.w-18-this.margin, y:POPUP.y+this.margin, w:18, h:18})
       .color('#D49A6A')
       .css('border', '1px solid #A73')
       .text('X');
     this.closeButton.z = Z.popupBit;
     this.attach(this.closeButton);
     this.closeButton.bind('Click', function() { this._parent.destroy(); });
-    // Add the popup text
-    this.writing = Crafty.e('Writing')
-      .attr({x:POPUP.x+10, y:POPUP.y+10, size:16, color:'#403010'});
-    this.writing.z = Z.popupBit;
-    this.attach(this.writing);
+    // Add the title
+    this.title = Crafty.e('Writing')
+      .attr({x:POPUP.x+this.margin, y:POPUP.y+this.margin,
+             size:22, color:'#403010'});
+    this.title.z = Z.popupBit;
+    this.attach(this.title);
+    // Add the main text
+    this.body = Crafty.e('Writing')
+      .attr({x:POPUP.x+this.margin, y:POPUP.y+this.title.h+(2*this.margin),
+             size:16, color:'#403010'});
+    this.body.z = Z.popupBit;
+    this.attach(this.body);
   },
 });
 

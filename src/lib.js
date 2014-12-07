@@ -1,9 +1,9 @@
 'use strict';
 /* global Crafty, console */
-/* exported console, destroyAll, replaceChar */
+/* exported console, destroyAll, replaceChar, capitalize */
 
 
-// Be extra safe and shim the non-standard console object
+// Be extra safe and shim the (non-standardized) console object
 if (typeof console !== 'object') {
   console = {};
 }
@@ -40,4 +40,10 @@ function destroyAll(component) {
 // Replace a character at a given index in a string.
 function replaceChar(string, index, char) {
   return string.slice(0, index) + char + string.slice(index+char.length);
+}
+
+
+// Capitalize the first character in a string.
+function capitalize(string) {
+  return string[0].toUpperCase() + string.slice(1);
 }
