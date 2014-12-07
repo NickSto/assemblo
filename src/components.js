@@ -235,14 +235,34 @@ Crafty.c('Popup', {
     this.title = Crafty.e('Writing')
       .attr({x:POPUP.x+this.margin, y:POPUP.y+this.margin,
              size:22, color:'#403010'});
+    this.title.h = 35;
     this.title.z = Z.popupBit;
     this.attach(this.title);
     // Add the main text
     this.body = Crafty.e('Writing')
-      .attr({x:POPUP.x+this.margin, y:POPUP.y+this.title.h+(2*this.margin),
+      .attr({x:POPUP.x+this.margin, y:POPUP.y+this.title.h+this.margin,
              size:16, color:'#403010'});
     this.body.z = Z.popupBit;
     this.attach(this.body);
+  },
+  addVideo: function(videoUrl, width, height) {
+    if (width === undefined) {
+      width = 480;
+    }
+    if (height === undefined) {
+      height = 300;
+    }
+    this.body.y += height+this.margin;
+    this.video = Crafty.e("Video")
+      .attr({x:POPUP.x+this.margin, y:POPUP.y+this.title.h+this.margin,
+             w:width, h:height})
+      .append("<video autoplay controls src='"+videoUrl+"'></video>")
+      .addBorder();
+    this.video._element.children[0].width = width;
+    this.video._element.children[0].height = height;
+    this.video.center('x');
+    this.video.z = Z.popupBit;
+    this.attach(this.video);
   },
 });
 
@@ -314,18 +334,21 @@ Crafty.c('Video', {
     this.requires('HTML')
       .attr({x: MAIN.x, y: MAIN.y});
   },
-  // Center the video along the given dimensions
-  center: function(dimensions) {
+  // Center the video along the given dimensions within the given panel.
+  center: function(dimensions, panel) {
     if (dimensions === undefined) {
       dimensions = 'x';
+    }
+    if (panel === undefined) {
+      panel = MAIN;
     }
     var x = this.x;
     var y = this.y;
     if (dimensions.indexOf('x') !== -1) {
-      x = MAIN.x + (MAIN.w - this.w)/2;
+      x = panel.x + (panel.w - this.w)/2;
     }
     if (dimensions.indexOf('y') !== -1) {
-      y = MAIN.y + (MAIN.h - this.h)/2;
+      y = panel.y + (panel.h - this.h)/2;
     }
     this.attr({x: x, y: y});
     return this;

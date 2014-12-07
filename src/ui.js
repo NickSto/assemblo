@@ -109,7 +109,10 @@ function define(term) {
   }
   var popup = Crafty.e('Popup');
   popup.title.string = capitalize(term);
-  popup.body.string = GLOSSARY[term];
+  if (GLOSSARY[term].video !== undefined) {
+    popup.addVideo(GLOSSARY[term].video);
+  }
+  popup.body.string = GLOSSARY[term].text;
   popup.body.w = POPUP.w - popup.margin;
 }
 
