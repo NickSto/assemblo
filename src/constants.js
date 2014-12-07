@@ -21,10 +21,35 @@ var Z = {read:   20, base:   10, border:   15,
          readFG: 30, baseFG: 17, borderFG: 22,
          popup: 50, popupBit: 60};
 
+// Text for the UI
 var GLOSSARY = {
-  'read length': 'The length of the read.',
-  'error': 'A sequencing error.',
-  'SNP': 'A single nucleotide polymorphism.',
-  'population size': 'The size of the population.',
-  'genome length': 'How long to make yr genome.',
+  'read length':
+    'A read is a short sequence of DNA created by a sequencing machine. They '+
+    'can differ in length depending on the machine, which can complicate '+
+    'genome assembly (try it out by changing read length in the game!).',
+  'error':
+    'A mistake made by a sequencing machine when sequencing DNA. To a person '+
+    'looking at a DNA sequence, a sequencing error will look like a SNP, but '+
+    'the two are completely different! To see how sequencing error can '+
+    'complicate an assembly, try increasing the error rate before playing '+
+    'your next Assemblo game.',
+  'SNP':
+    'Short for single nucleotide polymorphism, which basically means that a '+
+    'given DNA sequence differs from an (almost) identical DNA sequence at a '+
+    'single position. In sequence data, SNPs can come when a population (more '+
+    'than 1 cell type, person, dog, etc)  is sequenced. Most reference '+
+    'genomes, such as the human genome, are actually assembled from a '+
+    'population. Although some SNPs in certain genes have been associated '+
+    'with certain diseases, the majority of SNPs are not harmful at all and '+
+    'are just a source of genetic variation.',
+  'population size':
+    'The number of people the sequence reads are coming from.',
+  'genome length':
+    'A genome is a copy of all the DNA used to make an organism. You, if '+
+    'you\'re a human, have two copies of your genome - one from your mom and '+
+    'one from your dad. Genomes come in all different sizes (the human genome '+
+    'is a whopping 3.3 BILLION base pairs in length!) and longer genomes are '+
+    'typically more different to assemble, usually because there are more '+
+    'pieces in these puzzles. Try this out by increasing or decreasing the '+
+    'size of the genome in Assemblo.',
 };
