@@ -1,5 +1,6 @@
 'use strict';
-/* exported GAME, MAIN, HEAD, BASE_SIZE, READ_LENGTH, NUM_READS, COLORS, Z */
+/* exported GAME, MAIN, HEAD, BASE_SIZE, READ_LENGTH, NUM_READS, COLORS, Z,
+            GLOSSARY */
 
 // Defines the size of each square in the grid.
 var BASE_SIZE = 40;
@@ -19,3 +20,11 @@ var COLORS = {'A':'#A44', 'C':'#448', 'G':'#484', 'T':'#AA4', 'N':'#DDD'};
 var Z = {read:   20, base:   10, border:   15,
          readFG: 30, baseFG: 17, borderFG: 22,
          popup: 50, popupBit: 60};
+
+var GLOSSARY = {
+  'read length': 'The length of the read.',
+  'error': 'A sequencing error.',
+  'SNP': 'A single nucleotide polymorphism.',
+  'population size': 'The size of the population.',
+  'genome length': 'How long to make yr genome.',
+};

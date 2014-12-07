@@ -1,6 +1,6 @@
 'use strict';
-/* global Crafty, Game, HEAD, CONSENSUS, MAIN, BANK, PARAM, BASE_SIZE, snap,
-          calcConsensus, restartGame, startVideo */
+/* global Crafty, Game, HEAD, CONSENSUS, MAIN, BANK, PARAM, BASE_SIZE, GLOSSARY,
+          snap, calcConsensus, restartGame, startVideo */
 /* exported makeUI, drawPanel, drawLine */
 
 /* User-adjustable parameters. Will fill PARAM panel.
@@ -74,6 +74,7 @@ function makeParamPanel() {
 }
 
 
+// Draw each user-adjustable parameter box
 function makeParams(paramData) {
   var xMargin = 12;
   var ySpace = 50;
@@ -82,9 +83,10 @@ function makeParams(paramData) {
   for (var i = 0; i < paramData.length; i++) {
     var param = paramData[i];
     if (param.text1 !== undefined) {
-      Crafty.e('Writing')
+      Crafty.e('Writing, Mouse')
         .attr({x:PARAM.x+xMargin, y:y, string:param.text1, color:'#0000DD'})
-        .css('cursor', 'pointer');
+        .css('cursor', 'pointer')
+        .bind('Click', function() { define(this.string); });
     }
     if (param.text2 !== undefined) {
       Crafty.e('Writing')
@@ -98,9 +100,19 @@ function makeParams(paramData) {
 }
 
 
+// Create a pop-up box giving a glossary definition for a term.
+function define(term) {
+  var popup = Crafty.e('Popup');
+  popup.writing.string = GLOSSARY[term];
+}
+
+
 // Shift all reads "shiftDist" pixels
 function shift(shiftDist) {
   var reads = Crafty('Read').get();
+  if (reads.length == 0) {
+    return;
+  }
   // Check if there's room to move everything in that direction.
   //TODO: optimize if necessary by combining this check and the actual move loop
   for (var i = 0; i < reads.length; i++) {
