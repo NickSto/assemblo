@@ -1,13 +1,12 @@
 'use strict';
-/* global Crafty, MAIN, CONSENSUS, BASE_SIZE, COLORS, Z_BASE, Z_READ, Z_BORDER,
-          Z_BASE_FG, Z_READ_FG, Z_BORDER_FG */
+/* global Crafty, MAIN, CONSENSUS, BASE_SIZE, COLORS, Z */
 
 Crafty.c('Read', {
   init: function() {
     this.requires('2D, Draggable, Collision');
     this.h = BASE_SIZE;
     this.alpha = 0.0; // opacity = transparent
-    this.z = Z_READ; // depth = in front of the bases
+    this.z = Z.read; // depth = in front of the bases
     this.bases = [];
     this.bind('StopDrag', readStopDrag);
     this.bind('StartDrag', readStartDrag);
@@ -63,22 +62,22 @@ Crafty.c('Read', {
   foreground: function() {
     // The z values are chosen so that the bases' z's are still below all the
     // reads' z's, to make sure you never can click a base instead of a read.
-    this.z = Z_READ_FG;
+    this.z = Z.readFG;
     for (var i = 0; i < this.borders; i++) {
-      this.borders[i].z = Z_BORDER_FG;
+      this.borders[i].z = Z.borderFG;
     }
     for (var i = 0; i < this.bases.length; i++) {
-      this.bases[i].z = Z_BASE_FG;
+      this.bases[i].z = Z.baseFG;
     }
   },
   // Reset the z values to the defaults
   defaultDepth: function() {
-    this.z = Z_READ;
+    this.z = Z.read;
     for (var i = 0; i < this.borders; i++) {
-      this.borders[i].z = Z_BORDER;
+      this.borders[i].z = Z.border;
     }
     for (var i = 0; i < this.bases.length; i++) {
-      this.bases[i].z = Z_BASE;
+      this.bases[i].z = Z.base;
     }
   },
   addBorders: function(color, width) {
@@ -100,10 +99,10 @@ Crafty.c('Read', {
     var bottom = Crafty.e('2D, Color, DOM')
       .attr({x: this._x, y: this._y+this._h-1, h: width, w: this._w})
       .color(color);
-    left.z = Z_BORDER;
-    right.z = Z_BORDER;
-    top.z = Z_BORDER;
-    bottom.z = Z_BORDER;
+    left.z = Z.border;
+    right.z = Z.border;
+    top.z = Z.border;
+    bottom.z = Z.border;
     this.attach(left);
     this.attach(right);
     this.attach(top);
@@ -122,7 +121,7 @@ Crafty.c('Base', {
       .css('text-align', 'center')
       .css('cursor', 'default')
       .unselectable();
-    this.z = Z_BASE; // depth = behind the read
+    this.z = Z.base; // depth = behind the read
   }
 });
 
