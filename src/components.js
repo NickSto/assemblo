@@ -1,5 +1,5 @@
 'use strict';
-/* global Crafty, MAIN, CONSENSUS, BASE_SIZE, COLORS, Z, readStopDrag,
+/* global Crafty, MAIN, CONSENSUS, BASE_SIZE, COLORS, POPUP, Z, readStopDrag,
           readStartDrag */
 
 Crafty.c('Read', {
@@ -302,7 +302,7 @@ Crafty.c('Input', {
     // Put width into a style attribute, since it doesn't seem to work to set it
     // via this.css().
     if (this._width !== undefined) {
-      this._html += 'style="width: '+this._width+'px;"'
+      this._html += 'style="width: '+this._width+'px;"';
     }
     this._html += '>';
     this.replace(this._html);
@@ -322,15 +322,16 @@ Crafty.c('Video', {
     var x = this.x;
     var y = this.y;
     if (dimensions.indexOf('x') !== -1) {
-      var x = MAIN.x + (MAIN.w - this.w)/2;
+      x = MAIN.x + (MAIN.w - this.w)/2;
     }
     if (dimensions.indexOf('y') !== -1) {
-      var y = MAIN.y + (MAIN.h - this.h)/2;
+      y = MAIN.y + (MAIN.h - this.h)/2;
     }
     this.attr({x: x, y: y});
     return this;
   },
   // Draw a bounding box around the video. Must set its height and width first.
+  //TODO: replace with .css('border', '[width] [style] [color]')
   addBorder: function() {
     console.assert(this._w !== 0 && this._h !== 0,
       "'Video'.addBorder() called before video size set.");

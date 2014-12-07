@@ -1,5 +1,5 @@
 'use strict';
-/* global Crafty, GAME, HEAD, CONSENSUS, MAIN, BANK, COLORS, BASE_SIZE,
+/* global Crafty, GAME, HEAD, CONSENSUS, MAIN, BANK, PARAM, COLORS, BASE_SIZE,
           READ_LENGTH, NUM_READS, BASES, randSeq, wgsim, makeUI, startVideo,
           ToyPrng, destroyAll */
 /* exported startGame, newGame, destroyGame, restartGame, drawGrid */

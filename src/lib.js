@@ -9,7 +9,7 @@ if (typeof console !== 'object') {
 }
 // Make sure console.log can be called as a function
 if (typeof console.log !== 'function') {
-  console.log = function(message) {return message};
+  console.log = function(message) { return message; };
 }
 // Shim console.assert if it doesn't exist
 if (typeof console.assert !== 'function') {

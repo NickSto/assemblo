@@ -1,6 +1,7 @@
 'use strict';
-/* global Crafty, Game, HEAD, CONSENSUS, MAIN, BANK, PARAM, BASE_SIZE, GLOSSARY,
-          snap, calcConsensus, restartGame, startVideo, capitalize */
+/* global Crafty, Game, HEAD, CONSENSUS, MAIN, BANK, PARAM, POPUP, BASE_SIZE,
+          READ_LENGTH, GLOSSARY, snap, calcConsensus, restartGame, startVideo,
+          capitalize */
 /* exported makeUI, drawPanel, drawLine */
 
 /* User-adjustable parameters. Will fill PARAM panel.
@@ -112,7 +113,7 @@ function define(term) {
 // Shift all reads "shiftDist" pixels
 function shift(shiftDist) {
   var reads = Crafty('Read').get();
-  if (reads.length == 0) {
+  if (reads.length === 0) {
     return;
   }
   // Check if there's room to move everything in that direction.

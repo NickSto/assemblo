@@ -1,6 +1,6 @@
 'use strict';
 /* exported GAME, MAIN, HEAD, BASE_SIZE, READ_LENGTH, NUM_READS, COLORS, Z,
-            GLOSSARY */
+            GLOSSARY, POPUP */
 
 // Defines the size of each square in the grid.
 var BASE_SIZE = 40;
