@@ -103,6 +103,10 @@ function makeParams(paramData) {
 
 // Create a pop-up box giving a glossary definition for a term.
 function define(term) {
+  var popups = Crafty('Popup').get();
+  for (var i = 0; i < popups.length; i++) {
+    popups[i].destroy();
+  }
   var popup = Crafty.e('Popup');
   popup.title.string = capitalize(term);
   popup.body.string = GLOSSARY[term];
