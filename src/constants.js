@@ -30,6 +30,10 @@ var GLOSSARY = {
       'complicate genome assembly (try it out by changing read length in the '+
       'game!).',
   },
+  'depth': {
+    text: 'The average number of reads covering any one base in the genome. '+
+      'This should equal: (# of reads) * (read length) / (genome length).',
+  },
   'error': {
     video: 'assets/error.mp4',
     text: 'A mistake made by a sequencing machine when sequencing DNA. To a '+

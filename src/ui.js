@@ -12,9 +12,10 @@
  */
 var paramData = [
   {text1:'read length', default:READ_LENGTH},
+  {text1:'depth', w1:38, text2:'of', line2:'sequencing', default:'4x'},
   {text1:'error', w1:33, text2:'rate', default:'0.0'},
   {text1:'SNP', w1:28, text2:'rate', default:'0.0'},
-  {text1:'population size', default:'1'},
+  // {text1:'population size', default:'1'},
   {text1:'genome length', default:'20'},
 ];
 
@@ -78,7 +79,8 @@ function makeParamPanel() {
 // Draw each user-adjustable parameter box
 function makeParams(paramData) {
   var xMargin = 12;
-  var ySpace = 50;
+  var ySpace = 35;
+  var lineHeight = 15;
   var wBox = 25;
   var y = MAIN.y+5;
   for (var i = 0; i < paramData.length; i++) {
@@ -93,8 +95,14 @@ function makeParams(paramData) {
       Crafty.e('Writing')
         .attr({x:PARAM.x+xMargin+param.w1, y:y, string:param.text2});
     }
+    y += lineHeight;
+    if (param.line2 !== undefined) {
+      Crafty.e('Writing')
+        .attr({x:PARAM.x+xMargin, y:y, string:param.line2});
+      y += lineHeight;
+    }
     Crafty.e('Input')
-      .attr({h: 30, w:40, x:PARAM.x+10, y:y+15})
+      .attr({h: 30, w:40, x:PARAM.x+10, y:y})
       .attr({id:param.id, value:param.default, width:wBox});
     y += ySpace;
   }
