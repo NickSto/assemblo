@@ -13,8 +13,11 @@ var Game = {
   prng: new ToyPrng(),
   timeout: undefined,
   baseGrid: new BaseGrid(),
+  numReads: 7,
+  genomeLength: PARAMS.genomeLength.default,
   readLength: PARAMS.readLength.default,
   snpRate: PARAMS.snpRate.default,
+  depth: PARAMS.depth.default,
 };
 
 // Start the game:
@@ -48,14 +51,20 @@ function newGame(reference, seed) {
   }
   console.log('seed: '+seed);
   Game.prng = new ToyPrng(seed);
+  // Generate a reference sequence, if none given.
+  /// Make reference as long as the CONSENSUS panel is wide.
+  //TODO: Make it Game.genomeLength long, and change the panel size to fit.
+  Game.genomeLength = Math.floor(CONSENSUS.w/BASE_SIZE);
   if (reference === undefined) {
-    // Generate a reference as long as the panel is wide.
-    Game.reference = randSeq(Math.floor(CONSENSUS.w/BASE_SIZE));
+    Game.reference = randSeq(Game.genomeLength);
   } else {
     Game.reference = reference;
   }
   Game.consensus = makeConsensus(Game.reference.length);
   console.log("Shhh, the answer is "+Game.reference+"!");
+  // Generate the reads.
+  /// Calculate number of reads required for the desired depth of coverage.
+  Game.numReads = Math.round((Game.genomeLength*Game.depth) / Game.readLength);
   var reads = wgsim(Game.reference, NUM_READS, Game.readLength, 1, Game.snpRate);
   for (var i = 0; i < reads.length; i++) {
     var read = makeRead(reads[i], MAIN.x+i*BASE_SIZE, BANK.y+i*BASE_SIZE);

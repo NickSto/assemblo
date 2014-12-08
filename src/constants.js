@@ -16,7 +16,8 @@ var PARAMS = {
     default:8, type:'int', text1:'read length',
   },
   depth: {
-    default:4, type:'int', text1:'depth', w1:38, text2:'of', line2:'sequencing',
+    default:2.8, type:'float', text1:'depth', w1:38, text2:'of',
+    line2:'sequencing',
   },
   errorRate: {
     default:0.0, type:'float', text1:'error', w1:33, text2:'rate',
