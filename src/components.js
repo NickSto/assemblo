@@ -229,7 +229,7 @@ Crafty.c('Popup', {
       .color('#EEC')
       .css('border', '1px solid #424236')
       .text('X');
-    this.closeButton.z = Z.popupBit;
+    this.closeButton.z = Z.popup;
     this.attach(this.closeButton);
     this.closeButton.bind('Click', function() { this._parent.destroy(); });
     // Add the title
@@ -237,13 +237,13 @@ Crafty.c('Popup', {
       .attr({x:POPUP.x+this.margin, y:POPUP.y+this.margin,
              size:22, color:'#424236'});
     this.title.h = 35;
-    this.title.z = Z.popupBit;
+    this.title.z = Z.popup;
     this.attach(this.title);
     // Add the main text
     this.body = Crafty.e('Writing')
       .attr({x:POPUP.x+this.margin, y:POPUP.y+this.title.h+this.margin,
              size:16, color:'#424236'});
-    this.body.z = Z.popupBit;
+    this.body.z = Z.popup;
     this.attach(this.body);
   },
   addVideo: function(videoUrl, width, height) {
@@ -262,7 +262,7 @@ Crafty.c('Popup', {
     this.video._element.children[0].width = width;
     this.video._element.children[0].height = height;
     this.video.center('x');
-    this.video.z = Z.popupBit;
+    this.video.z = Z.popup;
     this.attach(this.video);
   },
 });
