@@ -13,8 +13,8 @@ var Game = {
   prng: new ToyPrng(),
   timeout: undefined,
   baseGrid: new BaseGrid(),
-  readLength: DEFAULTS.readLength,
-  snpRate: DEFAULTS.snpRate,
+  readLength: PARAMS.readLength.default,
+  snpRate: PARAMS.snpRate.default,
 };
 
 // Start the game:

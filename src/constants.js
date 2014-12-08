@@ -1,14 +1,27 @@
 'use strict';
-/* exported GAME, MAIN, HEAD, BASE_SIZE, DEFAULTS, NUM_READS, COLORS, Z,
-            GLOSSARY, POPUP */
+/* exported BASE_SIZE, PARAMS, PARAMS_ORDER, NUM_READS, HEAD, CONSENSUS, MAIN,
+            BANK, PARAM, POPUP, GAME, COLORS, Z, GLOSSARY */
 
 // Defines the size of each square in the grid.
 var BASE_SIZE = 40;
-var DEFAULTS = {
-  readLength: 8,
-  depth: 4,
-  snpRate: 0,
+/* User-adjustable parameters.
+ * Includes data to fill the PARAM panel:
+ * text1+text2 form the parameter label. "text1" will be highlighted in blue and
+ * clickable for a glossary definition. "text2" will be in the default color
+ * (black). "default" is the starting value of the parameter. "w1" is the width
+ * of "text1", to tell makeParams() where to draw "text2".
+ */
+var PARAMS = {
+  readLength: {text1:'read length', default:8},
+  depth: {text1:'depth', w1:38, text2:'of', line2:'sequencing', default:4},
+  errorRate: {text1:'error', w1:33, text2:'rate', default:0.0},
+  snpRate: {text1:'SNP', w1:28, text2:'rate', default:0.0},
+  popSize: {text1:'population size', default:1},
+  genomeLength: {text1:'genome length', default:20},
 };
+var PARAMS_ORDER = [
+  'readLength', 'depth', 'errorRate', 'snpRate', 'genomeLength'
+];
 var NUM_READS = 7;
 // Dimensions of the panels that make up the game area
 // x and y set where the top-left corner of the panel are.

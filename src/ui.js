@@ -1,23 +1,9 @@
 'use strict';
 /* global Crafty, Game, HEAD, CONSENSUS, MAIN, BANK, PARAM, POPUP, BASE_SIZE,
-          DEFAULTS, GLOSSARY, snap, calcConsensus, restartGame, startVideo,
-          capitalize */
+          PARAMS, PARAMS_ORDER, GLOSSARY, snap, calcConsensus, restartGame,
+          startVideo, capitalize */
 /* exported makeUI, drawPanel, drawLine */
 
-/* User-adjustable parameters. Will fill PARAM panel.
- * text1+text2 form the parameter label. "text1" will be highlighted in blue and
- * clickable for a glossary definition. "text2" will be in the default color
- * (black). "default" is the starting value of the parameter. "w1" is the width
- * of "text1", to tell makeParams() where to draw "text2".
- */
-var paramData = [
-  {text1:'read length', default:DEFAULTS.readLength},
-  {text1:'depth', w1:38, text2:'of', line2:'sequencing', default:'4x'},
-  {text1:'error', w1:33, text2:'rate', default:'0.0'},
-  {text1:'SNP', w1:28, text2:'rate', default:'0.0'},
-  // {text1:'population size', default:'1'},
-  {text1:'genome length', default:'20'},
-];
 
 // Make buttons, icons, controls, etc.
 function makeUI() {
@@ -66,7 +52,7 @@ function drawPanel(panel) {
 
 function makeParamPanel() {
   drawPanel(PARAM);
-  makeParams(paramData);
+  makeParams(PARAMS, PARAMS_ORDER);
   // Title/logo
   Crafty.e('Writing')
     .attr({x:PARAM.x+8, y:PARAM.y+13, string:'Assemblo', size:21, color:'#6600CC'});
@@ -77,14 +63,15 @@ function makeParamPanel() {
 
 
 // Draw each user-adjustable parameter box
-function makeParams(paramData) {
+function makeParams(params, paramsOrder) {
   var xMargin = 12;
   var ySpace = 35;
   var lineHeight = 15;
   var wBox = 25;
   var y = MAIN.y+5;
-  for (var i = 0; i < paramData.length; i++) {
-    var param = paramData[i];
+  for (var i = 0; i < paramsOrder.length; i++) {
+    var paramId = paramsOrder[i];
+    var param = params[paramId];
     if (param.text1 !== undefined) {
       Crafty.e('Writing, Mouse')
         .attr({x:PARAM.x+xMargin, y:y, string:param.text1, color:'#0000DD'})
@@ -103,7 +90,7 @@ function makeParams(paramData) {
     }
     Crafty.e('Input')
       .attr({h: 30, w:40, x:PARAM.x+10, y:y})
-      .attr({id:param.id, value:param.default, width:wBox});
+      .attr({id:'param_'+paramId, value:param.default, width:wBox});
     y += ySpace;
   }
 }
