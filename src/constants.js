@@ -12,15 +12,27 @@ var BASE_SIZE = 40;
  * of "text1", to tell makeParams() where to draw "text2".
  */
 var PARAMS = {
-  readLength: {text1:'read length', default:8},
-  depth: {text1:'depth', w1:38, text2:'of', line2:'sequencing', default:4},
-  errorRate: {text1:'error', w1:33, text2:'rate', default:0.0},
-  snpRate: {text1:'SNP', w1:28, text2:'rate', default:0.0},
-  popSize: {text1:'population size', default:1},
-  genomeLength: {text1:'genome length', default:20},
+  readLength: {
+    default:8, type:'int', text1:'read length',
+  },
+  depth: {
+    default:4, type:'int', text1:'depth', w1:38, text2:'of', line2:'sequencing',
+  },
+  errorRate: {
+    default:0.0, type:'float', text1:'error', w1:33, text2:'rate',
+  },
+  snpRate: {
+    default:0.0, type:'float', text1:'SNP', w1:28, text2:'rate',
+  },
+  popSize: {
+    default:1, type:'int', text1:'population size',
+  },
+  genomeLength: {
+    default:20, type:'int', text1:'genome length',
+  },
 };
 var PARAMS_ORDER = [
-  'readLength', 'depth', 'errorRate', 'snpRate', 'genomeLength'
+  'readLength', 'depth', 'errorRate', 'snpRate', 'genomeLength',
 ];
 var NUM_READS = 7;
 // Dimensions of the panels that make up the game area
