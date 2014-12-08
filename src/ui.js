@@ -96,22 +96,6 @@ function makeParams(params, paramsOrder) {
 }
 
 
-// Create a pop-up box giving a glossary definition for a term.
-function define(term) {
-  // var popups = Crafty('Popup').get();
-  // for (var i = 0; i < popups.length; i++) {
-  //   popups[i].destroy();
-  // }
-  var popup = Crafty.e('Popup');
-  popup.title.string = capitalize(term);
-  if (GLOSSARY[term].video !== undefined) {
-    popup.addVideo(GLOSSARY[term].video);
-  }
-  popup.body.string = GLOSSARY[term].text;
-  popup.body.w = POPUP.w - popup.margin;
-}
-
-
 function readParameters(game, params, paramsOrder) {
   for (var i = 0; i < paramsOrder.length; i++) {
     var paramId = paramsOrder[i];
@@ -136,6 +120,31 @@ function readParameters(game, params, paramsOrder) {
     game[paramId] = value;
   }
   return game;
+}
+
+
+// Create a pop-up box giving a glossary definition for a term.
+function define(term) {
+  // var popups = Crafty('Popup').get();
+  // for (var i = 0; i < popups.length; i++) {
+  //   popups[i].destroy();
+  // }
+  var popup = Crafty.e('Popup');
+  popup.title.string = capitalize(term);
+  if (GLOSSARY[term].video !== undefined) {
+    popup.addVideo(GLOSSARY[term].video);
+  }
+  popup.body.string = GLOSSARY[term].text;
+  popup.body.w = POPUP.w - popup.margin;
+}
+
+
+// Show the About page popup.
+function makeAbout() {
+  var about = Crafty.e('Popup');
+  about.title.string = 'About Assemblo';
+  about.body.string = ABOUT_TEXT;
+  about.body.w = POPUP.w - about.margin;
 }
 
 
