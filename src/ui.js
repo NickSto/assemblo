@@ -112,6 +112,33 @@ function define(term) {
 }
 
 
+function readParameters(game, params, paramsOrder) {
+  for (var i = 0; i < paramsOrder.length; i++) {
+    var paramId = paramsOrder[i];
+    var param = params[paramId];
+    var value = document.getElementById('param_'+paramId).value;
+    if (param.type === 'int') {
+      // Is value not a number? parseFloat() needed to make isNaN more reliable:
+      // https://stackoverflow.com/a/2652335
+      if (isNaN(parseFloat(value))) {
+        console.log('Error: Invalid parameter "'+paramId+'": "'+value+'"');
+      } else {
+        value = Math.round(+value);
+      }
+    } else if (param.type === 'float') {
+      // Is value not a number?
+      if (isNaN(parseFloat(value))) {
+        console.log('Error: Invalid parameter "'+paramId+'": "'+value+'"');
+      } else {
+        value = parseFloat(value);
+      }
+    }
+    game[paramId] = value;
+  }
+  return game;
+}
+
+
 // Shift all reads "shiftDist" pixels
 function shift(shiftDist) {
   var reads = Crafty('Read').get();

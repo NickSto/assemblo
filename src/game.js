@@ -1,7 +1,7 @@
 'use strict';
 /* global Crafty, GAME, HEAD, CONSENSUS, MAIN, BANK, PARAM, COLORS, BASE_SIZE,
-          DEFAULTS, NUM_READS, BASES, randSeq, wgsim, makeUI, startVideo,
-          ToyPrng, destroyAll */
+          DEFAULTS, NUM_READS, BASES, PARAMS, PARAMS_ORDER, randSeq, wgsim,
+          makeUI, startVideo, ToyPrng, destroyAll */
 /* exported startGame, newGame, destroyGame, restartGame, drawGrid */
 
 // Global game state
@@ -37,16 +37,19 @@ function startGame() {
  */
 function newGame(reference, seed) {
   drawGrid();
-  // Cancel any videos or animations that are currently running
+  // Cancel any videos or animations that are currently running.
   window.clearTimeout(Game.timeout);
   destroyAll('Video');
+  // Read the parameters in from the input panel.
+  Game = readParameters(Game, PARAMS, PARAMS_ORDER);
+  // Generate a PRNG seed if not given.
   if (seed === undefined) {
     seed = Date.now();
   }
   console.log('seed: '+seed);
   Game.prng = new ToyPrng(seed);
   if (reference === undefined) {
-    // Generate a reference as long as the panel is wide
+    // Generate a reference as long as the panel is wide.
     Game.reference = randSeq(Math.floor(CONSENSUS.w/BASE_SIZE));
   } else {
     Game.reference = reference;
