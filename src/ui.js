@@ -1,6 +1,6 @@
 'use strict';
 /* global Crafty, Game, HEAD, CONSENSUS, MAIN, BANK, PARAM, POPUP, BASE_SIZE,
-          READ_LENGTH, GLOSSARY, snap, calcConsensus, restartGame, startVideo,
+          DEFAULTS, GLOSSARY, snap, calcConsensus, restartGame, startVideo,
           capitalize */
 /* exported makeUI, drawPanel, drawLine */
 
@@ -11,7 +11,7 @@
  * of "text1", to tell makeParams() where to draw "text2".
  */
 var paramData = [
-  {text1:'read length', default:READ_LENGTH},
+  {text1:'read length', default:DEFAULTS.readLength},
   {text1:'depth', w1:38, text2:'of', line2:'sequencing', default:'4x'},
   {text1:'error', w1:33, text2:'rate', default:'0.0'},
   {text1:'SNP', w1:28, text2:'rate', default:'0.0'},

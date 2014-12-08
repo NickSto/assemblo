@@ -1,10 +1,14 @@
 'use strict';
-/* exported GAME, MAIN, HEAD, BASE_SIZE, READ_LENGTH, NUM_READS, COLORS, Z,
+/* exported GAME, MAIN, HEAD, BASE_SIZE, DEFAULTS, NUM_READS, COLORS, Z,
             GLOSSARY, POPUP */
 
 // Defines the size of each square in the grid.
 var BASE_SIZE = 40;
-var READ_LENGTH = 8;
+var DEFAULTS = {
+  readLength: 8,
+  depth: 4,
+  snpRate: 0,
+};
 var NUM_READS = 7;
 // Dimensions of the panels that make up the game area
 // x and y set where the top-left corner of the panel are.
