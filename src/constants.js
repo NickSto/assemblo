@@ -40,7 +40,7 @@ var PARAMS = {
 };
 // This determines which parameters show up in the interface, and in what order.
 var PARAMS_ORDER = [
-  'readLength', 'depth', 'errorRate', 'snpRate', 'genomeLength',
+  'readLength', 'depth', 'errorRate', 'genomeLength',
 ];
 
 var NUM_READS = 7;
@@ -102,7 +102,7 @@ var GLOSSARY = {
       'harmful at all and are just a source of genetic variation.',
   },
   popSize: {
-    title: 'Poupulation size',
+    title: 'Population size',
     video: 'assets/population.mp4',
     text: 'The number of people the sequence reads are coming from.',
   },

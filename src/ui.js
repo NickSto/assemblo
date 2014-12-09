@@ -61,6 +61,12 @@ function makeParamPanel() {
   // Parameters section header
   Crafty.e('Writing')
     .attr({x:PARAM.x+8, y:PARAM.y+110, string:'Parameters', size:14});
+  // Link to about page
+  Crafty.e('Writing, Mouse')
+    .attr({x:PARAM.x+12, y:PARAM.y+PARAM.h-23, string:"What's this?",
+           color:'#0000DD'})
+    .css('cursor', 'pointer')
+    .bind('Click', makeAbout);
 }
 
 
