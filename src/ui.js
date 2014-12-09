@@ -191,7 +191,7 @@ function makeApplications() {
   apps.title.string = 'Genome Assembly: What is it good for?';
   apps.body.string = APPLICATIONS;
   apps.body.w = apps.w - 2*apps.margin;
-  apps.h = apps.y + 520;
+  apps.h = apps.y + 530;
   //TODO: Figure out why closeButton's height keeps changing when apps.h does.
   apps.closeButton.h = 18;
   //TODO: Set highlightTerms to fire when the text is actually loaded, instead

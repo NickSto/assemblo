@@ -112,8 +112,8 @@ var GLOSSARY = {
     text: 'A genome is a copy of all the DNA used to make an organism. You, '+
       'if you\'re a human, have two copies of your genome - one from your mom '+
       'and one from your dad. Genomes come in all different sizes (the human '+
-      'genome is a whopping 3.3 <strong>billion</strong> base pairs in '+
-      'length!) and longer genomes are typically more different to assemble, '+
+      'genome is a whopping 3.3 <strong>billion</strong> nucleotides in '+
+      'length!) and longer genomes are typically harder to assemble, '+
       'usually because there are more pieces in these puzzles. Try this out '+
       'by increasing or decreasing the size of the genome in Assemblo.',
   },
