@@ -54,8 +54,10 @@ function makeParamPanel() {
   drawPanel(PARAM);
   makeParams(PARAMS, PARAMS_ORDER);
   // Title/logo
-  Crafty.e('Writing')
-    .attr({x:PARAM.x+8, y:PARAM.y+13, string:'Assemblo', size:21, color:'#6600CC'});
+  Crafty.e('Writing, Mouse')
+    .attr({x:PARAM.x+8, y:PARAM.y+13, string:'Assemblo', size:21, color:'#6600CC'})
+    .css('cursor', 'pointer')
+    .bind('Click', makeAbout);
   // Parameters section header
   Crafty.e('Writing')
     .attr({x:PARAM.x+8, y:PARAM.y+110, string:'Parameters', size:14});
@@ -145,6 +147,11 @@ function makeAbout() {
   var about = Crafty.e('Popup');
   about.title.string = 'About Assemblo';
   about.addMedia('image', 'assets/logo.png');
+  // Place the image in the upper right, adjust body text position to match.
+  //TODO: Replace x positioning kludge with one based on detected image size.
+  about.media.x = about.x + about.w - 336;
+  about.media.y = about.y + about.margin;
+  about.body.y = about.media.y + about.media.h + about.margin;
   about.body.string = ABOUT_TEXT;
   about.body.w = POPUP.w - about.margin;
 }
