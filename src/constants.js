@@ -117,13 +117,31 @@ var GLOSSARY = {
       'usually because there are more pieces in these puzzles. Try this out '+
       'by increasing or decreasing the size of the genome in Assemblo.',
   },
+  denovo: {
+    title: '<em>De novo</em> assembly',
+    text: 'Sequencing and assembly of a genome without knowing beforehand how '+
+      'it goes together. Examples of <em>de novo</em> assemblers (besides '+
+      'Assemblo!) include: SSAKE, SHARCGS, VCAKE, Newbler, Celera Assembler, '+
+      'Euler, Velvet, ABySS, AllPaths, and SOAPdenovo.',
+  },
+  reference: {
+    title: 'Reference genome',
+    text: 'An already assembled genome that is used to represent an '+
+      'organism\'s set of genes. These are often assembled from a '+
+      'population individuals, so a reference genome is rarely an accurate '+
+      'set of genes from a single person or individual. An assembled '+
+      'reference genome is used as a comparison for other applications of '+
+      'genome sequencing.',
+  },
 };
 
 var ABOUT_TEXT = 'Assemblo was created to teach the public about '+
   '<a class="term" data-term="genome">genome</a> '+
   'assembly, a necessary first step for any genomics application. This '+
-  'interactive game demonstrates the process of de novo assembly, the most '+
-  'common method to create a reference genome. To play, simply press "New '+
+  'interactive game demonstrates the process of <a class="term" '+
+  'data-term="denovo"><em>de novo</em> assembly</a>, '+
+  'the most common method to create a <a class="term" data-term="reference">'+
+  'reference</a> genome. To play, simply press "New '+
   'Game" and slide the <a class="term" data-term="read">reads</a> in '+
   'the bottom half of the screen to create an '+
   'assembled sequence, shown at the top of the screen. You know you\'ve '+
@@ -136,4 +154,34 @@ var ABOUT_TEXT = 'Assemblo was created to teach the public about '+
   'vIHqtAX6f_AwsWCWQB4QZTf5lI/viewform">click here</a> to take a short survey '+
   'about how we can improve the Assemblo game.';
 
+var APPLICATIONS = 'Genome assembly opens up countless possibilities for the '+
+  'real-world applications of genomics. With a well-assembled <a class="term"'+
+  'data-term="reference">reference genome</a>, we can: <ul>'+
+  '<li>sequence microbes (such as bacteria and viruses) to better understand '+
+    'drug resistance to create treatments</li>'+
+  '<li>map cancer genomes to a reference to try to narrow down a '+
+    'cancer-causing mutation in a gene</li>'+
+  '<li>improve disease and genetic-disorder screening of newborns in order to '+
+    'avoid delaying treatment</li>'+
+  '<li>determine a person\'s response to certain drugs (called '+
+    'pharmacogenomics)</li>'+
+  '<li>use well-studied genetic markers to assess a person\'s risk for '+
+    'certain diseases (for a cool story on how a scientist used his genome '+
+    'sequence to discover his risk for diabetes and then track the '+
+    'development of his disease, read <a target="_blank" href="http://news.'+
+    'sciencemag.org/biology/2012/03/examining-his-own-body-stanford-geneticist'+
+    '-stops-diabetes-its-tracks">Dr. Michael Snyder\'s story</a>).'+
+  '</ul>Genome assembly and sequencing is awesome, right? It can tell us '+
+  'everything we want to know about ourselves, right? Wrong (kind of). As '+
+  'much as sequencing your genome may be able to tell you if you\'re at a '+
+  'higher risk for diabetes, or why your body doesn\'t process a certain '+
+  'medicine well, there are plenty of things we don\'t know about the human '+
+  'genome. Due to repetitive elements and other hard-to-sequence spots, the '+
+  'human reference genome isn\'t complete. Also, scientists currently still '+
+  'know very little about how to interpret a lot of genome sequence data. '+
+  'James Watson, one of the discoverers of the structure of DNA, had his '+
+  'genome sequenced and found nothing more interesting than a gene that makes '+
+  'him more sensitive to blood pressure medicine. Although not yet perfect, '+
+  'genome sequencing is the future of medicine, and it all begins with a well-'+
+  'assembled genome.';
 
