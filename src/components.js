@@ -238,7 +238,7 @@ Crafty.c('Popup', {
     this.title = Crafty.e('Writing')
       .attr({x:this.x+this.margin, y:this.y+this.margin,
              size:22, color:this.linesColor});
-    this.title.h = 35;
+    this.title.h = 25;
     this.title.z = Z.popup;
     this.attach(this.title);
     // Add the main text
@@ -253,7 +253,7 @@ Crafty.c('Popup', {
     console.assert(type === 'video' || type === 'image',
                    'Error: Media type must be "video" or "image".');
     this.media = Crafty.e(capitalize(type))
-      .attr({x:this.x+this.margin, y:this.y+this.title.h+this.margin});
+      .attr({x:this.x+this.margin, y:this.title.y+this.title.h+this.margin});
     // Add the HTML element for the media.
     if (type === 'video') {
       this.media
@@ -274,7 +274,7 @@ Crafty.c('Popup', {
       mediaElement.width = width;
       this.media.h = height;
       mediaElement.height = height;
-      this.body.y += this.media.h + this.margin;
+      this.body.y = this.media.y + this.media.h + this.margin;
     }
     this.attach(this.media);
   },
