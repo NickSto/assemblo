@@ -143,6 +143,7 @@ function define(term) {
 function makeAbout() {
   var about = Crafty.e('Popup');
   about.title.string = 'About Assemblo';
+  about.addImage('assets/logo.png');
   about.body.string = ABOUT_TEXT;
   about.body.w = POPUP.w - about.margin;
 }

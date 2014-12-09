@@ -265,6 +265,19 @@ Crafty.c('Popup', {
     this.video.z = Z.popup;
     this.attach(this.video);
   },
+  addImage: function(imgUrl) {
+    console.assert(this.video === undefined, 'Error: Cannot yet have both an '+
+                   'image and a video in a popup.');
+    this.img = Crafty.e('Video')
+      .attr({x:POPUP.x+this.margin, y:POPUP.y+this.title.h+this.margin})
+      .append('<img src="'+imgUrl+'"></img>');
+    var imgElem = this.img._element.children[0];
+    this.img.w = imgElem.width;
+    this.img.h = imgElem.height;
+    this.body.y += this.img.h+this.margin;
+    this.img.z = Z.popup;
+    this.attach(this.img);
+  },
 });
 
 Crafty.c('Input', {
