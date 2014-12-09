@@ -124,9 +124,11 @@ function readParameters(game, params, paramsOrder) {
 function highlightTerms() {
   var terms = document.getElementsByClassName('term');
   for (var i = 0; i < terms.length; i++) {
-    terms[i].style.color = '#00D';
-    terms[i].style.cursor = 'pointer';
-    terms[i].onclick = define;
+    if (terms[i].onclick !== undefined) {
+      terms[i].style.color = '#00D';
+      terms[i].style.cursor = 'pointer';
+      terms[i].onclick = define;
+    }
   }
 }
 
@@ -165,6 +167,10 @@ function makeAbout() {
   about.body.y = about.media.y + about.media.h + about.margin;
   about.body.string = ABOUT_TEXT;
   about.body.w = about.w - 2*about.margin;
+  //TODO: Set highlightTerms to fire when the text is actually loaded, instead
+  //      of this kludge.
+  window.setTimeout(highlightTerms, 200);
+  window.setTimeout(highlightTerms, 1000);
 }
 
 

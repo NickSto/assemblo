@@ -60,22 +60,7 @@ var POPUP = {x: MAIN.x+(100/2), y: 75, w: MAIN.w-100, h: 535};
 // Size of entire Crafty game area
 var GAME = {w: PARAM.x+PARAM.w+1, h: 1+BANK.y+BANK.h};
 
-// Text for the UI
-var ABOUT_TEXT = 'Assemblo was created to teach the public about genome '+
-  'assembly, a necessary first step for any genomics application. This '+
-  'interactive game demonstrates the process of de novo assembly, the most '+
-  'common method to create a reference genome. To play, simply press "New '+
-  'Game" and slide the <a class="term" data-term="readLength">reads</a> in '+
-  'the bottom half of the screen to create an '+
-  'assembled sequence, shown at the top of the screen. You know you\'ve '+
-  'assembled the sequence correctly when you see a green check! If you want '+
-  'to increase the difficulty, try changing the parameters on the right side. '+
-  'If you\'re confused about any terms you see, click on the word or click '+
-  'the glossary. To learn more about the applications of genome assembly, '+
-  'click here. If you want to give us feedback on Assemblo (please do!) '+
-  '<a target="_blank" href="https://docs.google.com/forms/d/1g7CHvc35_7inTc3os'+
-  'vIHqtAX6f_AwsWCWQB4QZTf5lI/viewform">click here</a> to take a short survey '+
-  'about how we can improve the Assemblo game.';
+/* Text for the UI */
 
 var GLOSSARY = {
   readLength: {
@@ -133,3 +118,21 @@ var GLOSSARY = {
       'by increasing or decreasing the size of the genome in Assemblo.',
   },
 };
+
+var ABOUT_TEXT = 'Assemblo was created to teach the public about genome '+
+  'assembly, a necessary first step for any genomics application. This '+
+  'interactive game demonstrates the process of de novo assembly, the most '+
+  'common method to create a reference genome. To play, simply press "New '+
+  'Game" and slide the <a class="term" data-term="readLength">reads</a> in '+
+  'the bottom half of the screen to create an '+
+  'assembled sequence, shown at the top of the screen. You know you\'ve '+
+  'assembled the sequence correctly when you see a green check! If you want '+
+  'to increase the difficulty, try changing the parameters on the right side. '+
+  'If you\'re confused about any terms you see, click on the word or click '+
+  'the glossary. To learn more about the applications of genome assembly, '+
+  'click here. If you want to give us feedback on Assemblo (please do!) '+
+  '<a target="_blank" href="https://docs.google.com/forms/d/1g7CHvc35_7inTc3os'+
+  'vIHqtAX6f_AwsWCWQB4QZTf5lI/viewform">click here</a> to take a short survey '+
+  'about how we can improve the Assemblo game.';
+
+
