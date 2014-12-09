@@ -62,6 +62,7 @@ function makeParamPanel() {
   Crafty.e('Writing')
     .attr({x:PARAM.x+8, y:PARAM.y+110, string:'Parameters', size:14});
   // Link to about page
+  //TODO: Replace with "About" button in top bar.
   Crafty.e('Writing, Mouse')
     .attr({x:PARAM.x+12, y:PARAM.y+PARAM.h-23, string:"What's this?",
            color:'#0000DD'})
@@ -136,6 +137,11 @@ function highlightTerms() {
       terms[i].onclick = define;
     }
   }
+  var links = document.getElementsByClassName('link');
+  for (var i = 0; i < links.length; i++) {
+    links[i].style.color = '#00D';
+    links[i].style.cursor = 'pointer';
+  }
 }
 
 
@@ -173,6 +179,21 @@ function makeAbout() {
   about.body.y = about.media.y + about.media.h + about.margin;
   about.body.string = ABOUT_TEXT;
   about.body.w = about.w - 2*about.margin;
+  //TODO: Set highlightTerms to fire when the text is actually loaded, instead
+  //      of this kludge.
+  window.setTimeout(highlightTerms, 200);
+  window.setTimeout(highlightTerms, 1000);
+}
+
+
+function makeApplications() {
+  var apps = Crafty.e('Popup');
+  apps.title.string = 'Genome Assembly: What is it good for?';
+  apps.body.string = APPLICATIONS;
+  apps.body.w = apps.w - 2*apps.margin;
+  apps.h = apps.y + 520;
+  //TODO: Figure out why closeButton's height keeps changing when apps.h does.
+  apps.closeButton.h = 18;
   //TODO: Set highlightTerms to fire when the text is actually loaded, instead
   //      of this kludge.
   window.setTimeout(highlightTerms, 200);

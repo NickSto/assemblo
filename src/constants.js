@@ -147,9 +147,9 @@ var ABOUT_TEXT = 'Assemblo was created to teach the public about '+
   'assembled sequence, shown at the top of the screen. You know you\'ve '+
   'assembled the sequence correctly when you see a green check! If you want '+
   'to increase the difficulty, try changing the parameters on the right side. '+
-  'If you\'re confused about any terms you see, click on the word or click '+
-  'the glossary. To learn more about the applications of genome assembly, '+
-  'click here. If you want to give us feedback on Assemblo (please do!) '+
+  'To learn more about the applications of genome assembly, '+
+  '<a class="link" onclick="makeApplications()">click here</a>. If you want '+
+  'to give us feedback on Assemblo (please do!) '+
   '<a target="_blank" href="https://docs.google.com/forms/d/1g7CHvc35_7inTc3os'+
   'vIHqtAX6f_AwsWCWQB4QZTf5lI/viewform">click here</a> to take a short survey '+
   'about how we can improve the Assemblo game.';

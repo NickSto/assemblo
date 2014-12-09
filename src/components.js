@@ -243,7 +243,7 @@ Crafty.c('Popup', {
     this.attach(this.title);
     // Add the main text
     this.body = Crafty.e('Writing')
-      .attr({x:this.x+this.margin, y:this.y+this.title.h+this.margin,
+      .attr({x:this.x+this.margin, y:this.y+this.title.h+2*this.margin,
              size:16, color:this.linesColor});
     this.body.z = Z.popup;
     this.attach(this.body);
