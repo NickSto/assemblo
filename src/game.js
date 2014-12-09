@@ -16,6 +16,7 @@ var Game = {
   numReads: 7,
   genomeLength: PARAMS.genomeLength.default,
   readLength: PARAMS.readLength.default,
+  errorRate: PARAMS.errorRate.default,
   snpRate: PARAMS.snpRate.default,
   depth: PARAMS.depth.default,
 };
@@ -65,7 +66,7 @@ function newGame(reference, seed) {
   // Generate the reads.
   /// Calculate number of reads required for the desired depth of coverage.
   Game.numReads = Math.round((Game.genomeLength*Game.depth) / Game.readLength);
-  var reads = wgsim(Game.reference, NUM_READS, Game.readLength, 1, Game.snpRate);
+  var reads = wgsim(Game.reference, NUM_READS, Game.readLength, 1, Game.errorRate);
   for (var i = 0; i < reads.length; i++) {
     var read = makeRead(reads[i], MAIN.x+i*BASE_SIZE, BANK.y+i*BASE_SIZE);
     // var read = Crafty.e('Read')

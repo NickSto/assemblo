@@ -77,7 +77,7 @@ function randSeq(length) {
  * least "minCoverage" reads (omit it or set it to 0 to eliminate that
  * constraint).
  */
-function wgsim(reference, numReads, readLength, minCoverage, snpRate) {
+function wgsim(reference, numReads, readLength, minCoverage, errorRate) {
   if (minCoverage === undefined) {
     minCoverage = 0;
   }
@@ -94,32 +94,32 @@ function wgsim(reference, numReads, readLength, minCoverage, snpRate) {
   }
   for (var i = 0; i < numReads; i++) {
     var start = Game.prng.randInt(reference.length - readLength);
-    var readData = getRead(reference, start, readLength, coverage, snpRate);
+    var readData = getRead(reference, start, readLength, coverage, errorRate);
     starts[i] = start;
     reads[i] = readData.read;
     coverage = readData.coverage;
   }
   return fixCoverage(reads, starts, coverage, minCoverage, reference,
-                     readLength, snpRate);
+                     readLength, errorRate);
 }
 
 
 /* Generate a read of length "readLength" from the sequence "reference"
- * starting at coordinate "start", with an error rate "snpRate" and increment
+ * starting at coordinate "start", with an error rate "errorRate" and increment
  * the covered bases in the "coverage" array.
  * Returns an object with the read sequence ("read") and the coverage array
  * ("coverage").
  */
-function getRead(reference, start, readLength, coverage, snpRate, indelRate) {
+function getRead(reference, start, readLength, coverage, errorRate, indelRate) {
   console.assert(indelRate === undefined, "Error: indelRate not yet supported "+
          "in getRead().");
   var read = reference.substring(start, start+readLength);
   // actualLength can be different, once indels are implemented.
   var actualLength = readLength;
-  // Mutate bases randomly according to snpRate.
-  if (snpRate !== undefined && snpRate > 0) {
+  // Mutate bases randomly according to errorRate.
+  if (errorRate !== undefined && errorRate > 0) {
     for (var i = 0; i < actualLength; i++) {
-      if (Game.prng.random() < snpRate) {
+      if (Game.prng.random() < errorRate) {
         read = replaceChar(read, i, randBase());
       }
     }
@@ -134,7 +134,7 @@ function getRead(reference, start, readLength, coverage, snpRate, indelRate) {
 
 // Make sure all bases are covered by at least minCoverage reads.
 function fixCoverage(reads, starts, coverage, minCoverage, reference,
-                     readLength, snpRate) {
+                     readLength, errorRate) {
   var tries = 0;
   while (tries < 50) {
     var peak = getCoveragePeak(coverage);
@@ -169,7 +169,7 @@ function fixCoverage(reads, starts, coverage, minCoverage, reference,
       max = reference.length - readLength;
     }
     var start = min + Game.prng.randInt(max - min + 1);
-    var readData = getRead(reference, start, readLength, coverage, snpRate);
+    var readData = getRead(reference, start, readLength, coverage, errorRate);
     starts[r] = start;
     reads[r] = readData.read;
     coverage = readData.coverage;
