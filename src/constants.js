@@ -127,11 +127,11 @@ var GLOSSARY = {
   reference: {
     title: 'Reference genome',
     text: 'An already assembled genome that is used to represent an '+
-      'organism\'s set of genes. These are often assembled from a '+
-      'population individuals, so a reference genome is rarely an accurate '+
-      'set of genes from a single person or individual. An assembled '+
+      'organism\'s set of genes. An assembled '+
       'reference genome is used as a comparison for other applications of '+
-      'genome sequencing.',
+      'genome sequencing. Sometimes these are assembled from a '+
+      'population of individuals, in which case there can be differences '+
+      'between it and any real genome that exists in nature!',
   },
 };
 
