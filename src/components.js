@@ -216,33 +216,35 @@ Crafty.c('Writing', {
 Crafty.c('Popup', {
   init: function() {
     this.requires('2D, DOM, Color')
-      .attr(POPUP)
-      .color('#EEC')
-      .z = Z.popup;
+      .attr(POPUP);
+    this.linesColor = '#424236';
+    this.fillColor = '#EEC';
+    this.color(this.fillColor);
+    this.z = Z.popup;
+    this.css('border', '1px solid '+this.linesColor);
     this.margin = 10;
-    this.css('border', '1px solid #424236');
     // Add a close button
     this.closeButton = Crafty.e('Button')
       .textFont({size: '16px'})
-      .textColor('#424236')
-      .attr({x:POPUP.x+POPUP.w-18-this.margin, y:POPUP.y+this.margin, w:18, h:18})
-      .color('#EEC')
-      .css('border', '1px solid #424236')
+      .textColor(this.linesColor)
+      .attr({x:this.x+this.w-18-this.margin, y:this.y+this.margin, w:18, h:18})
+      .color(this.fillColor)
+      .css('border', '1px solid '+this.linesColor)
       .text('X');
     this.closeButton.z = Z.popup;
     this.attach(this.closeButton);
     this.closeButton.bind('Click', function() { this._parent.destroy(); });
     // Add the title
     this.title = Crafty.e('Writing')
-      .attr({x:POPUP.x+this.margin, y:POPUP.y+this.margin,
-             size:22, color:'#424236'});
+      .attr({x:this.x+this.margin, y:this.y+this.margin,
+             size:22, color:this.linesColor});
     this.title.h = 35;
     this.title.z = Z.popup;
     this.attach(this.title);
     // Add the main text
     this.body = Crafty.e('Writing')
-      .attr({x:POPUP.x+this.margin, y:POPUP.y+this.title.h+this.margin,
-             size:16, color:'#424236'});
+      .attr({x:this.x+this.margin, y:this.y+this.title.h+this.margin,
+             size:16, color:this.linesColor});
     this.body.z = Z.popup;
     this.attach(this.body);
   },
@@ -251,12 +253,12 @@ Crafty.c('Popup', {
     console.assert(type === 'video' || type === 'image',
                    'Error: Media type must be "video" or "image".');
     this.media = Crafty.e(capitalize(type))
-      .attr({x:POPUP.x+this.margin, y:POPUP.y+this.title.h+this.margin});
+      .attr({x:this.x+this.margin, y:this.y+this.title.h+this.margin});
     // Add the HTML element for the media.
     if (type === 'video') {
       this.media
         .append('<video autoplay controls src="'+url+'"></video>')
-        .css('border', '1px solid #424236');
+        .css('border', '1px solid '+this.linesColor);
     } else if (type === 'image') {
       this.media
         .append('<img src="'+url+'"></img>');
@@ -284,7 +286,7 @@ Crafty.c('Popup', {
     var popup = Crafty(parentId)._parent;
     popup.media.w = this.width;
     popup.media.h = this.height;
-    popup.body.y += popup.media.h + popup.margin;
+    popup.body.y = popup.media.y + popup.media.h + popup.margin;
   },
 });
 
