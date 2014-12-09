@@ -74,15 +74,9 @@ function makeParams(params, paramsOrder) {
   for (var i = 0; i < paramsOrder.length; i++) {
     var paramId = paramsOrder[i];
     var param = params[paramId];
-    if (param.text1 !== undefined) {
-      Crafty.e('Writing, Mouse')
-        .attr({x:PARAM.x+xMargin, y:y, string:param.text1, color:'#0000DD'})
-        .css('cursor', 'pointer')
-        .bind('Click', function() { define(this.string); });
-    }
-    if (param.text2 !== undefined) {
+    if (param.text !== undefined) {
       Crafty.e('Writing')
-        .attr({x:PARAM.x+xMargin+param.w1, y:y, string:param.text2});
+        .attr({x:PARAM.x+xMargin, y:y, string:param.text});
     }
     y += lineHeight;
     if (param.line2 !== undefined) {
@@ -95,6 +89,7 @@ function makeParams(params, paramsOrder) {
       .attr({id:'param_'+paramId, value:param.default, width:wBox});
     y += ySpace;
   }
+  window.setTimeout(highlightTerms, 100);
 }
 
 
@@ -125,19 +120,35 @@ function readParameters(game, params, paramsOrder) {
 }
 
 
+// Highlight and link text marked up as glossary terms
+function highlightTerms() {
+  var terms = document.getElementsByClassName('term');
+  for (var i = 0; i < terms.length; i++) {
+    terms[i].style.color = '#00D';
+    terms[i].style.cursor = 'pointer';
+    terms[i].onclick = define;
+  }
+}
+
+
 // Create a pop-up box giving a glossary definition for a term.
-function define(term) {
+function define() {
+  var term = this.attributes['data-term'].value;
+  var termEntry = GLOSSARY[term];
+  if (termEntry === undefined) {
+    return;
+  }
   // var popups = Crafty('Popup').get();
   // for (var i = 0; i < popups.length; i++) {
   //   popups[i].destroy();
   // }
   var popup = Crafty.e('Popup');
-  popup.title.string = capitalize(term);
-  if (GLOSSARY[term].video !== undefined) {
-    popup.addMedia('video', GLOSSARY[term].video, 480, 300);
+  popup.title.string = termEntry.title;
+  if (termEntry.video !== undefined) {
+    popup.addMedia('video', termEntry.video, 480, 300);
     popup.media.center('x');
   }
-  popup.body.string = GLOSSARY[term].text;
+  popup.body.string = termEntry.text;
   popup.body.w = popup.w - 2*popup.margin;
 }
 
