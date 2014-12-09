@@ -15,7 +15,7 @@ var BASE_SIZE = 40;
 var PARAMS = {
   readLength: {
     default:8, type:'int',
-    text:'<a class="term" data-term="readLength">read length</a>',
+    text:'<a class="term" data-term="read">read</a> length',
   },
   depth: {
     default:2.8, type:'float',
@@ -35,7 +35,7 @@ var PARAMS = {
   },
   genomeLength: {
     default:20, type:'int',
-    text:'<a class="term" data-term="genomeLength">genome length</a>',
+    text:'<a class="term" data-term="genome">genome</a> length',
   },
 };
 // This determines which parameters show up in the interface, and in what order.
@@ -63,8 +63,8 @@ var GAME = {w: PARAM.x+PARAM.w+1, h: 1+BANK.y+BANK.h};
 /* Text for the UI */
 
 var GLOSSARY = {
-  readLength: {
-    title: 'Read length',
+  read: {
+    title: 'Read',
     video: 'assets/readlength.mp4',
     text: 'A read is a short sequence of DNA created by a sequencing machine. '+
       'They can differ in length depending on the machine, which can '+
@@ -89,7 +89,7 @@ var GLOSSARY = {
       'can complicate an assembly, try increasing the error rate before '+
       'playing your next Assemblo game.',
   },
-  snpRate: {
+  snp: {
     title: 'SNP',
     video: 'assets/snp.mp4',
     text: 'Short for single nucleotide polymorphism, which basically means '+
@@ -106,8 +106,8 @@ var GLOSSARY = {
     video: 'assets/population.mp4',
     text: 'The number of people the sequence reads are coming from.',
   },
-  genomeLength: {
-    title: 'Genome length',
+  genome: {
+    title: 'Genome',
     video: 'assets/genomesize.mp4',
     text: 'A genome is a copy of all the DNA used to make an organism. You, '+
       'if you\'re a human, have two copies of your genome - one from your mom '+
@@ -119,11 +119,12 @@ var GLOSSARY = {
   },
 };
 
-var ABOUT_TEXT = 'Assemblo was created to teach the public about genome '+
+var ABOUT_TEXT = 'Assemblo was created to teach the public about '+
+  '<a class="term" data-term="genome">genome</a> '+
   'assembly, a necessary first step for any genomics application. This '+
   'interactive game demonstrates the process of de novo assembly, the most '+
   'common method to create a reference genome. To play, simply press "New '+
-  'Game" and slide the <a class="term" data-term="readLength">reads</a> in '+
+  'Game" and slide the <a class="term" data-term="read">reads</a> in '+
   'the bottom half of the screen to create an '+
   'assembled sequence, shown at the top of the screen. You know you\'ve '+
   'assembled the sequence correctly when you see a green check! If you want '+
