@@ -64,6 +64,8 @@ var ABOUT_TEXT = 'Assemblo was created to teach the public about genome '+
   'the glossary. To learn more about the applications of genome assembly, '+
   'click here. If you want to give us feedback on Assemblo (please do!) click '+
   'here to take a short survey about how we can improve the Assemblo game.';
+var SURVEY_URL = 'https://docs.google.com/forms/d/1g7CHvc35_7inTc3osvIHqtAX6f_'+
+                 'AwsWCWQB4QZTf5lI/viewform';
 
 var GLOSSARY = {
   'read length': {
@@ -74,8 +76,12 @@ var GLOSSARY = {
       'game!).',
   },
   'depth': {
-    text: 'The average number of reads covering any one base in the genome. '+
-      'This should equal: (# of reads) * (read length) / (genome length).',
+    video: 'assets/depth.mp4',
+    text: 'The average number of reads covering each DNA nucleotide in the '+
+      'genome. Increasing the sequencing depth makes it easier to assemble a '+
+      'genome and account for errors! You can calculate the number of reads '+
+      'your sequencing machine needs to generate to reach a particular depth '+
+      'with this formula: Depth = Reads * ReadLength / GenomeLength.',
   },
   'error': {
     video: 'assets/error.mp4',
@@ -97,9 +103,11 @@ var GLOSSARY = {
       'harmful at all and are just a source of genetic variation.',
   },
   'population size': {
+    video: 'assets/population.mp4',
     text: 'The number of people the sequence reads are coming from.',
   },
   'genome length': {
+    video: 'assets/genomesize.mp4',
     text: 'A genome is a copy of all the DNA used to make an organism. You, '+
       'if you\'re a human, have two copies of your genome - one from your mom '+
       'and one from your dad. Genomes come in all different sizes (the human '+
