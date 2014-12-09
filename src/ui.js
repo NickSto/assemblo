@@ -132,7 +132,8 @@ function define(term) {
   var popup = Crafty.e('Popup');
   popup.title.string = capitalize(term);
   if (GLOSSARY[term].video !== undefined) {
-    popup.addVideo(GLOSSARY[term].video);
+    popup.addMedia('video', GLOSSARY[term].video, 480, 300);
+    popup.media.center('x');
   }
   popup.body.string = GLOSSARY[term].text;
   popup.body.w = POPUP.w - popup.margin;
@@ -143,7 +144,7 @@ function define(term) {
 function makeAbout() {
   var about = Crafty.e('Popup');
   about.title.string = 'About Assemblo';
-  about.addImage('assets/logo.png');
+  about.addMedia('image', 'assets/logo.png');
   about.body.string = ABOUT_TEXT;
   about.body.w = POPUP.w - about.margin;
 }

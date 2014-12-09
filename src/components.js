@@ -246,37 +246,40 @@ Crafty.c('Popup', {
     this.body.z = Z.popup;
     this.attach(this.body);
   },
-  addVideo: function(videoUrl, width, height) {
-    if (width === undefined) {
-      width = 480;
+  // Add an image or video above the popup text.
+  addMedia: function(type, url, width, height) {
+    console.assert(type === 'video' || type === 'image',
+                   'Error: Media type must be "video" or "image".');
+    this.media = Crafty.e(capitalize(type))
+      .attr({x:POPUP.x+this.margin, y:POPUP.y+this.title.h+this.margin});
+    // Add the HTML element for the media.
+    if (type === 'video') {
+      this.media
+        .append('<video autoplay controls src="'+url+'"></video>')
+        .css('border', '1px solid #424236');
+    } else if (type === 'image') {
+      this.media
+        .append('<img src="'+url+'"></img>');
     }
-    if (height === undefined) {
-      height = 300;
+    this.media.z = Z.popup;
+    // Set the height and width, either as given in arguments or detected from
+    // the media itself.
+    //TODO: set an event on the element's onload to fix the dimensions.
+    var mediaElement = this.media._element.children[0];
+    if (height !== undefined) {
+      this.media.h = height;
+      mediaElement.height = height;
+    } else {
+      this.media.h = mediaElement.height;
     }
-    this.body.y += height+this.margin;
-    this.video = Crafty.e('Video')
-      .attr({x:POPUP.x+this.margin, y:POPUP.y+this.title.h+this.margin,
-             w:width, h:height})
-      .append("<video autoplay controls src='"+videoUrl+"'></video>")
-      .css('border', '1px solid #424236');
-    this.video._element.children[0].width = width;
-    this.video._element.children[0].height = height;
-    this.video.center('x');
-    this.video.z = Z.popup;
-    this.attach(this.video);
-  },
-  addImage: function(imgUrl) {
-    console.assert(this.video === undefined, 'Error: Cannot yet have both an '+
-                   'image and a video in a popup.');
-    this.img = Crafty.e('Image')
-      .attr({x:POPUP.x+this.margin, y:POPUP.y+this.title.h+this.margin})
-      .append('<img src="'+imgUrl+'"></img>');
-    var imgElem = this.img._element.children[0];
-    this.img.w = imgElem.width;
-    this.img.h = imgElem.height;
-    this.body.y += this.img.h+this.margin;
-    this.img.z = Z.popup;
-    this.attach(this.img);
+    if (width !== undefined) {
+      this.media.w = width;
+      mediaElement.width = width;
+    } else {
+      this.media.w = mediaElement.width;
+    }
+    this.body.y += this.media.h + this.margin;
+    this.attach(this.media);
   },
 });
 
