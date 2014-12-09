@@ -264,22 +264,27 @@ Crafty.c('Popup', {
     this.media.z = Z.popup;
     // Set the height and width, either as given in arguments or detected from
     // the media itself.
-    //TODO: set an event on the element's onload to fix the dimensions.
     var mediaElement = this.media._element.children[0];
-    if (height !== undefined) {
-      this.media.h = height;
-      mediaElement.height = height;
+    if (width === undefined || height === undefined) {
+      mediaElement.onload = this._setMediaDimensions;
     } else {
-      this.media.h = mediaElement.height;
-    }
-    if (width !== undefined) {
       this.media.w = width;
       mediaElement.width = width;
-    } else {
-      this.media.w = mediaElement.width;
+      this.media.h = height;
+      mediaElement.height = height;
+      this.body.y += this.media.h + this.margin;
     }
-    this.body.y += this.media.h + this.margin;
     this.attach(this.media);
+  },
+  // Once the media has loaded, set the height and width, and adjust the text
+  // position. N.B.: In this function, "this" is the image HTMLElement.
+  _setMediaDimensions: function() {
+    var parentId = +this.parentElement.id.slice(3);
+    console.assert(! isNaN(parseFloat(parentId)));
+    var popup = Crafty(parentId)._parent;
+    popup.media.w = this.width;
+    popup.media.h = this.height;
+    popup.body.y += popup.media.h + popup.margin;
   },
 });
 
