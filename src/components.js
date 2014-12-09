@@ -254,11 +254,11 @@ Crafty.c('Popup', {
       height = 300;
     }
     this.body.y += height+this.margin;
-    this.video = Crafty.e("Video")
+    this.video = Crafty.e('Video')
       .attr({x:POPUP.x+this.margin, y:POPUP.y+this.title.h+this.margin,
              w:width, h:height})
       .append("<video autoplay controls src='"+videoUrl+"'></video>")
-      .addBorder();
+      .css('border', '1px solid #424236');
     this.video._element.children[0].width = width;
     this.video._element.children[0].height = height;
     this.video.center('x');
@@ -268,7 +268,7 @@ Crafty.c('Popup', {
   addImage: function(imgUrl) {
     console.assert(this.video === undefined, 'Error: Cannot yet have both an '+
                    'image and a video in a popup.');
-    this.img = Crafty.e('Video')
+    this.img = Crafty.e('Image')
       .attr({x:POPUP.x+this.margin, y:POPUP.y+this.title.h+this.margin})
       .append('<img src="'+imgUrl+'"></img>');
     var imgElem = this.img._element.children[0];
@@ -343,12 +343,12 @@ Crafty.c('Input', {
   },
 });
 
-Crafty.c('Video', {
+Crafty.c('Media', {
   init: function() {
     this.requires('HTML')
       .attr({x: MAIN.x, y: MAIN.y});
   },
-  // Center the video along the given dimensions within the given panel.
+  // Center the media along the given dimensions within the given panel.
   center: function(dimensions, panel) {
     if (dimensions === undefined) {
       dimensions = 'x';
@@ -367,25 +367,18 @@ Crafty.c('Video', {
     this.attr({x: x, y: y});
     return this;
   },
-  // Draw a bounding box around the video. Must set its height and width first.
-  //TODO: replace with .css('border', '[width] [style] [color]')
-  addBorder: function() {
-    console.assert(this._w !== 0 && this._h !== 0,
-      "'Video'.addBorder() called before video size set.");
-    var top = Crafty.e('Line')
-      .place(this._x, this._y-1, this._x+this._w, this._y-1);
-    this.attach(top);
-    var bottom = Crafty.e('Line')
-      .place(this._x, this._y+this._h, this._x+this._w, this._y+this._h);
-    this.attach(bottom);
-    var left = Crafty.e('Line')
-      .place(this._x-1, this._y, this._x-1, this._y+this._h);
-    this.attach(left);
-    var right = Crafty.e('Line')
-      .place(this._x+this._w, this._y, this._x+this._w, this._y+this._h);
-    this.attach(right);
-    return this;
-  },
+});
+
+Crafty.c('Video', {
+  init: function() {
+    this.requires('Media');
+  }
+});
+
+Crafty.c('Image', {
+  init: function() {
+    this.requires('Media');
+  }
 });
 
 Crafty.c('Line', {
