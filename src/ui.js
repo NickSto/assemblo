@@ -138,7 +138,7 @@ function define(term) {
     popup.media.center('x');
   }
   popup.body.string = GLOSSARY[term].text;
-  popup.body.w = POPUP.w - popup.margin;
+  popup.body.w = popup.w - 2*popup.margin;
 }
 
 
@@ -149,11 +149,11 @@ function makeAbout() {
   about.addMedia('image', 'assets/logo.png');
   // Place the image in the upper right, adjust body text position to match.
   //TODO: Replace x positioning kludge with one based on detected image size.
-  about.media.x = about.x + about.w - 336;
+  about.media.x = about.x + about.w - 356;
   about.media.y = about.y + about.margin;
   about.body.y = about.media.y + about.media.h + about.margin;
   about.body.string = ABOUT_TEXT;
-  about.body.w = POPUP.w - about.margin;
+  about.body.w = about.w - 2*about.margin;
 }
 
 

@@ -222,7 +222,7 @@ Crafty.c('Popup', {
     this.color(this.fillColor);
     this.z = Z.popup;
     this.css('border', '1px solid '+this.linesColor);
-    this.margin = 10;
+    this.margin = 20;
     // Add a close button
     this.closeButton = Crafty.e('Button')
       .textFont({size: '16px'})
