@@ -1,7 +1,8 @@
 'use strict';
-/* global Crafty, Game, Panels, BASE_SIZE, PARAMS, PARAMS_ORDER, GLOSSARY, snap,
-          calcConsensus, restartGame, startVideo, capitalize */
-/* exported Panels, makeUI, drawPanel, drawLine */
+/* global Crafty, Game, BASE_SIZE, NUM_READS, PARAMS, PARAMS_ORDER, GLOSSARY,
+          ABOUT_TEXT, APPLICATIONS, snap, calcConsensus, restartGame,
+          startVideo, capitalize */
+/* exported Panels, makeUI, drawPanel, drawLine, readParameters */
 
 
 // Dimensions of the panels that make up the game area
@@ -117,7 +118,7 @@ function makeParams(params, paramsOrder) {
       .attr({id:'param_'+paramId, value:param.default, width:wBox});
     y += ySpace;
   }
-  window.setTimeout(highlightTerms, 100);
+  window.setTimeout(activateTerms, 100);
 }
 
 
@@ -148,20 +149,13 @@ function readParameters(game, params, paramsOrder) {
 }
 
 
-// Highlight and link text marked up as glossary terms
-function highlightTerms() {
+// Link text marked up as glossary terms
+function activateTerms() {
   var terms = document.getElementsByClassName('term');
   for (var i = 0; i < terms.length; i++) {
     if (terms[i].onclick !== undefined) {
-      terms[i].style.color = '#00D';
-      terms[i].style.cursor = 'pointer';
       terms[i].onclick = define;
     }
-  }
-  var links = document.getElementsByClassName('link');
-  for (var i = 0; i < links.length; i++) {
-    links[i].style.color = '#00D';
-    links[i].style.cursor = 'pointer';
   }
 }
 
@@ -200,10 +194,10 @@ function makeAbout() {
   about.body.y = about.media.y + about.media.h + about.margin;
   about.body.string = ABOUT_TEXT;
   about.body.w = about.w - 2*about.margin;
-  //TODO: Set highlightTerms to fire when the text is actually loaded, instead
+  //TODO: Set activateTerms to fire when the text is actually loaded, instead
   //      of this kludge.
-  window.setTimeout(highlightTerms, 200);
-  window.setTimeout(highlightTerms, 1000);
+  window.setTimeout(activateTerms, 200);
+  window.setTimeout(activateTerms, 1000);
 }
 
 
@@ -215,10 +209,10 @@ function makeApplications() {
   apps.h = apps.y + 530;
   //TODO: Figure out why closeButton's height keeps changing when apps.h does.
   apps.closeButton.h = 18;
-  //TODO: Set highlightTerms to fire when the text is actually loaded, instead
+  //TODO: Set activateTerms to fire when the text is actually loaded, instead
   //      of this kludge.
-  window.setTimeout(highlightTerms, 200);
-  window.setTimeout(highlightTerms, 1000);
+  window.setTimeout(activateTerms, 200);
+  window.setTimeout(activateTerms, 1000);
 }
 
 

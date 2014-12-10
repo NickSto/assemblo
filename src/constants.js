@@ -137,6 +137,7 @@ var ABOUT_TEXT = 'Assemblo was created to teach the public about '+
   'assembled the sequence correctly when you see a green check! If you want '+
   'to increase the difficulty, try changing the parameters on the right side. '+
   'To learn more about the applications of genome assembly, '+
+  //TODO: Use better method to set onclick action
   '<a class="link" onclick="makeApplications()">click here</a>. If you want '+
   'to give us feedback on Assemblo (please do!) '+
   '<a target="_blank" href="https://docs.google.com/forms/d/1g7CHvc35_7inTc3os'+
