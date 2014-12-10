@@ -9,9 +9,9 @@
 // x and y set where the top-left corner of the panel are.
 var Panels = (function() {
   var head = {w: 800, h: 50, x: 0, y: 0};
-  var consensus = {w: head.w, h: 2*BASE_SIZE, x: 0, y: head.y+head.h};
+  var consensus = {w: head.w, h: BASE_SIZE, x: 0, y: head.y+head.h};
   var main = {w: head.w, h: NUM_READS*BASE_SIZE,
-              x: 0, y: consensus.y+consensus.h};
+              x: 0, y: consensus.y+consensus.h+BASE_SIZE};
   var bank = {w: head.w, h: NUM_READS*BASE_SIZE,
               x: 0, y: main.y+main.h+BASE_SIZE};
   var param = {w: 115, h: main.y+main.h, x: 10+head.x+head.w, y: 0};
@@ -56,28 +56,25 @@ function makeUI() {
     .color('#CCC')
     .text('>')
     .bind('Click', shiftRight);
-  // Draw panels, plus a box where the consensus sequence will be.
-  var consensusBox = {x:Panels.consensus.x, y:Panels.consensus.y,
-                      w:Panels.consensus.w, h:BASE_SIZE};
-  drawPanel(consensusBox, COLORS['N']);
+  // Draw panels.
   drawPanel(Panels.main);
   drawPanel(Panels.bank);
   makeParamPanel();
   drawGrid();
+  // Make blank consensus box
+  if (Game.consensus === undefined) {
+    Game.consensus = makeConsensus(Game.genomeLength);
+  }
 }
 
 
-function drawPanel(panel, fillColor) {
+function drawPanel(panel) {
   // Subtract 1 from the width/height so the right/bottom lines are placed where
   // you expect.
   var modPanel = {x:panel.x, y:panel.y, w:panel.w-1, h:panel.h-1};
   var panel = Crafty.e('HTML, 2D')
     .attr(modPanel)
     .css('border', '1px solid #DDD');
-  if (fillColor !== undefined) {
-    panel.addComponent('Color')
-      .color(fillColor);
-  }
 }
 
 

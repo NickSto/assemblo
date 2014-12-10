@@ -127,7 +127,8 @@ Crafty.c('Base', {
 
 Crafty.c('Consensus', {
   init: function() {
-    this.requires('2D');
+    this.requires('HTML, 2D, Color')
+      .color(COLORS['N']);
     this.counts = [];
     this.bases = [];
     this.seq = [];

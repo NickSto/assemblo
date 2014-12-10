@@ -46,7 +46,10 @@ function runIntroAnimation() {
 
   // Make the reference sequence
   Game.reference = 'ATCTATTACTGTTATTCGCA';
-  Game.consensus = Crafty.e('Consensus');
+  if (Game.consensus) {
+    Game.consensus.destroy();
+  }
+  Game.consensus = makeConsensus(Game.reference.length);
   for (var i = 0; i < Game.reference.length; i++) {
     Game.consensus.add(Game.reference[i], i);
   }

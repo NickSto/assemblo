@@ -62,6 +62,9 @@ function newGame(reference, seed) {
   } else {
     Game.reference = reference;
   }
+  if (Game.consensus) {
+    Game.consensus.destroy();
+  }
   Game.consensus = makeConsensus(Game.reference.length);
   console.log("Shhh, the answer is "+Game.reference+"!");
   // Generate the reads.
@@ -86,10 +89,6 @@ function newGame(reference, seed) {
 // Destroy all game components, but not the UI.
 // Removes reads, consensus sequence bar, grid, etc.
 function destroyGame() {
-  if (Game.consensus !== undefined) {
-    Game.consensus.destroy();
-  }
-  Game.consensus = undefined;
   Game.reference = undefined;
   setSuccessIndicator(undefined);
   destroyAll('Read');
@@ -241,7 +240,9 @@ function makeRead(seq, x, y) {
 
 // Initialize the consensus sequence at the top of the consensus panel
 function makeConsensus(length) {
-  var consensus = Crafty.e('Consensus');
+  var consensus = Crafty.e('Consensus')
+    .attr({x:Panels.consensus.x, y:Panels.consensus.y,
+           w:length*BASE_SIZE, h:BASE_SIZE});
   for (var i = 0; i < length; i++) {
     consensus.add('N', i);
   }
