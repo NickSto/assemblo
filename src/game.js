@@ -10,9 +10,9 @@ var Game = {
   consensus: undefined,
   reference: undefined,
   success: undefined,
-  prng: new ToyPrng(),
+  prng: undefined,
   timeout: undefined,
-  baseGrid: new BaseGrid(),
+  baseGrid: undefined,
   numReads: 7,
   genomeLength: PARAMS.genomeLength.default,
   readLength: PARAMS.readLength.default,
@@ -82,6 +82,7 @@ function newGame(reference, seed) {
       read.bases[j].css('cursor', 'grab');
     }
   }
+  Game.baseGrid = new BaseGrid();
   Game.baseGrid.fill();
   calcConsensus(Game.baseGrid);
 }
