@@ -66,8 +66,24 @@ function makeUI() {
   drawGrid();
   // Make blank consensus box
   Game.consensus = makeConsensus(Game.genomeLength);
-  // Make success indicator
-  Game.success = setSuccessIndicator();
+}
+
+
+function resizePanels(Panels, Game) {
+  var width = Game.genomeLength * Game.cell;
+  Panels.head.w = width;
+  Panels.consensus.w = width;
+  Panels.main.w = width;
+  Panels.bank.w = width;
+  Panels.param.x = Panels.main.x + Panels.main.w + 10;
+  Panels.popup.x = Panels.main.x + Panels.popup.w/2;
+  if (Panels.popup.x < 0) {
+    Panels.popup.x = 0;
+  }
+  console.assert(Panels.param.x+Panels.param.w < GAME_WIDTH &&
+                 Panels.bank.x+Panels.bank.h < GAME_HEIGHT,
+                 'Error: Interface dimensions exceed Crafty canvas size.');
+  return Panels;
 }
 
 
@@ -83,26 +99,32 @@ function drawPanel(panel) {
 
 function makeParamPanel() {
   var param = Panels.param;
-  drawPanel(param);
-  makeParams(PARAMS, PARAMS_ORDER);
+  var y = param.y;
+  y += 13;
   // Title/logo
   Crafty.e('Writing, Mouse')
-    .attr({x:param.x+8, y:param.y+13, string:'Assemblo', size:21, color:'#6600CC'})
+    .attr({x:param.x+8, y:y, string:'Assemblo', size:21, color:'#6600CC'})
     .css('cursor', 'pointer')
     .bind('Click', makeAbout);
+  // Make success indicator
+  Game.success = setSuccessIndicator();
+  y += 90;
   // Parameters section header
   Crafty.e('Writing')
-    .attr({x:param.x+8, y:param.y+110, string:'Parameters', size:14});
+    .attr({x:param.x+8, y:y, string:'Parameters', size:14});
+  y += 25;
+  y = makeParams(y, PARAMS, PARAMS_ORDER);
+  param.h = y - param.y;
+  drawPanel(param);
 }
 
 
 // Draw each user-adjustable parameter box
-function makeParams(params, paramsOrder) {
+function makeParams(y, params, paramsOrder) {
   var xMargin = 12;
   var ySpace = 35;
   var lineHeight = 15;
   var wBox = 25;
-  var y = Panels.main.y+5;
   for (var i = 0; i < paramsOrder.length; i++) {
     var paramId = paramsOrder[i];
     var param = params[paramId];
@@ -122,6 +144,7 @@ function makeParams(params, paramsOrder) {
     y += ySpace;
   }
   window.setTimeout(activateTerms, 100);
+  return y;
 }
 
 
