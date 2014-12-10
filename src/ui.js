@@ -48,6 +48,13 @@ function makeUI() {
     .color('#CAC')
     .text('Intro')
     .bind('Click', startVideo);
+  // About
+  Crafty.e('Button')
+    .attr({x: Panels.head.x + Panels.head.w - 150, y: Panels.head.y+10,
+           w: 90, h: 30})
+    .color('#CCA')
+    .text('About')
+    .bind('Click', makeAbout);
   // Draw panels, plus a box where the consensus sequence will be.
   //TODO: Just make a gray box for it.
   var consensus = Panels.consensus;
