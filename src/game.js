@@ -1,11 +1,11 @@
 'use strict';
-/* global Crafty, Panels, COLORS, BASE_SIZE, NUM_READS, BASES, PARAMS,
-          PARAMS_ORDER, ToyPrng, readParameters, randSeq, wgsim, makeUI,
-          startVideo, destroyAll */
-/* exported startGame, newGame, destroyGame, restartGame, drawGrid */
+/* global Crafty, Panels, GAME_WIDTH, GAME_HEIGHT, BASE_SIZE, COLORS, NUM_READS,
+          BASES, PARAMS, PARAMS_ORDER, ToyPrng, readParameters, randSeq, wgsim,
+          makeUI, startVideo, destroyAll */
+/* exported Game, startGame, newGame, destroyGame, restartGame, drawGrid */
 
 // Global game state
-// Explicitly enumerate all attributes, even when undefined, for clarity.
+// Explicitly enumerating all attributes, even when undefined, for clarity.
 var Game = {
   consensus: undefined,
   reference: undefined,

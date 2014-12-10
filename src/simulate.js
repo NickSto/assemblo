@@ -1,8 +1,6 @@
 'use strict';
-/* global Game, replaceChar */
+/* global Game, BASES, replaceChar */
 /* exported ToyPrng, randSeq, wgsim */
-
-var BASES = ['A', 'C', 'G', 'T'];
 
 
 // A simple, seedable pseudo-random number generator.

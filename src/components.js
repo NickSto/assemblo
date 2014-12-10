@@ -1,5 +1,6 @@
 'use strict';
-/* global Crafty, Panels, BASE_SIZE, COLORS, Z, readStopDrag, readStartDrag */
+/* global Crafty, Panels, BASE_SIZE, COLORS, Z, readStopDrag, readStartDrag,
+          capitalize */
 
 Crafty.c('Read', {
   init: function() {

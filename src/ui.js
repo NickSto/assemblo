@@ -1,7 +1,7 @@
 'use strict';
-/* global Crafty, Game, BASE_SIZE, NUM_READS, PARAMS, PARAMS_ORDER, GLOSSARY,
-          ABOUT_TEXT, APPLICATIONS, drawGrid, snap, calcConsensus, makeConsensus,
-          restartGame, startVideo */
+/* global Crafty, Game, GAME_WIDTH, GAME_HEIGHT, BASE_SIZE, NUM_READS, PARAMS,
+          PARAMS_ORDER, GLOSSARY, ABOUT, APPLICATIONS, drawGrid, snap,
+          calcConsensus, makeConsensus, restartGame, startVideo */
 /* exported Panels, makeUI, drawPanel, drawLine, readParameters */
 
 
@@ -193,7 +193,7 @@ function makeAbout() {
   about.media.x = about.x + about.w - 356;
   about.media.y = about.y + about.margin;
   about.body.y = about.media.y + about.media.h + about.margin;
-  about.body.string = ABOUT_TEXT;
+  about.body.string = ABOUT;
   about.body.w = about.w - 2*about.margin;
   //TODO: Set activateTerms to fire when the text is actually loaded, instead
   //      of this kludge.

@@ -1,6 +1,6 @@
 'use strict';
-/* exported BASE_SIZE, PARAMS, PARAMS_ORDER, NUM_READS, COLORS, Z, GLOSSARY,
-            ABOUT_TEXT, APPLICATIONS */
+/* exported BASE_SIZE, GAME_WIDTH, GAME_HEIGHT, PARAMS, PARAMS_ORDER, NUM_READS,
+            BASES, COLORS, Z, GLOSSARY, ABOUT, APPLICATIONS */
 
 // defines the size of each square in the grid
 var BASE_SIZE = 40;
@@ -47,6 +47,8 @@ var PARAMS_ORDER = [
 ];
 
 var NUM_READS = 7;
+// valid bases which can compose a DNA sequence
+var BASES = ['A', 'C', 'G', 'T'];
 var COLORS = {'A':'#A44', 'C':'#448', 'G':'#484', 'T':'#AA4', 'N':'#DDD'};
 var Z = {read:   20, base:   10, border:   15,
          readFG: 30, baseFG: 17, borderFG: 22,
@@ -127,7 +129,7 @@ var GLOSSARY = {
   },
 };
 
-var ABOUT_TEXT = 'Assemblo was created to teach the public about '+
+var ABOUT = 'Assemblo was created to teach the public about '+
   '<a class="term" data-term="genome">genome</a> '+
   'assembly, a necessary first step for any genomics application. This '+
   'interactive game demonstrates the process of <a class="term" '+
