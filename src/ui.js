@@ -7,21 +7,20 @@
 
 // Dimensions of the panels that make up the game area
 // x and y set where the top-left corner of the panel are.
-var Panels = new (function() {
-  this.head = {w: 800, h: 50, x: 0, y: 0};
-  this.consensus = {w: this.head.w, h: 2*BASE_SIZE,
-                    x: 0, y: this.head.y+this.head.h};
-  this.main = {w: this.head.w, h: NUM_READS*BASE_SIZE,
-               x: 0, y: this.consensus.y+this.consensus.h};
-  this.bank = {w: this.head.w, h: NUM_READS*BASE_SIZE,
-               x: 0, y: this.main.y+this.main.h+BASE_SIZE};
-  this.param = {w: 115, h: this.main.y+this.main.h,
-                x: 10+this.head.x+this.head.w, y: 0};
-  this.popup = {x: this.main.x+(100/2), y: 75,
-                w: this.main.w-100, h: 535};
+var Panels = (function() {
+  var head = {w: 800, h: 50, x: 0, y: 0};
+  var consensus = {w: head.w, h: 2*BASE_SIZE, x: 0, y: head.y+head.h};
+  var main = {w: head.w, h: NUM_READS*BASE_SIZE,
+              x: 0, y: consensus.y+consensus.h};
+  var bank = {w: head.w, h: NUM_READS*BASE_SIZE,
+              x: 0, y: main.y+main.h+BASE_SIZE};
+  var param = {w: 115, h: main.y+main.h, x: 10+head.x+head.w, y: 0};
+  var popup = {x: main.x+(100/2), y: 75, w: main.w-100, h: 535};
   // size of entire Crafty game area
-  this.game = {w: this.param.x+this.param.w+1, h: this.bank.y+this.bank.h+1};
-});
+  var game = {w: param.x+param.w+1, h: bank.y+bank.h+1};
+  return {head: head, consensus: consensus, main: main, bank: bank,
+          param: param, popup: popup, game: game};
+})();
 
 
 // Make buttons, icons, controls, etc.
@@ -50,6 +49,7 @@ function makeUI() {
     .text('Intro')
     .bind('Click', startVideo);
   // Draw panels, plus a box where the consensus sequence will be.
+  //TODO: Just make a gray box for it.
   var consensus = Panels.consensus;
   consensus.h = BASE_SIZE;
   drawPanel(consensus);
