@@ -25,6 +25,25 @@ var Panels = (function() {
 
 // Make buttons, icons, controls, etc.
 function makeUI() {
+  // New Game
+  Crafty.e('Button')
+    .attr({x: Panels.head.x+60, y: Panels.head.y+10, w: 145, h: 30})
+    .color('#CAC')
+    .text('New Game')
+    .bind('Click', restartGame);
+  // Intro
+  Crafty.e('Button')
+    .attr({x: Panels.head.x+215, y: Panels.head.y+10, w: 70, h: 30})
+    .color('#ACC')
+    .text('Intro')
+    .bind('Click', startVideo);
+  // About
+  Crafty.e('Button')
+    .attr({x: Panels.head.x+Panels.head.w-150, y: Panels.head.y+10,
+           w: 90, h: 30})
+    .color('#CCA')
+    .text('About')
+    .bind('Click', makeAbout);
   // The shift buttons
   Crafty.e('Button')
     .attr({x: Panels.head.x, y: Panels.head.y+10, w: 50, h: 30})
@@ -32,29 +51,11 @@ function makeUI() {
     .text('<')
     .bind('Click', shiftLeft);
   Crafty.e('Button')
-    .attr({x: Panels.head.w - 50, y: Panels.head.y+10, w: 50, h: 30})
+    .attr({x: Panels.head.x+Panels.head.w-50, y: Panels.head.y+10,
+           w: 50, h: 30})
     .color('#CCC')
     .text('>')
     .bind('Click', shiftRight);
-  // Restart the game
-  Crafty.e('Button')
-    .attr({x: Panels.head.x + 60, y: Panels.head.y+10, w: 145, h: 30})
-    .color('#ACC')
-    .text('New Game')
-    .bind('Click', restartGame);
-  // Run the intro
-  Crafty.e('Button')
-    .attr({x: Panels.head.x + 215, y: Panels.head.y+10, w: 70, h: 30})
-    .color('#CAC')
-    .text('Intro')
-    .bind('Click', startVideo);
-  // About
-  Crafty.e('Button')
-    .attr({x: Panels.head.x + Panels.head.w - 150, y: Panels.head.y+10,
-           w: 90, h: 30})
-    .color('#CCA')
-    .text('About')
-    .bind('Click', makeAbout);
   // Draw panels, plus a box where the consensus sequence will be.
   //TODO: Just make a gray box for it.
   var consensus = Panels.consensus;
@@ -90,13 +91,6 @@ function makeParamPanel() {
   // Parameters section header
   Crafty.e('Writing')
     .attr({x:param.x+8, y:param.y+110, string:'Parameters', size:14});
-  // Link to about page
-  //TODO: Replace with "About" button in top bar.
-  Crafty.e('Writing, Mouse')
-    .attr({x:param.x+12, y:param.y+param.h-23, string:"What's this?",
-           color:'#0000DD'})
-    .css('cursor', 'pointer')
-    .bind('Click', makeAbout);
 }
 
 
