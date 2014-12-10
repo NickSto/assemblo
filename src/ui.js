@@ -57,10 +57,9 @@ function makeUI() {
     .text('>')
     .bind('Click', shiftRight);
   // Draw panels, plus a box where the consensus sequence will be.
-  //TODO: Just make a gray box for it.
-  var consensus = Panels.consensus;
-  consensus.h = BASE_SIZE;
-  drawPanel(consensus, COLORS['N']);
+  var consensusBox = {x:Panels.consensus.x, y:Panels.consensus.y,
+                      w:Panels.consensus.w, h:BASE_SIZE};
+  drawPanel(consensusBox, COLORS['N']);
   drawPanel(Panels.main);
   drawPanel(Panels.bank);
   makeParamPanel();
