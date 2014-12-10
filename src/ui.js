@@ -1,39 +1,59 @@
 'use strict';
-/* global Crafty, Game, HEAD, CONSENSUS, MAIN, BANK, PARAM, POPUP, BASE_SIZE,
-          PARAMS, PARAMS_ORDER, GLOSSARY, snap, calcConsensus, restartGame,
-          startVideo, capitalize */
-/* exported makeUI, drawPanel, drawLine */
+/* global Crafty, Game, Panels, BASE_SIZE, PARAMS, PARAMS_ORDER, GLOSSARY, snap,
+          calcConsensus, restartGame, startVideo, capitalize */
+/* exported Panels, makeUI, drawPanel, drawLine */
+
+
+// Dimensions of the panels that make up the game area
+// x and y set where the top-left corner of the panel are.
+var Panels = new (function() {
+  this.head = {w: 800, h: 50, x: 0, y: 0};
+  this.consensus = {w: this.head.w, h: 2*BASE_SIZE,
+                    x: 0, y: this.head.y+this.head.h};
+  this.main = {w: this.head.w, h: NUM_READS*BASE_SIZE,
+               x: 0, y: this.consensus.y+this.consensus.h};
+  this.bank = {w: this.head.w, h: NUM_READS*BASE_SIZE,
+               x: 0, y: this.main.y+this.main.h+BASE_SIZE};
+  this.param = {w: 115, h: this.main.y+this.main.h,
+                x: 10+this.head.x+this.head.w, y: 0};
+  this.popup = {x: this.main.x+(100/2), y: 75,
+                w: this.main.w-100, h: 535};
+  // size of entire Crafty game area
+  this.game = {w: this.param.x+this.param.w+1, h: this.bank.y+this.bank.h+1};
+});
 
 
 // Make buttons, icons, controls, etc.
 function makeUI() {
   // The shift buttons
   Crafty.e('Button')
-    .attr({x: HEAD.x, y: HEAD.y+10, w: 50, h: 30})
+    .attr({x: Panels.head.x, y: Panels.head.y+10, w: 50, h: 30})
     .color('#CCC')
     .text('<')
     .bind('Click', shiftLeft);
   Crafty.e('Button')
-    .attr({x: HEAD.w - 50, y: HEAD.y+10, w: 50, h: 30})
+    .attr({x: Panels.head.w - 50, y: Panels.head.y+10, w: 50, h: 30})
     .color('#CCC')
     .text('>')
     .bind('Click', shiftRight);
   // Restart the game
   Crafty.e('Button')
-    .attr({x: HEAD.x + 60, y: HEAD.y+10, w: 145, h: 30})
+    .attr({x: Panels.head.x + 60, y: Panels.head.y+10, w: 145, h: 30})
     .color('#ACC')
     .text('New Game')
     .bind('Click', restartGame);
   // Run the intro
   Crafty.e('Button')
-    .attr({x: HEAD.x + 215, y: HEAD.y+10, w: 70, h: 30})
+    .attr({x: Panels.head.x + 215, y: Panels.head.y+10, w: 70, h: 30})
     .color('#CAC')
     .text('Intro')
     .bind('Click', startVideo);
-  // Draw panels, plus a box where the consensus display will be.
-  drawPanel({x: CONSENSUS.x, y: CONSENSUS.y, h: BASE_SIZE, w: CONSENSUS.w});
-  drawPanel(MAIN);
-  drawPanel(BANK);
+  // Draw panels, plus a box where the consensus sequence will be.
+  var consensus = Panels.consensus;
+  consensus.h = BASE_SIZE;
+  drawPanel(consensus);
+  drawPanel(Panels.main);
+  drawPanel(Panels.bank);
   makeParamPanel();
 }
 
@@ -51,20 +71,21 @@ function drawPanel(panel) {
 
 
 function makeParamPanel() {
-  drawPanel(PARAM);
+  var param = Panels.param;
+  drawPanel(param);
   makeParams(PARAMS, PARAMS_ORDER);
   // Title/logo
   Crafty.e('Writing, Mouse')
-    .attr({x:PARAM.x+8, y:PARAM.y+13, string:'Assemblo', size:21, color:'#6600CC'})
+    .attr({x:param.x+8, y:param.y+13, string:'Assemblo', size:21, color:'#6600CC'})
     .css('cursor', 'pointer')
     .bind('Click', makeAbout);
   // Parameters section header
   Crafty.e('Writing')
-    .attr({x:PARAM.x+8, y:PARAM.y+110, string:'Parameters', size:14});
+    .attr({x:param.x+8, y:param.y+110, string:'Parameters', size:14});
   // Link to about page
   //TODO: Replace with "About" button in top bar.
   Crafty.e('Writing, Mouse')
-    .attr({x:PARAM.x+12, y:PARAM.y+PARAM.h-23, string:"What's this?",
+    .attr({x:param.x+12, y:param.y+param.h-23, string:"What's this?",
            color:'#0000DD'})
     .css('cursor', 'pointer')
     .bind('Click', makeAbout);
@@ -77,22 +98,22 @@ function makeParams(params, paramsOrder) {
   var ySpace = 35;
   var lineHeight = 15;
   var wBox = 25;
-  var y = MAIN.y+5;
+  var y = Panels.main.y+5;
   for (var i = 0; i < paramsOrder.length; i++) {
     var paramId = paramsOrder[i];
     var param = params[paramId];
     if (param.text !== undefined) {
       Crafty.e('Writing')
-        .attr({x:PARAM.x+xMargin, y:y, string:param.text});
+        .attr({x:Panels.param.x+xMargin, y:y, string:param.text});
     }
     y += lineHeight;
     if (param.line2 !== undefined) {
       Crafty.e('Writing')
-        .attr({x:PARAM.x+xMargin, y:y, string:param.line2});
+        .attr({x:Panels.param.x+xMargin, y:y, string:param.line2});
       y += lineHeight;
     }
     Crafty.e('Input')
-      .attr({h: 30, w:40, x:PARAM.x+10, y:y})
+      .attr({h: 30, w:40, x:Panels.param.x+10, y:y})
       .attr({id:'param_'+paramId, value:param.default, width:wBox});
     y += ySpace;
   }
@@ -210,12 +231,13 @@ function shift(shiftDist) {
   // Check if there's room to move everything in that direction.
   //TODO: optimize if necessary by combining this check and the actual move loop
   for (var i = 0; i < reads.length; i++) {
-    // Skip if the read is below the MAIN panel.
-    if (reads[i]._y >= MAIN.y+MAIN.h) {
+    // Skip if the read is below the main panel.
+    if (reads[i]._y >= Panels.main.y+Panels.main.h) {
       continue;
     }
     var new_x = reads[i]._x + shiftDist;
-    var snapped_x = snap(new_x, reads[i]._w, MAIN.x, MAIN.x+MAIN.w);
+    var snapped_x = snap(new_x, reads[i]._w, Panels.main.x,
+                         Panels.main.x+Panels.main.w);
     // If snap() says the new_x must be modified, then we must be butting up
     // against the edge of the game area. Abort shift.
     if (new_x !== snapped_x) {
@@ -224,8 +246,8 @@ function shift(shiftDist) {
   }
   // Now loop again, but actually shift everything.
   for (var i = 0; i < reads.length; i++) {
-    // Skip if the read is below the MAIN panel.
-    if (reads[i]._y >= MAIN.y+MAIN.h) {
+    // Skip if the read is below the main panel.
+    if (reads[i]._y >= Panels.main.y+Panels.main.h) {
       continue;
     }
     reads[i].x = reads[i]._x + shiftDist;

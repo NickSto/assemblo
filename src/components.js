@@ -1,6 +1,5 @@
 'use strict';
-/* global Crafty, MAIN, CONSENSUS, BASE_SIZE, COLORS, POPUP, Z, readStopDrag,
-          readStartDrag */
+/* global Crafty, Panels, BASE_SIZE, COLORS, Z, readStopDrag, readStartDrag */
 
 Crafty.c('Read', {
   init: function() {
@@ -156,7 +155,8 @@ Crafty.c('Consensus', {
   // Add a base of "letter" to position "coord".
   add: function(letter, coord) {
     var base = Crafty.e('Base')
-      .attr({x: CONSENSUS.x+coord*BASE_SIZE, y: CONSENSUS.y, w: BASE_SIZE, h: BASE_SIZE})
+      .attr({x: Panels.consensus.x+coord*BASE_SIZE, y: Panels.consensus.y,
+             w: BASE_SIZE, h: BASE_SIZE})
       .color(COLORS[letter]);
     if (letter !== 'N') {
       base.text(letter);
@@ -216,7 +216,7 @@ Crafty.c('Writing', {
 Crafty.c('Popup', {
   init: function() {
     this.requires('2D, DOM, Color')
-      .attr(POPUP);
+      .attr(Panels.popup);
     this.linesColor = '#424236';
     this.fillColor = '#EEC';
     this.color(this.fillColor);
@@ -356,7 +356,7 @@ Crafty.c('Input', {
 Crafty.c('Media', {
   init: function() {
     this.requires('HTML')
-      .attr({x: MAIN.x, y: MAIN.y});
+      .attr({x: Panels.main.x, y: Panels.main.y});
   },
   // Center the media along the given dimensions within the given panel.
   center: function(dimensions, panel) {
@@ -364,7 +364,7 @@ Crafty.c('Media', {
       dimensions = 'x';
     }
     if (panel === undefined) {
-      panel = MAIN;
+      panel = Panels.main;
     }
     var x = this.x;
     var y = this.y;
