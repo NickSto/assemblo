@@ -42,7 +42,6 @@ function startGame() {
  * just give "undefined" as the reference, i.e. "newGame(undefined, 15);"
  */
 function newGame(reference, seed) {
-  drawGrid();
   // Cancel any videos or animations that are currently running.
   window.clearTimeout(Game.timeout);
   destroyAll('Video');
@@ -94,7 +93,6 @@ function destroyGame() {
   Game.reference = undefined;
   setSuccessIndicator(undefined);
   destroyAll('Read');
-  destroyAll('Grid');
 }
 
 function restartGame() {

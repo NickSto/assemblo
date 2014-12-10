@@ -60,20 +60,25 @@ function makeUI() {
   //TODO: Just make a gray box for it.
   var consensus = Panels.consensus;
   consensus.h = BASE_SIZE;
-  drawPanel(consensus);
+  drawPanel(consensus, COLORS['N']);
   drawPanel(Panels.main);
   drawPanel(Panels.bank);
   makeParamPanel();
+  drawGrid();
 }
 
 
-function drawPanel(panel) {
+function drawPanel(panel, fillColor) {
   // Subtract 1 from the width/height so the right/bottom lines are placed where
   // you expect.
   var modPanel = {x:panel.x, y:panel.y, w:panel.w-1, h:panel.h-1};
-  Crafty.e('HTML, 2D')
+  var panel = Crafty.e('HTML, 2D')
     .attr(modPanel)
     .css('border', '1px solid #DDD');
+  if (fillColor !== undefined) {
+    panel.addComponent('Color')
+      .color(fillColor);
+  }
 }
 
 

@@ -154,16 +154,20 @@ Crafty.c('Consensus', {
   },
   // Add a base of "letter" to position "coord".
   add: function(letter, coord) {
-    var base = Crafty.e('Base')
-      .attr({x: Panels.consensus.x+coord*BASE_SIZE, y: Panels.consensus.y,
+    this.seq[coord] = letter;
+    var base = Crafty.e('Base');
+    base.letter = letter;
+    // If it's an N, leave base as an invisible placeholder object.
+    if (letter === 'N') {
+      this.bases[coord] = base;
+      this.attach(base);
+      return;
+    }
+    base.attr({x: Panels.consensus.x+coord*BASE_SIZE, y: Panels.consensus.y,
              w: BASE_SIZE, h: BASE_SIZE})
       .color(COLORS[letter]);
-    if (letter !== 'N') {
-      base.text(letter);
-    }
-    base.letter = letter;
+    base.text(letter);
     this.bases[coord] = base;
-    this.seq[coord] = letter;
     this.attach(base);
   },
   seqStr: function() {
