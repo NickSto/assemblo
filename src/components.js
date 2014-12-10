@@ -2,6 +2,11 @@
 /* global Crafty, Game, Panels, COLORS, Z, readStopDrag, readStartDrag,
           capitalize */
 
+
+// Create an empty scene to use its function of destroying all entities.
+Crafty.scene('destroyAll', function() {});
+
+
 Crafty.c('Read', {
   init: function() {
     this.requires('2D, Draggable, Collision');

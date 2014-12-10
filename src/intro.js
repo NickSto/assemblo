@@ -1,6 +1,6 @@
 'use strict';
-/* global Crafty, Game, Panels, ToyPrng, makeRead, destroyGame,
-          restartGame, drawGrid, destroyAll, makeConsensus */
+/* global Crafty, Game, Panels, ToyPrng, makeRead, setSuccessIndicator
+          newGame, drawGrid, destroyAll, makeConsensus */
 /* exported runIntroAnimation, startVideo */
 
 var INTRO_READS = [
@@ -23,7 +23,7 @@ var INTRO_TIMING = {
 
 function startVideo() {
   window.clearTimeout(Game.timeout);
-  destroyGame();
+  makeUI();
   Crafty.e('Video')
    .attr({w:640, h:400, y:Panels.main.y-(Game.cell/2)})
    .append("<video id='intro' autoplay src='assets/intro.mp4'></video>")
@@ -91,7 +91,7 @@ function runIntroAnimation() {
                       INTRO_TIMING.startDelay + i*INTRO_TIMING.interval);
   }
   // After a pause, exit the animation and start the game.
-  Game.timeout = window.setTimeout(restartGame, 9500);
+  Game.timeout = window.setTimeout(newGame, 9500);
 }
 
 // Pythagorean distance between (xa, ya) and (xb, yb)

@@ -30,7 +30,6 @@ function startGame() {
                  Panels.main.x === Panels.main.x,
                  "Error: panels are not horizontally aligned.");
   Crafty.init(GAME_WIDTH, GAME_HEIGHT);
-  makeUI();
   startVideo();
 }
 
@@ -43,11 +42,12 @@ function startGame() {
  * just give "undefined" as the reference, i.e. "newGame(undefined, 15);"
  */
 function newGame(reference, seed) {
-  // Cancel any videos or animations that are currently running.
+  // Cancel any videos or animations that are currently scheduled.
   window.clearTimeout(Game.timeout);
-  destroyAll('Video');
   // Read the parameters in from the input panel.
   Game = readParameters(Game, PARAMS, PARAMS_ORDER);
+  // Destroy all entities so the UI can be redrawn later.
+  makeUI();
   // Generate a PRNG seed if not given.
   if (seed === undefined) {
     seed = Date.now();
@@ -58,16 +58,17 @@ function newGame(reference, seed) {
   /// Make reference as long as the consensus panel is wide.
   //TODO: Make it Game.genomeLength long, and change the panel size to fit.
   Game.genomeLength = Math.floor(Panels.consensus.w/Game.cell);
-  if (reference === undefined) {
-    Game.reference = randSeq(Game.genomeLength);
-  } else {
+  if (typeof reference === 'string') {
     Game.reference = reference;
+  } else {
+    Game.reference = randSeq(Game.genomeLength);
   }
   if (Game.consensus) {
     Game.consensus.destroy();
   }
   Game.consensus = makeConsensus(Game.reference.length);
   console.log("Shhh, the answer is "+Game.reference+"!");
+  Game.success = setSuccessIndicator();
   // Generate the reads.
   /// Calculate number of reads required for the desired depth of coverage.
   Game.numReads = Math.round((Game.genomeLength*Game.depth) / Game.readLength);
@@ -88,18 +89,6 @@ function newGame(reference, seed) {
   calcConsensus(Game.baseGrid);
 }
 
-// Destroy all game components, but not the UI.
-// Removes reads, consensus sequence bar, grid, etc.
-function destroyGame() {
-  Game.reference = undefined;
-  setSuccessIndicator(undefined);
-  destroyAll('Read');
-}
-
-function restartGame() {
-  destroyGame();
-  newGame();
-}
 
 // Everything that needs to happen once the user has moved a read.
 // This is bound to each read's 'StopDrag' event.
@@ -124,7 +113,7 @@ function readStopDrag(event) {
   // Recalculate the consensus and check if it's correct
   Game.baseGrid.fill();
   calcConsensus(Game.baseGrid);
-  setSuccessIndicator(checkAnswer());
+  Game.success = setSuccessIndicator(Game.success, checkAnswer());
 }
 
 // This is bound to each read's 'StartDrag' event.
@@ -268,24 +257,25 @@ function checkAnswer() {
 
 
 // Show an indicator of success or failure.
-function setSuccessIndicator(success) {
+function setSuccessIndicator(indicator, successful) {
   // Create success indicator if it doesn't exist yet.
-  if (Game.success === undefined) {
-    Game.success = Crafty.e('Button')
+  if (indicator === undefined) {
+    indicator = Crafty.e('Button')
       .attr({x: Panels.param.x+10, y: Panels.consensus.y+5,
              w: Panels.param.w-20, h: 30})
       .css('cursor', 'default');
   }
   // When there is no result, show a neutral indicator.
-  if (success === undefined) {
-    Game.success.color('#CCC').text('...');
+  if (successful === undefined) {
+    indicator.color('#CCC').text('...');
   // On success, show a green checkmark.
-  } else if (success) {
-    Game.success.color('#1A1').text('\u2713');
+  } else if (successful) {
+    indicator.color('#1A1').text('\u2713');
   // If incorrect, show a red X.
   } else {
-    Game.success.color('#F77').text('X');
+    indicator.color('#F77').text('X');
   }
+  return indicator;
 }
 
 

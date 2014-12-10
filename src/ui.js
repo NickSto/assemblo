@@ -1,7 +1,7 @@
 'use strict';
 /* global Crafty, Game, GAME_WIDTH, GAME_HEIGHT, NUM_READS, PARAMS,
-          PARAMS_ORDER, GLOSSARY, ABOUT, APPLICATIONS, drawGrid, snap,
-          calcConsensus, makeConsensus, restartGame, startVideo */
+          PARAMS_ORDER, GLOSSARY, ABOUT, APPLICATIONS, drawGrid, calcConsensus,
+          makeConsensus, restartGame, startVideo, snap, makeSuccessIndicator */
 /* exported Panels, makeUI, drawPanel, drawLine, readParameters */
 
 
@@ -26,12 +26,14 @@ var Panels = (function() {
 
 // Make buttons, icons, controls, etc.
 function makeUI() {
+  // Destroy all existing objects.
+  Crafty.scene('destroyAll');
   // New Game
   Crafty.e('Button')
     .attr({x: Panels.head.x+60, y: Panels.head.y+10, w: 145, h: 30})
     .color('#CAC')
     .text('New Game')
-    .bind('Click', restartGame);
+    .bind('Click', newGame);
   // Intro
   Crafty.e('Button')
     .attr({x: Panels.head.x+215, y: Panels.head.y+10, w: 70, h: 30})
@@ -63,9 +65,9 @@ function makeUI() {
   makeParamPanel();
   drawGrid();
   // Make blank consensus box
-  if (Game.consensus === undefined) {
-    Game.consensus = makeConsensus(Game.genomeLength);
-  }
+  Game.consensus = makeConsensus(Game.genomeLength);
+  // Make success indicator
+  Game.success = setSuccessIndicator();
 }
 
 
@@ -73,7 +75,7 @@ function drawPanel(panel) {
   // Subtract 1 from the width/height so the right/bottom lines are placed where
   // you expect.
   var modPanel = {x:panel.x, y:panel.y, w:panel.w-1, h:panel.h-1};
-  var panel = Crafty.e('HTML, 2D')
+  Crafty.e('HTML, 2D')
     .attr(modPanel)
     .css('border', '1px solid #DDD');
 }
