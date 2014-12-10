@@ -1,25 +1,26 @@
 'use strict';
 /* global Crafty, Game, BASE_SIZE, NUM_READS, PARAMS, PARAMS_ORDER, GLOSSARY,
-          ABOUT_TEXT, APPLICATIONS, snap, calcConsensus, restartGame,
-          startVideo, capitalize */
+          ABOUT_TEXT, APPLICATIONS, drawGrid, snap, calcConsensus, makeConsensus,
+          restartGame, startVideo */
 /* exported Panels, makeUI, drawPanel, drawLine, readParameters */
 
 
 // Dimensions of the panels that make up the game area
 // x and y set where the top-left corner of the panel are.
 var Panels = (function() {
-  var head = {w: 800, h: 50, x: 0, y: 0};
-  var consensus = {w: head.w, h: BASE_SIZE, x: 0, y: head.y+head.h};
-  var main = {w: head.w, h: NUM_READS*BASE_SIZE,
-              x: 0, y: consensus.y+consensus.h+BASE_SIZE};
-  var bank = {w: head.w, h: NUM_READS*BASE_SIZE,
-              x: 0, y: main.y+main.h+BASE_SIZE};
-  var param = {w: 115, h: main.y+main.h, x: 10+head.x+head.w, y: 0};
-  var popup = {x: main.x+(100/2), y: 75, w: main.w-100, h: 535};
-  // size of entire Crafty game area
-  var game = {w: param.x+param.w+1, h: bank.y+bank.h+1};
+  var width = 800;
+  var x = 0;
+  var y = 0;
+  var head = {w: width, h: 50, x: x, y: y};
+  var consensus = {w: width, h: BASE_SIZE, x: x, y: head.y+head.h};
+  var main = {w: width, h: NUM_READS*BASE_SIZE,
+              x: x, y: consensus.y+consensus.h+BASE_SIZE};
+  var bank = {w: width, h: NUM_READS*BASE_SIZE,
+              x: x, y: main.y+main.h+BASE_SIZE};
+  var param = {w: 115, h: main.y+main.h, x: 10+main.x+main.w, y: y};
+  var popup = {w: width-100, h: 535, x: main.x+50, y: 75};
   return {head: head, consensus: consensus, main: main, bank: bank,
-          param: param, popup: popup, game: game};
+          param: param, popup: popup};
 })();
 
 

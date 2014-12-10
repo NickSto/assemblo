@@ -2,8 +2,11 @@
 /* exported BASE_SIZE, PARAMS, PARAMS_ORDER, NUM_READS, COLORS, Z, GLOSSARY,
             ABOUT_TEXT, APPLICATIONS */
 
-// Defines the size of each square in the grid.
+// defines the size of each square in the grid
 var BASE_SIZE = 40;
+// size of entire Crafty game area
+var GAME_WIDTH = 1001;
+var GAME_HEIGHT = 751;
 
 /* User-adjustable parameters.
  * Includes data to fill the PARAM panel:

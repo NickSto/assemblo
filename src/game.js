@@ -28,7 +28,7 @@ function startGame() {
                  Panels.consensus.x === Panels.main.x &&
                  Panels.main.x === Panels.main.x,
                  "Error: panels are not horizontally aligned.");
-  Crafty.init(Panels.game.w, Panels.game.h);
+  Crafty.init(GAME_WIDTH, GAME_HEIGHT);
   makeUI();
   startVideo();
 }
