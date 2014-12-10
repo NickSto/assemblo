@@ -1,11 +1,11 @@
 'use strict';
-/* global Crafty, Panels, BASE_SIZE, COLORS, Z, readStopDrag, readStartDrag,
+/* global Crafty, Game, Panels, COLORS, Z, readStopDrag, readStartDrag,
           capitalize */
 
 Crafty.c('Read', {
   init: function() {
     this.requires('2D, Draggable, Collision');
-    this.h = BASE_SIZE;
+    this.h = Game.cell;
     this.alpha = 0.0; // opacity = transparent
     this.z = Z.read; // depth = in front of the bases
     this.bases = [];
@@ -48,7 +48,7 @@ Crafty.c('Read', {
     for (var i = 0; i < seq.length; i++) {
       var base = Crafty.e('Base');
       console.log('made base '+i+' of '+seq.length+': '+base.getId());
-      //   .attr({x: this._x+i*BASE_SIZE, y: this._y, w: BASE_SIZE, h: BASE_SIZE})
+      //   .attr({x: this._x+i*Game.cell, y: this._y, w: Game.cell, h: Game.cell})
       //   .color(COLORS[seq[i]])
       //   .text(seq[i]);
       // base.letter = seq[i];
@@ -57,7 +57,7 @@ Crafty.c('Read', {
     }
     console.log('made bases');
     // Resize the read to be the correct length.
-    this.w = seq.length * BASE_SIZE;
+    this.w = seq.length * Game.cell;
   },
   // Bring the read to the top of the z-dimension (foreground).
   foreground: function() {
@@ -115,7 +115,7 @@ Crafty.c('Read', {
 
 Crafty.c('Base', {
   init: function() {
-    var textSize = Math.round(BASE_SIZE*0.86);
+    var textSize = Math.round(Game.cell*0.86);
     this.requires('2D, DOM, Color, Text')
       .textFont({size: textSize+'px'})
       .textColor('#FFFFFF')
@@ -165,8 +165,8 @@ Crafty.c('Consensus', {
       this.attach(base);
       return;
     }
-    base.attr({x: Panels.consensus.x+coord*BASE_SIZE, y: Panels.consensus.y,
-             w: BASE_SIZE, h: BASE_SIZE})
+    base.attr({x: Panels.consensus.x+coord*Game.cell, y: Panels.consensus.y,
+             w: Game.cell, h: Game.cell})
       .color(COLORS[letter]);
     base.text(letter);
     this.bases[coord] = base;

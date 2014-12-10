@@ -1,5 +1,5 @@
 'use strict';
-/* global Crafty, Game, Panels, BASE_SIZE, ToyPrng, makeRead, destroyGame,
+/* global Crafty, Game, Panels, ToyPrng, makeRead, destroyGame,
           restartGame, drawGrid, destroyAll, makeConsensus */
 /* exported runIntroAnimation, startVideo */
 
@@ -25,7 +25,7 @@ function startVideo() {
   window.clearTimeout(Game.timeout);
   destroyGame();
   Crafty.e('Video')
-   .attr({w:640, h:400, y:Panels.main.y-(BASE_SIZE/2)})
+   .attr({w:640, h:400, y:Panels.main.y-(Game.cell/2)})
    .append("<video id='intro' autoplay src='assets/intro.mp4'></video>")
    .center('x')
    .css('border', '1px solid #DDD');
@@ -58,7 +58,7 @@ function runIntroAnimation() {
   var reads = new Array(INTRO_READS.length);
   for (var i = 0; i < INTRO_READS.length; i++) {
     reads[i] = makeRead(INTRO_READS[i].seq,
-                        Panels.consensus.x+INTRO_READS[i].start*BASE_SIZE,
+                        Panels.consensus.x+INTRO_READS[i].start*Game.cell,
                         Panels.consensus.y);
   }
   for (var i = 0; i < reads.length; i++) {
@@ -77,9 +77,9 @@ function runIntroAnimation() {
   // Animate each read
   var j = 0;
   var animator = function() {
-    var x_orig = INTRO_READS[j].start*BASE_SIZE;
-    var x_dest = Panels.main.x + BASE_SIZE*INTRO_READS[index[j]].x;
-    var y_dest = Panels.main.y + BASE_SIZE*INTRO_READS[index[j]].y;
+    var x_orig = INTRO_READS[j].start*Game.cell;
+    var x_dest = Panels.main.x + Game.cell*INTRO_READS[index[j]].x;
+    var y_dest = Panels.main.y + Game.cell*INTRO_READS[index[j]].y;
     // Calculate flight time based on distance to keep speed constant
     var dist = distance(x_orig, 0, x_dest, y_dest);
     reads[index[j]].tween({x: x_dest, y: y_dest}, 5*Math.floor(dist));

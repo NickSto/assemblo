@@ -1,20 +1,12 @@
 'use strict';
-/* exported BASE_SIZE, GAME_WIDTH, GAME_HEIGHT, PARAMS, PARAMS_ORDER, NUM_READS,
-            BASES, COLORS, Z, GLOSSARY, ABOUT, APPLICATIONS */
+/* exported GAME_WIDTH, GAME_HEIGHT, PARAMS, PARAMS_ORDER, NUM_READS, BASES,
+            COLORS, Z, GLOSSARY, ABOUT, APPLICATIONS */
 
-// defines the size of each square in the grid
-var BASE_SIZE = 40;
 // size of entire Crafty game area
 var GAME_WIDTH = 1001;
 var GAME_HEIGHT = 751;
 
-/* User-adjustable parameters.
- * Includes data to fill the PARAM panel:
- * text1+text2 form the parameter label. "text1" will be highlighted in blue and
- * clickable for a glossary definition. "text2" will be in the default color
- * (black). "default" is the starting value of the parameter. "w1" is the width
- * of "text1", to tell makeParams() where to draw "text2".
- */
+// Parameters for sequencing simulation.
 var PARAMS = {
   readLength: {
     default:8, type:'int',

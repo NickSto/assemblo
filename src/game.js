@@ -1,5 +1,5 @@
 'use strict';
-/* global Crafty, Panels, GAME_WIDTH, GAME_HEIGHT, BASE_SIZE, COLORS, NUM_READS,
+/* global Crafty, Panels, GAME_WIDTH, GAME_HEIGHT, COLORS, NUM_READS,
           BASES, PARAMS, PARAMS_ORDER, ToyPrng, readParameters, randSeq, wgsim,
           makeUI, startVideo, destroyAll */
 /* exported Game, startGame, newGame, destroyGame, restartGame, drawGrid */
@@ -7,13 +7,14 @@
 // Global game state
 // Explicitly enumerating all attributes, even when undefined, for clarity.
 var Game = {
+  cell: 40, // defines size of squares on the grid
+  numReads: 7,
   consensus: undefined,
   reference: undefined,
   success: undefined,
   prng: undefined,
   timeout: undefined,
   baseGrid: undefined,
-  numReads: 7,
   genomeLength: PARAMS.genomeLength.default,
   readLength: PARAMS.readLength.default,
   errorRate: PARAMS.errorRate.default,
@@ -56,7 +57,7 @@ function newGame(reference, seed) {
   // Generate a reference sequence, if none given.
   /// Make reference as long as the consensus panel is wide.
   //TODO: Make it Game.genomeLength long, and change the panel size to fit.
-  Game.genomeLength = Math.floor(Panels.consensus.w/BASE_SIZE);
+  Game.genomeLength = Math.floor(Panels.consensus.w/Game.cell);
   if (reference === undefined) {
     Game.reference = randSeq(Game.genomeLength);
   } else {
@@ -72,10 +73,10 @@ function newGame(reference, seed) {
   Game.numReads = Math.round((Game.genomeLength*Game.depth) / Game.readLength);
   var reads = wgsim(Game.reference, NUM_READS, Game.readLength, 1, Game.errorRate);
   for (var i = 0; i < reads.length; i++) {
-    var read = makeRead(reads[i], Panels.main.x+i*BASE_SIZE,
-                        Panels.bank.y+i*BASE_SIZE);
+    var read = makeRead(reads[i], Panels.main.x+i*Game.cell,
+                        Panels.bank.y+i*Game.cell);
     // var read = Crafty.e('Read')
-    //   .attr({x: Panels.bank.x+i*BASE_SIZE, y: Panels.bank.y+i*BASE_SIZE})
+    //   .attr({x: Panels.bank.x+i*Game.cell, y: Panels.bank.y+i*Game.cell})
     // read.setSeq(reads[i]);
     read.addBorders('#FFF');
     for (var j = 0; j < read.bases.length; j++) {
@@ -108,7 +109,7 @@ function readStopDrag(event) {
   var bank = Panels.bank;
   // Make each read snap to the grid when the user stops moving it.
   this.x = snap(this._x, this._w, main.x, main.x+main.w);
-  if (this._y < (main.y+main.h+bank.y-BASE_SIZE)/2) {
+  if (this._y < (main.y+main.h+bank.y-Game.cell)/2) {
     this.y = snap(this._y, this._h, main.y, main.y+main.h);
   } else {
     this.y = snap(this._y, this._h, bank.y, bank.y+bank.h);
@@ -145,15 +146,15 @@ function snap(pos, size, min, max) {
   if (pos < min) {
     return min;
   // Is the right/lower side beyond the last grid line before the border?
-  } else if (pos + size > max - (max % BASE_SIZE)) {
-    return max - ((max-min) % BASE_SIZE) - size;
+  } else if (pos + size > max - (max % Game.cell)) {
+    return max - ((max-min) % Game.cell) - size;
   // Otherwise, just find the closest grid line and snap to it
   } else {
-    var offset = (pos - min) % BASE_SIZE;
-    if (offset < BASE_SIZE/2) {
+    var offset = (pos - min) % Game.cell;
+    if (offset < Game.cell/2) {
       return pos - offset;
     } else {
-      return pos - offset + BASE_SIZE;
+      return pos - offset + Game.cell;
     }
   }
 }
@@ -175,7 +176,7 @@ function calcConsensus(baseGrid) {
   }
   // Visit each read, tallying the base counts.
   for (var i = 0; i < baseGrid.rows.length; i++) {
-    if (i >= Panels.main.h/BASE_SIZE) {
+    if (i >= Panels.main.h/Game.cell) {
       break;
     } 
     var read = baseGrid.rows[i];
@@ -205,12 +206,12 @@ function calcConsensus(baseGrid) {
 function drawGrid() {
   var main = Panels.main;
   // draw vertical grid lines
-  for (var x = main.x+BASE_SIZE; x < main.x+main.w; x += BASE_SIZE) {
+  for (var x = main.x+Game.cell; x < main.x+main.w; x += Game.cell) {
     Crafty.e('Grid')
       .attr({x: x, y: main.y, w: 1, h: main.h});
   }
   // draw horizontal grid lines
-  for (var y = main.y+BASE_SIZE; y < main.y+main.h; y += BASE_SIZE) {
+  for (var y = main.y+Game.cell; y < main.y+main.h; y += Game.cell) {
     Crafty.e('Grid')
       .attr({x: main.x, y: y, w: main.w, h: 1});
   }
@@ -224,11 +225,11 @@ function makeRead(seq, x, y) {
   // be what the user actually clicks and drags. The bases will be
   // behind it and attached to it.
   var read = Crafty.e('Read')
-    .attr({x: x, y: y, w: seq.length*BASE_SIZE, h: BASE_SIZE});
+    .attr({x: x, y: y, w: seq.length*Game.cell, h: Game.cell});
   // Make each base in the sequence, attach to the read
   for (var i = 0; i < seq.length; i++) {
     var base = Crafty.e('Base')
-      .attr({x: x+i*BASE_SIZE, y: y, w: BASE_SIZE, h: BASE_SIZE})
+      .attr({x: x+i*Game.cell, y: y, w: Game.cell, h: Game.cell})
       .color(COLORS[seq[i]])
       .text(seq[i]);
     base.letter = seq[i];
@@ -243,7 +244,7 @@ function makeRead(seq, x, y) {
 function makeConsensus(length) {
   var consensus = Crafty.e('Consensus')
     .attr({x:Panels.consensus.x, y:Panels.consensus.y,
-           w:length*BASE_SIZE, h:BASE_SIZE});
+           w:length*Game.cell, h:Game.cell});
   for (var i = 0; i < length; i++) {
     consensus.add('N', i);
   }
@@ -299,7 +300,7 @@ function BaseGrid() {
   // Fill a 2D array with all bases on the grid
   this.fill = function() {
     // Initialize this.rows
-    var totalRows = Math.floor((Panels.main.h+Panels.bank.h) / BASE_SIZE);
+    var totalRows = Math.floor((Panels.main.h+Panels.bank.h) / Game.cell);
     this.rows = new Array(totalRows);
     for (var i = 0; i < this.rows.length; i++) {
       this.rows[i] = [];
@@ -310,14 +311,14 @@ function BaseGrid() {
       // Determine the row the read is in.
       if (reads[i]._y < Panels.bank.y) {
         // It's in the main panel
-        var row = (reads[i]._y-Panels.main.y) / BASE_SIZE;
+        var row = (reads[i]._y-Panels.main.y) / Game.cell;
       } else {
         // It's in the bank panel
-        var row = ((reads[i]._y-Panels.bank.y) / BASE_SIZE) +
-                  (Panels.main.h/BASE_SIZE);
+        var row = ((reads[i]._y-Panels.bank.y) / Game.cell) +
+                  (Panels.main.h/Game.cell);
       }
       for (var j = 0; j < bases.length; j++) {
-        var column = (bases[j]._x - Panels.main.x) / BASE_SIZE;
+        var column = (bases[j]._x - Panels.main.x) / Game.cell;
         this.rows[row][column] = bases[j].letter;
       }
     }

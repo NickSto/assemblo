@@ -1,5 +1,5 @@
 'use strict';
-/* global Crafty, Game, GAME_WIDTH, GAME_HEIGHT, BASE_SIZE, NUM_READS, PARAMS,
+/* global Crafty, Game, GAME_WIDTH, GAME_HEIGHT, NUM_READS, PARAMS,
           PARAMS_ORDER, GLOSSARY, ABOUT, APPLICATIONS, drawGrid, snap,
           calcConsensus, makeConsensus, restartGame, startVideo */
 /* exported Panels, makeUI, drawPanel, drawLine, readParameters */
@@ -12,11 +12,11 @@ var Panels = (function() {
   var x = 0;
   var y = 0;
   var head = {w: width, h: 50, x: x, y: y};
-  var consensus = {w: width, h: BASE_SIZE, x: x, y: head.y+head.h};
-  var main = {w: width, h: NUM_READS*BASE_SIZE,
-              x: x, y: consensus.y+consensus.h+BASE_SIZE};
-  var bank = {w: width, h: NUM_READS*BASE_SIZE,
-              x: x, y: main.y+main.h+BASE_SIZE};
+  var consensus = {w: width, h: Game.cell, x: x, y: head.y+head.h};
+  var main = {w: width, h: NUM_READS*Game.cell,
+              x: x, y: consensus.y+consensus.h+Game.cell};
+  var bank = {w: width, h: NUM_READS*Game.cell,
+              x: x, y: main.y+main.h+Game.cell};
   var param = {w: 115, h: main.y+main.h, x: 10+main.x+main.w, y: y};
   var popup = {w: width-100, h: 535, x: main.x+50, y: 75};
   return {head: head, consensus: consensus, main: main, bank: bank,
@@ -253,9 +253,9 @@ function shift(shiftDist) {
 }
 // Shift left by one grid increment
 function shiftLeft() {
-  shift(-BASE_SIZE);
+  shift(-Game.cell);
 }
 // Shift right by one grid increment
 function shiftRight() {
-  shift(BASE_SIZE);
+  shift(Game.cell);
 }
