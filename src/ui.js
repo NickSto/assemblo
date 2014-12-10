@@ -68,14 +68,12 @@ function makeUI() {
 
 
 function drawPanel(panel) {
-  Crafty.e('Line') // top
-    .place(panel.x, panel.y, panel.x+panel.w, panel.y);
-  Crafty.e('Line') // bottom
-    .place(panel.x, panel.y+panel.h, panel.x+panel.w, panel.y+panel.h);
-  Crafty.e('Line') // left
-    .place(panel.x, panel.y, panel.x, panel.y+panel.h);
-  Crafty.e('Line') // right
-    .place(panel.x+panel.w, panel.y, panel.x+panel.w, panel.y+panel.h);
+  // Subtract 1 from the width/height so the right/bottom lines are placed where
+  // you expect.
+  var modPanel = {x:panel.x, y:panel.y, w:panel.w-1, h:panel.h-1};
+  Crafty.e('HTML, 2D')
+    .attr(modPanel)
+    .css('border', '1px solid #DDD');
 }
 
 
