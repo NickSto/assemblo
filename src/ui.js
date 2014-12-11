@@ -144,9 +144,14 @@ function makeParams(y, params, paramsOrder) {
         .attr({x:Panels.param.x+xMargin, y:y, string:param.line2});
       y += lineHeight;
     }
-    Crafty.e('Input')
+    var box = Crafty.e('Input')
       .attr({h: 30, w:40, x:Panels.param.x+10, y:y})
       .attr({id:'param_'+paramId, value:Game[paramId], width:wBox});
+      box._element.onkeyup = function(event) {
+        if (isEnterKey(event)) {
+          newGame();
+        }
+      };
     y += ySpace;
   }
   window.setTimeout(activateTerms, 100);
@@ -204,6 +209,23 @@ function parseParameter(param, value) {
     return false;
   }
   return value;
+}
+
+
+// Determine whether a KeyboardEvent is from the enter key, handling most
+// cross-browser quirks (see http://unixpapa.com/js/key.html).
+function isEnterKey(keyEvent) {
+  var keyCode;
+  if (typeof keyEvent.which === 'number') {
+    keyCode = keyEvent.which;
+  } else {
+    keyCode = keyEvent.keyCode;
+  }
+  if (typeof KeyboardEvent === 'function' && KeyboardEvent.DOM_VK_RETURN) {
+    return keyCode === KeyboardEvent.DOM_VK_RETURN;
+  } else {
+    return keyCode === 13;
+  }
 }
 
 
