@@ -1,5 +1,5 @@
 'use strict';
-/* global Crafty, Game, GAME_WIDTH, GAME_HEIGHT, NUM_READS, PARAMS,
+/* global Crafty, Game, GAME_WIDTH, GAME_HEIGHT, PARAMS,
           PARAMS_ORDER, GLOSSARY, ABOUT, APPLICATIONS, drawGrid, calcConsensus,
           makeConsensus, restartGame, startVideo, snap, makeSuccessIndicator */
 /* exported Panels, makeUI, drawPanel, drawLine, readParameters */
@@ -13,9 +13,9 @@ var Panels = (function() {
   var y = 0;
   var head = {w: width, h: 50, x: x, y: y};
   var consensus = {w: width, h: Game.cell, x: x, y: head.y+head.h};
-  var main = {w: width, h: NUM_READS*Game.cell,
+  var main = {w: width, h: Game.numReads*Game.cell,
               x: x, y: consensus.y+consensus.h+Game.cell};
-  var bank = {w: width, h: NUM_READS*Game.cell,
+  var bank = {w: width, h: Game.numReads*Game.cell,
               x: x, y: main.y+main.h+Game.cell};
   var param = {w: 115, h: main.y+main.h, x: 10+main.x+main.w, y: y};
   var popup = {w: width-100, h: 535, x: main.x+50, y: 75};
@@ -83,9 +83,9 @@ function resizePanels(Panels, Game) {
   }
   Panels.consensus.h = Game.cell;
   Panels.main.y = Panels.consensus.y + Panels.consensus.h + Game.cell;
-  Panels.main.h = NUM_READS * Game.cell;
+  Panels.main.h = Game.numReads * Game.cell;
   Panels.bank.y = Panels.main.y + Panels.main.h + Game.cell;
-  Panels.bank.h = NUM_READS * Game.cell;
+  Panels.bank.h = Game.numReads * Game.cell;
   console.assert(Panels.param.x+Panels.param.w < GAME_WIDTH &&
                  Panels.bank.x+Panels.bank.h < GAME_HEIGHT,
                  'Error: Interface dimensions exceed Crafty canvas size.');

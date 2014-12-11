@@ -1,8 +1,7 @@
 'use strict';
-/* global Crafty, Panels, GAME_WIDTH, GAME_HEIGHT, COLORS, NUM_READS,
-          BASES, PARAMS, PARAMS_ORDER, ToyPrng, readParameters, randSeq, wgsim,
-          makeUI, startVideo, destroyAll */
-/* exported Game, startGame, newGame, destroyGame, restartGame, drawGrid */
+/* global Crafty, Panels, GAME_WIDTH, GAME_HEIGHT, COLORS, BASES, PARAMS_ORDER,
+          PARAMS, ToyPrng, readParameters, randSeq, wgsim, makeUI, startVideo */
+/* exported Game, startGame, newGame, makeConsensus, drawGrid */
 
 // Global game state
 // Explicitly enumerating all attributes, even when undefined, for clarity.
@@ -49,7 +48,7 @@ function newGame(reference, seed) {
   /// Calculate number of reads required for the desired depth of coverage.
   Game.numReads = Math.round((Game.genomeLength*Game.depth) / Game.readLength);
   // Determine what size the grid cells need to be to fit the sequence.
-  Game.cell = resizeGrid(Game.genomeLength, NUM_READS);
+  Game.cell = resizeGrid(Game.genomeLength, Game.numReads);
   // Redraw the UI.
   makeUI();
   // Generate a PRNG seed if not given.
@@ -66,7 +65,8 @@ function newGame(reference, seed) {
   }
   console.log("Shhh, the answer is "+Game.reference+"!");
   // Generate the reads.
-  var reads = wgsim(Game.reference, NUM_READS, Game.readLength, 1, Game.errorRate);
+  var reads = wgsim(Game.reference, Game.numReads, Game.readLength, 1,
+                    Game.errorRate);
   for (var i = 0; i < reads.length; i++) {
     var read = makeRead(reads[i], Panels.bank.x+i*Game.cell,
                         Panels.bank.y+i*Game.cell);

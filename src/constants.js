@@ -1,6 +1,6 @@
 'use strict';
-/* exported GAME_WIDTH, GAME_HEIGHT, PARAMS, PARAMS_ORDER, NUM_READS, BASES,
-            COLORS, Z, GLOSSARY, ABOUT, APPLICATIONS */
+/* exported GAME_WIDTH, GAME_HEIGHT, PARAMS, PARAMS_ORDER, BASES, COLORS, Z,
+            GLOSSARY, ABOUT, APPLICATIONS */
 
 // size of entire Crafty game area
 var GAME_WIDTH = 1001;
@@ -38,7 +38,6 @@ var PARAMS_ORDER = [
   'readLength', 'depth', 'errorRate', 'genomeLength',
 ];
 
-var NUM_READS = 7;
 // valid bases which can compose a DNA sequence
 var BASES = ['A', 'C', 'G', 'T'];
 var COLORS = {'A':'#A44', 'C':'#448', 'G':'#484', 'T':'#AA4', 'N':'#DDD'};
