@@ -147,7 +147,7 @@ function makeParams(y, params, paramsOrder) {
     }
     Crafty.e('Input')
       .attr({h: 30, w:40, x:Panels.param.x+10, y:y})
-      .attr({id:'param_'+paramId, value:param.default, width:wBox});
+      .attr({id:'param_'+paramId, value:Game[paramId], width:wBox});
     y += ySpace;
   }
   window.setTimeout(activateTerms, 100);
