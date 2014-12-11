@@ -46,7 +46,9 @@ function newGame(reference, seed) {
   window.clearTimeout(Game.timeout);
   // Read the parameters in from the input panel.
   Game = readParameters(Game, PARAMS, PARAMS_ORDER);
-  // Destroy all entities so the UI can be redrawn later.
+  // Determine what size the grid cells need to be to fit the sequence.
+  Game.cell = resizeGrid(Game.genomeLength);
+  // Redraw the UI.
   makeUI();
   // Generate a PRNG seed if not given.
   if (seed === undefined) {
@@ -55,20 +57,12 @@ function newGame(reference, seed) {
   console.log('seed: '+seed);
   Game.prng = new ToyPrng(seed);
   // Generate a reference sequence, if none given.
-  /// Make reference as long as the consensus panel is wide.
-  //TODO: Make it Game.genomeLength long, and change the panel size to fit.
-  Game.genomeLength = Math.floor(Panels.consensus.w/Game.cell);
   if (typeof reference === 'string') {
     Game.reference = reference;
   } else {
     Game.reference = randSeq(Game.genomeLength);
   }
-  if (Game.consensus) {
-    Game.consensus.destroy();
-  }
-  Game.consensus = makeConsensus(Game.reference.length);
   console.log("Shhh, the answer is "+Game.reference+"!");
-  Game.success = setSuccessIndicator();
   // Generate the reads.
   /// Calculate number of reads required for the desired depth of coverage.
   Game.numReads = Math.round((Game.genomeLength*Game.depth) / Game.readLength);
@@ -87,6 +81,15 @@ function newGame(reference, seed) {
   Game.baseGrid = new BaseGrid();
   Game.baseGrid.fill();
   calcConsensus(Game.baseGrid);
+}
+
+
+// Determine what size the grid cells need to be to fit the sequence.
+function resizeGrid(genomeLength) {
+  // Determine the desired main panel width.
+  var targetWidth = GAME_WIDTH - 1 - Panels.param.w - 10 - Panels.main.x;
+  var cell = Math.floor(targetWidth / genomeLength);
+  return cell;
 }
 
 

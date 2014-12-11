@@ -28,6 +28,7 @@ var Panels = (function() {
 function makeUI() {
   // Destroy all existing objects.
   Crafty.scene('destroyAll');
+  Panels = resizePanels(Panels, Game);
   // New Game
   Crafty.e('Button')
     .attr({x: Panels.head.x+60, y: Panels.head.y+10, w: 145, h: 30})
@@ -76,10 +77,13 @@ function resizePanels(Panels, Game) {
   Panels.main.w = width;
   Panels.bank.w = width;
   Panels.param.x = Panels.main.x + Panels.main.w + 10;
-  Panels.popup.x = Panels.main.x + Panels.popup.w/2;
+  Panels.popup.x = Panels.main.x + (Panels.main.w - Panels.popup.w)/2;
   if (Panels.popup.x < 0) {
     Panels.popup.x = 0;
   }
+  Panels.main.h = NUM_READS * Game.cell;
+  Panels.bank.y = Panels.main.y + Panels.main.h + Game.cell;
+  Panels.bank.h = NUM_READS * Game.cell;
   console.assert(Panels.param.x+Panels.param.w < GAME_WIDTH &&
                  Panels.bank.x+Panels.bank.h < GAME_HEIGHT,
                  'Error: Interface dimensions exceed Crafty canvas size.');
