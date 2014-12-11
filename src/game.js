@@ -46,8 +46,10 @@ function newGame(reference, seed) {
   window.clearTimeout(Game.timeout);
   // Read the parameters in from the input panel.
   Game = readParameters(Game, PARAMS, PARAMS_ORDER);
+  /// Calculate number of reads required for the desired depth of coverage.
+  Game.numReads = Math.round((Game.genomeLength*Game.depth) / Game.readLength);
   // Determine what size the grid cells need to be to fit the sequence.
-  Game.cell = resizeGrid(Game.genomeLength);
+  Game.cell = resizeGrid(Game.genomeLength, NUM_READS);
   // Redraw the UI.
   makeUI();
   // Generate a PRNG seed if not given.
@@ -64,11 +66,9 @@ function newGame(reference, seed) {
   }
   console.log("Shhh, the answer is "+Game.reference+"!");
   // Generate the reads.
-  /// Calculate number of reads required for the desired depth of coverage.
-  Game.numReads = Math.round((Game.genomeLength*Game.depth) / Game.readLength);
   var reads = wgsim(Game.reference, NUM_READS, Game.readLength, 1, Game.errorRate);
   for (var i = 0; i < reads.length; i++) {
-    var read = makeRead(reads[i], Panels.main.x+i*Game.cell,
+    var read = makeRead(reads[i], Panels.bank.x+i*Game.cell,
                         Panels.bank.y+i*Game.cell);
     // var read = Crafty.e('Read')
     //   .attr({x: Panels.bank.x+i*Game.cell, y: Panels.bank.y+i*Game.cell})
@@ -85,11 +85,21 @@ function newGame(reference, seed) {
 
 
 // Determine what size the grid cells need to be to fit the sequence.
-function resizeGrid(genomeLength) {
-  // Determine the desired main panel width.
-  var targetWidth = GAME_WIDTH - 1 - Panels.param.w - 10 - Panels.main.x;
-  var cell = Math.floor(targetWidth / genomeLength);
-  return cell;
+function resizeGrid(genomeLength, numReads) {
+  // What size should a cell be to fit the genome horizontally?
+  /// Determine the desired main panel width.
+  var targetWidth = GAME_WIDTH - 1 - Panels.main.x - Panels.param.w - 10;
+  var cell1 = Math.floor(targetWidth / genomeLength);
+  // What size should a cell be to fit the reads vertically?
+  /** The total height of the game area affected by the cell size is 1 row for
+    * the consensus + 1 row spacer + numReads rows for the main panel + 1 row
+    * spacer + numReads rows for the bank panel = 3 + 2*numReads rows.
+   **/
+  var targetHeight = GAME_HEIGHT - 1 - Panels.consensus.y;
+  var rows = 3 + 2*numReads;
+  var cell2 = Math.floor(targetHeight / rows);
+  // Take the smaller of the two calculated values to make sure it will fit.
+  return Math.min(cell1, cell2);
 }
 
 

@@ -81,6 +81,8 @@ function resizePanels(Panels, Game) {
   if (Panels.popup.x < 0) {
     Panels.popup.x = 0;
   }
+  Panels.consensus.h = Game.cell;
+  Panels.main.y = Panels.consensus.y + Panels.consensus.h + Game.cell;
   Panels.main.h = NUM_READS * Game.cell;
   Panels.bank.y = Panels.main.y + Panels.main.h + Game.cell;
   Panels.bank.h = NUM_READS * Game.cell;
