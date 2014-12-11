@@ -6,7 +6,7 @@
 // Global game state
 // Explicitly enumerating all attributes, even when undefined, for clarity.
 var Game = {
-  cell: 40, // defines size of squares on the grid
+  cell: 41, // defines size of squares on the grid
   numReads: 7,
   consensus: undefined,
   reference: undefined,

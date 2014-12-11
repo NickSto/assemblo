@@ -5,10 +5,11 @@
 /* exported Panels, makeUI, drawPanel, drawLine, readParameters */
 
 
-// Dimensions of the panels that make up the game area
+// Dimensions of the panels that make up the game area.
+// These values are only the initial ones. They are recalculated each game.
 // x and y set where the top-left corner of the panel are.
 var Panels = (function() {
-  var width = 800;
+  var width = 820;
   var x = 0;
   var y = 0;
   var head = {w: width, h: 50, x: x, y: y};
