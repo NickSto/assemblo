@@ -380,10 +380,10 @@ Crafty.c('Media', {
     var x = this.x;
     var y = this.y;
     if (dimensions.indexOf('x') !== -1) {
-      x = panel.x + (panel.w - this.w)/2;
+      x = Math.max(0, panel.x + (panel.w - this.w)/2);
     }
     if (dimensions.indexOf('y') !== -1) {
-      y = panel.y + (panel.h - this.h)/2;
+      y = Math.max(0, panel.y + (panel.h - this.h)/2);
     }
     this.attr({x: x, y: y});
     return this;

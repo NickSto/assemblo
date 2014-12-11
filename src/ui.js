@@ -71,16 +71,15 @@ function makeUI() {
 
 
 function resizePanels(Panels, Game) {
+  //TODO: Leave a minimum width so the toolbar buttons don't overlap.
   var width = Game.genomeLength * Game.cell;
   Panels.head.w = width;
   Panels.consensus.w = width;
   Panels.main.w = width;
   Panels.bank.w = width;
   Panels.param.x = Panels.main.x + Panels.main.w + 10;
-  Panels.popup.x = Panels.main.x + (Panels.main.w - Panels.popup.w)/2;
-  if (Panels.popup.x < 0) {
-    Panels.popup.x = 0;
-  }
+  Panels.popup.x = Math.max(0, Panels.main.x +
+                            (Panels.main.w - Panels.popup.w)/2);
   Panels.consensus.h = Game.cell;
   Panels.main.y = Panels.consensus.y + Panels.consensus.h + Game.cell;
   Panels.main.h = Game.numReads * Game.cell;
