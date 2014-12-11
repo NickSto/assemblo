@@ -3,8 +3,19 @@
   <head>
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="/nom.cgi">
-    <!-- <script type="text/javascript" src="https://github.com/craftyjs/Crafty/releases/download/0.6.2/crafty.js"></script> -->
-    <script type="text/javascript" src="lib/crafty.0.6.2.min.js"></script>
+    <!-- Load Crafty library.
+    If on a local development machine, load a local copy. Otherwise, try loading
+    a remote copy from Github, falling back to a local copy. -->
+    <script>
+      if (window.location.hostname === "") {
+        document.write('<script src="lib/crafty.0.6.2.min.js">\x3C/script>');
+      } else {
+        document.write('<script src="//github.com/craftyjs/Crafty/releases/download/0.6.2/crafty.js">\x3C/script>');
+        if (typeof Crafty === 'undefined') {
+          document.write('<script src="lib/crafty.0.6.2.min.js">\x3C/script>');
+        }
+      }
+    </script>
     <script type="text/javascript" src="src/constants.js"></script>
     <script type="text/javascript" src="src/game.js"></script>
     <script type="text/javascript" src="src/lib.js"></script>
