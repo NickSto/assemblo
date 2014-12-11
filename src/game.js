@@ -44,7 +44,7 @@ function newGame(reference, seed) {
   // Cancel any videos or animations that are currently scheduled.
   window.clearTimeout(Game.timeout);
   // Read the parameters in from the input panel.
-  Game = readParameters(Game, PARAMS, PARAMS_ORDER);
+  Game = readParameters(Game);
   /// Calculate number of reads required for the desired depth of coverage.
   Game.numReads = Math.round((Game.genomeLength*Game.depth) / Game.readLength);
   // Determine what size the grid cells need to be to fit the sequence.

@@ -154,30 +154,56 @@ function makeParams(y, params, paramsOrder) {
 }
 
 
-function readParameters(game, params, paramsOrder) {
-  for (var i = 0; i < paramsOrder.length; i++) {
-    var paramId = paramsOrder[i];
-    var param = params[paramId];
+function readParameters(Game) {
+  for (var i = 0; i < PARAMS_ORDER.length; i++) {
+    var paramId = PARAMS_ORDER[i];
+    var param = PARAMS[paramId];
     var value = document.getElementById('param_'+paramId).value;
-    if (param.type === 'int') {
-      // Is value not a number? parseFloat() needed to make isNaN more reliable:
-      // https://stackoverflow.com/a/2652335
-      if (isNaN(parseFloat(value))) {
-        console.log('Error: Invalid parameter "'+paramId+'": "'+value+'"');
-      } else {
-        value = Math.round(+value);
-      }
-    } else if (param.type === 'float') {
-      // Is value not a number?
-      if (isNaN(parseFloat(value))) {
-        console.log('Error: Invalid parameter "'+paramId+'": "'+value+'"');
-      } else {
-        value = parseFloat(value);
-      }
+    value = parseParameter(param, value);
+    // If invalid, skip and stick with the previous value.
+    if (value === false) {
+      console.log('Error: Invalid parameter "'+paramId+'"');
+      continue;
+    } else {
+      Game[paramId] = value;
     }
-    game[paramId] = value;
   }
-  return game;
+  if (Game.readLength > Game.genomeLength) {
+    console.log('Error: Read length cannot be greater than genome length.');
+    Game.readLength = Game.genomeLength;
+  }
+  return Game;
+}
+
+
+// Parse the parameter string from the input box into the proper type.
+// Also validate it. If valid, return the parsed value. Else, return false.
+function parseParameter(param, value) {
+  // Check whether the value is of the proper type.
+  if (param.type === 'int') {
+    // Is value not a number? parseFloat() needed to make isNaN more reliable:
+    // https://stackoverflow.com/a/2652335
+    if (isNaN(parseFloat(value))) {
+      return false;
+    } else {
+      value = Math.round(+value);
+    }
+  } else if (param.type === 'float') {
+    // Is value not a number?
+    if (isNaN(parseFloat(value))) {
+      return false;
+    } else {
+      value = parseFloat(value);
+    }
+  }
+  // Check whether the value is within bounds.
+  if (param.min !== undefined && value < param.min) {
+    return false;
+  }
+  if (param.max !== undefined && value > param.max) {
+    return false;
+  }
+  return value;
 }
 
 

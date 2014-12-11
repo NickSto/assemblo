@@ -9,27 +9,27 @@ var GAME_HEIGHT = 751;
 // Parameters for sequencing simulation.
 var PARAMS = {
   readLength: {
-    default:8, type:'int',
+    default:8, type:'int', min:2,
     text:'<a class="term" data-term="read">read</a> length',
   },
   depth: {
-    default:2.8, type:'float',
+    default:2.8, type:'float', min:1.0,
     text:'sequencing', line2: '<a class="term" data-term="depth">depth</a>',
   },
   errorRate: {
-    default:0.0, type:'float',
+    default:0.0, type:'float', min:0.0, max:1.0,
     text:'<a class="term" data-term="error">error</a> rate',
   },
   snpRate: {
-    default:0.0, type:'float',
+    default:0.0, type:'float', min:0.0, max:1.0,
     text:'<a class="term" data-term="snp">SNP</a> rate',
   },
   popSize: {
-    default:1, type:'int',
+    default:1, type:'int', min:1,
     text:'<a class="term" data-term="popSize">population</a> size',
   },
   genomeLength: {
-    default:20, type:'int',
+    default:20, type:'int', min:10, max: 75,
     text:'<a class="term" data-term="genome">genome</a> length',
   },
 };
