@@ -93,7 +93,8 @@ function drawPanel(panel) {
   var modPanel = {x:panel.x, y:panel.y, w:panel.w-1, h:panel.h-1};
   Crafty.e('HTML, 2D')
     .attr(modPanel)
-    .css('border', '1px solid #DDD');
+    .css('border', '1px solid #DDD')
+    .z = -1;
 }
 
 
