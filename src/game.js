@@ -88,7 +88,7 @@ function newGame(reference, seed) {
 function resizeGrid(genomeLength, numReads) {
   // What size should a cell be to fit the genome horizontally?
   /// Determine the desired main panel width.
-  var targetWidth = GAME_WIDTH - 1 - Panels.main.x - Panels.param.w - 10;
+  var targetWidth = GAME_WIDTH - 1 - Panels.param.x - Panels.param.w - 10;
   var cell1 = Math.floor(targetWidth / genomeLength);
   // What size should a cell be to fit the reads vertically?
   /** The total height of the game area affected by the cell size is 1 row for

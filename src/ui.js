@@ -10,15 +10,14 @@
 // x and y set where the top-left corner of the panel are.
 var Panels = (function() {
   var width = 820;
-  var x = 0;
-  var y = 0;
-  var head = {w: width, h: 50, x: x, y: y};
-  var consensus = {w: width, h: Game.cell, x: x, y: head.y+head.h};
+  var param = {w: 115, h: 343, x: 0, y: 0};
+  var main_x = param.x+param.w+10;
+  var head = {w: width, h: 50, x: main_x, y: 0};
+  var consensus = {w: width, h: Game.cell, x: main_x, y: head.y+head.h};
   var main = {w: width, h: Game.numReads*Game.cell,
-              x: x, y: consensus.y+consensus.h+Game.cell};
+              x: main_x, y: consensus.y+consensus.h+Game.cell};
   var bank = {w: width, h: Game.numReads*Game.cell,
-              x: x, y: main.y+main.h+Game.cell};
-  var param = {w: 115, h: main.y+main.h, x: 10+main.x+main.w, y: y};
+              x: main_x, y: main.y+main.h+Game.cell};
   var popup = {w: width-100, h: 535, x: main.x+50, y: 75};
   return {head: head, consensus: consensus, main: main, bank: bank,
           param: param, popup: popup};
@@ -78,7 +77,6 @@ function resizePanels(Panels, Game) {
   Panels.consensus.w = width;
   Panels.main.w = width;
   Panels.bank.w = width;
-  Panels.param.x = Panels.main.x + Panels.main.w + 10;
   Panels.popup.x = Math.max(0, Panels.main.x +
                             (Panels.main.w - Panels.popup.w)/2);
   Panels.consensus.h = Game.cell;
