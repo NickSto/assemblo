@@ -120,6 +120,36 @@ var GLOSSARY = {
   },
 };
 
+var POPUPS = {
+  about: {
+    title: 'About Assemblo',
+    h: 400,
+    media: {
+      url: 'assets/logo.png', type: 'image',
+      w: 300, h: 133, x: 345, y: 0,
+    },
+    body: 'Assemblo was created to teach the public about '+
+      '<a class="popup" href="#genome">genome</a> '+
+      'assembly, a necessary first step for any genomics application. This '+
+      'interactive game demonstrates the process of <a class="popup" '+
+      'href="#denovo"><em>de novo</em> assembly</a>, '+
+      'the most common method to create a <a class="popup" href="#reference">'+
+      'reference</a> genome. To play, simply press "New '+
+      'Game" and slide the <a class="popup" href="#read">reads</a> in '+
+      'the bottom half of the screen to create an '+
+      'assembled sequence, shown at the top of the screen. You know you\'ve '+
+      'assembled the sequence correctly when you see a green check! If you want '+
+      'to increase the difficulty, try changing the parameters on the right side. '+
+      'To learn more about the applications of genome assembly, '+
+      //TODO: Use better method to set onclick action
+      '<a class="popup" href="#applications">click here</a>. If you want '+
+      'to give us feedback on Assemblo (please do!) '+
+      '<a target="_blank" href="https://docs.google.com/forms/d/1g7CHvc35_7inTc3os'+
+      'vIHqtAX6f_AwsWCWQB4QZTf5lI/viewform">click here</a> to take a short survey '+
+      'about how we can improve the Assemblo game.',
+  },
+};
+
 var ABOUT = 'Assemblo was created to teach the public about '+
   '<a class="term" data-term="genome">genome</a> '+
   'assembly, a necessary first step for any genomics application. This '+

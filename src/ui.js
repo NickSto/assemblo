@@ -67,6 +67,8 @@ function makeUI() {
   drawGrid();
   // Make blank consensus box
   Game.consensus = makeConsensus(Game.genomeLength);
+  // Monitor the URL's fragment identifier, launch popups on change
+  window.onhashchange = constructPopup;
 }
 
 
@@ -110,7 +112,7 @@ function makeParamPanel() {
   Crafty.e('Writing, Mouse')
     .attr({x:param.x+8, y:y, string:'Assemblo', size:21, color:'#6600CC'})
     .css('cursor', 'pointer')
-    .bind('Click', makeAbout);
+    .bind('Click', function() { window.location.hash = '#about'; });
   // Make success indicator
   Game.success = setSuccessIndicator();
   y += 90;
@@ -225,6 +227,45 @@ function isEnterKey(keyEvent) {
   } else {
     return keyCode === 13;
   }
+}
+
+
+function constructPopup() {
+  var name = window.location.hash.slice(1);
+  // Don't have multiple popups on the page at once.
+  destroyAll('Popup');
+  if (!POPUPS.hasOwnProperty(name)) {
+    console.log('Popup name not found!');
+    return;
+  }
+  var popupData = POPUPS[name];
+  var popup = Crafty.e('Popup');
+  popup.title.string = popupData.title;
+  popup.body.string = popupData.body;
+  popup.body.w = popup.w - 2*popup.margin;
+  if (popupData.media) {
+    var media = popupData.media;
+    popup.addMedia(media.type, media.url, media.w, media.h);
+    if (media.y !== undefined) {
+      popup.media.y = popup.y + popup.margin + media.y;
+    } else {
+      popup.media.y = popup.title.y + popup.title.h + popup.margin;
+    }
+    if (media.x !== undefined) {
+      popup.media.x = popup.x + popup.margin + media.x;
+    } else {
+      if (media.align === 'left' || media.align === undefined) {
+        popup.media.x = popup.x + popup.margin;
+      } else if (media.align === 'right') {
+        popup.media.x = popup.x + popup.w - popup.margin - media.w;
+      } else if (media.align === 'center') {
+        popup.media.x = popup.x + (popup.w - media.w)/2;
+      }
+    }
+    popup.body.y = popup.media.y + popup.media.h + popup.margin;
+  }
+  //TODO: resize the popup after X milliseconds based on text's actual size.
+  popup.h = popupData.h;
 }
 
 

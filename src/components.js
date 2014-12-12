@@ -243,8 +243,13 @@ Crafty.c('Popup', {
       .css('border', '1px solid '+this.linesColor)
       .text('X');
     this.closeButton.z = Z.popup;
+    // this.closeButton.bind('Click', function() { this._parent.destroy(); });
+    this.closeButton._element.onclick = function(event) {
+      var craftyId = parseInt(event.target.id.slice(3));
+      var closeButton = Crafty(craftyId);
+      closeButton._parent.destroy();
+    };
     this.attach(this.closeButton);
-    this.closeButton.bind('Click', function() { this._parent.destroy(); });
     // Add the title
     this.title = Crafty.e('Writing')
       .attr({x:this.x+this.margin, y:this.y+this.margin,

@@ -2,3 +2,8 @@
   color: #00D;
   cursor: pointer;
 }
+
+a.popup {
+  text-decoration: none;
+}
+
