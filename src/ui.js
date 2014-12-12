@@ -239,6 +239,13 @@ function activateTerms() {
 }
 
 
+function activateElement(node) {
+  if (node.nodeName === 'A' && node.classList.contains('term')) {
+    node.onclick = define;
+  }
+}
+
+
 // Create a pop-up box giving a glossary definition for a term.
 function define() {
   var term = this.attributes['data-term'].value;
@@ -273,10 +280,23 @@ function makeAbout() {
   about.body.y = about.media.y + about.media.h + about.margin;
   about.body.string = ABOUT;
   about.body.w = about.w - 2*about.margin;
-  //TODO: Set activateTerms to fire when the text is actually loaded, instead
-  //      of this kludge.
-  window.setTimeout(activateTerms, 200);
-  window.setTimeout(activateTerms, 1000);
+  if (typeof MutationObserver === 'function') {
+    var mutationProcessor = function(mutation) {
+      var nodes = mutation.addedNodes;
+      for (var i = 0; i < nodes.length; i++) {
+        activateElement(nodes[i]);
+      }
+    };
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(mutationProcessor);
+    });
+    var textElem = about.body._element;
+    observer.observe(textElem, {childList:true});
+    //TODO: observer.disconnect() at some point?
+  } else {
+    window.setTimeout(activateTerms, 200);
+    window.setTimeout(activateTerms, 1000);
+  }
 }
 
 
