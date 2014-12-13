@@ -29,7 +29,12 @@ function startGame() {
                  Panels.main.x === Panels.main.x,
                  "Error: panels are not horizontally aligned.");
   Crafty.init(GAME_WIDTH, GAME_HEIGHT);
-  startVideo();
+  if (window.location.hash === '') {
+    startVideo();
+  } else {
+    makeUI();
+    newGame();
+  }
 }
 
 /* Generate a new game with a new consensus bar and new reads.
@@ -51,6 +56,7 @@ function newGame(reference, seed) {
   Game.cell = resizeGrid(Game.genomeLength, Game.numReads);
   // Redraw the UI.
   makeUI();
+  constructPopup();
   // Generate a PRNG seed if not given.
   if (seed === undefined) {
     seed = Date.now();
