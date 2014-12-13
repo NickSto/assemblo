@@ -133,6 +133,7 @@ function makeParams(y, params, paramsOrder) {
   var ySpace = 35;
   var lineHeight = 15;
   var wBox = 25;
+  var hBox = 24;
   var newGameOnEnter = function(event) {
     if (isEnterKey(event)) {
       newGame();
@@ -152,32 +153,30 @@ function makeParams(y, params, paramsOrder) {
       y += lineHeight;
     }
     var box = Crafty.e('Input')
-      .attr({h: 30, w:40, x:Panels.param.x+10, y:y})
+      .attr({w:40, x:Panels.param.x+10, y:y})
       .attr({id:'param_'+paramId, value:Game[paramId], width:wBox});
     box._element.addEventListener('keyup', newGameOnEnter);
     // Input box tooltip
     if (param.min !== undefined || param.max !== undefined) {
-      var tooltip = Crafty.e('Writing')
-        .attr({x:box.x+box.w+5, y:y, h:24, size:10});
+      var tip;
       if (param.min !== undefined && param.max !== undefined) {
-        tooltip.string = '<span>'+param.min+' to '+param.max+'</span>';
+        tip = param.min+' to '+param.max;
       } else if (param.min !== undefined) {
-        tooltip.string = '<span>greater than '+param.min+'</span>';
+        tip = 'greater than '+param.min;
       } else if (param.max !== undefined) {
-        tooltip.string = '<span>less than '+param.max+'</span>';
+        tip = 'less than '+param.max;
       }
-      tooltip.w = Panels.param.x + Panels.param.w - (box.x + box.w) - 2*xMargin;
+      var tooltip = Crafty.e('HTML')
+        .attr({x:box.x+box.w+5, y:y, h:hBox,
+               w:Panels.param.x+Panels.param.w-(box.x+box.w)-2*xMargin});
+      var span = document.createElement('span');
+      span.innerHTML = tip;
+      span.style.font = '9px sans-serif';
+      // This, along with the .center entry in index.css, vertically centers it.
+      span.className = 'center';
+      tooltip._element.style.lineHeight = hBox+'px';
+      tooltip._element.appendChild(span);
     }
-    // Idea: do this in the css file
-    window.setTimeout(function() {
-      var tooltip = Crafty('Writing').get()[8];
-      var toolElem = tooltip._element;
-      toolElem.style.lineHeight = '24px';
-      var spanElem = toolElem.children[0];
-      spanElem.style.display = 'inline-block';
-      spanElem.style.verticalAlign = 'middle';
-      spanElem.style.lineHeight = 'normal';
-    }, 500);
     y += ySpace;
   }
   return y;
