@@ -68,7 +68,7 @@ function makeUI() {
   // Make blank consensus box
   Game.consensus = makeConsensus(Game.genomeLength);
   // Monitor the URL's fragment identifier, launch popups on change
-  window.onhashchange = constructPopup;
+  window.addEventListener('hashchange', constructPopup);
 }
 
 
@@ -132,6 +132,11 @@ function makeParams(y, params, paramsOrder) {
   var ySpace = 35;
   var lineHeight = 15;
   var wBox = 25;
+  var newGameOnEnter = function(event) {
+    if (isEnterKey(event)) {
+      newGame();
+    }
+  };
   for (var i = 0; i < paramsOrder.length; i++) {
     var paramId = paramsOrder[i];
     var param = params[paramId];
@@ -148,11 +153,7 @@ function makeParams(y, params, paramsOrder) {
     var box = Crafty.e('Input')
       .attr({h: 30, w:40, x:Panels.param.x+10, y:y})
       .attr({id:'param_'+paramId, value:Game[paramId], width:wBox});
-      box._element.onkeyup = function(event) {
-        if (isEnterKey(event)) {
-          newGame();
-        }
-      };
+    box._element.addEventListener('keyup', newGameOnEnter);
     y += ySpace;
   }
   return y;
@@ -235,7 +236,7 @@ function constructPopup() {
   destroyAll('Popup');
   if (!POPUPS.hasOwnProperty(name)) {
     if (name !== '') {
-      console.log('Popup name not found!');
+      console.log('Popup name not found: "'+name+'"');
     }
     return;
   }

@@ -30,7 +30,7 @@ function startVideo() {
    .center('x')
    .css('border', '1px solid #DDD');
   var video = document.getElementById('intro');
-  video.onended = runIntroAnimation;
+  video.addEventListener('ended', runIntroAnimation);
 }
 
 function runIntroAnimation() {

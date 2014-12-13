@@ -244,13 +244,13 @@ Crafty.c('Popup', {
       .text('X');
     this.closeButton.z = Z.popup;
     // this.closeButton.bind('Click', function() { this._parent.destroy(); });
-    this.closeButton._element.onclick = function(event) {
+    this.closeButton._element.addEventListener('click', function(event) {
       if (window.history.state && window.history.state.first) {
         window.location.hash = '';
       } else {
         window.history.back();
       }
-    };
+    });
     this.attach(this.closeButton);
     // Add the title
     this.title = Crafty.e('Writing')
@@ -286,7 +286,7 @@ Crafty.c('Popup', {
     // the media itself.
     var mediaElement = this.media._element.children[0];
     if (width === undefined || height === undefined) {
-      mediaElement.onload = this._setMediaDimensions;
+      mediaElement.addEventListener('load', this._setMediaDimensions);
     } else {
       this.media.w = width;
       mediaElement.width = width;
