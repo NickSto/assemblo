@@ -245,7 +245,11 @@ Crafty.c('Popup', {
     this.closeButton.z = Z.popup;
     // this.closeButton.bind('Click', function() { this._parent.destroy(); });
     this.closeButton._element.onclick = function(event) {
-      window.location.hash = '';
+      if (window.history.state && window.history.state.first) {
+        window.location.hash = '';
+      } else {
+        window.history.back();
+      }
     };
     this.attach(this.closeButton);
     // Add the title

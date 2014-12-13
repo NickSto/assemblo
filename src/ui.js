@@ -234,7 +234,9 @@ function constructPopup() {
   // Don't have multiple popups on the page at once.
   destroyAll('Popup');
   if (!POPUPS.hasOwnProperty(name)) {
-    console.log('Popup name not found!');
+    if (name !== '') {
+      console.log('Popup name not found!');
+    }
     return;
   }
   var popupData = POPUPS[name];

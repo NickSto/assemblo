@@ -29,6 +29,9 @@ function startGame() {
                  Panels.main.x === Panels.main.x,
                  "Error: panels are not horizontally aligned.");
   Crafty.init(GAME_WIDTH, GAME_HEIGHT);
+  // Mark the point in the history that the user started at.
+  window.history.replaceState({first:true},
+                              document.getElementsByTagName('title')[0].text);
   if (window.location.hash === '') {
     startVideo();
   } else {
