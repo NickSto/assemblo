@@ -155,6 +155,29 @@ function makeParams(y, params, paramsOrder) {
       .attr({h: 30, w:40, x:Panels.param.x+10, y:y})
       .attr({id:'param_'+paramId, value:Game[paramId], width:wBox});
     box._element.addEventListener('keyup', newGameOnEnter);
+    // Input box tooltip
+    if (param.min !== undefined || param.max !== undefined) {
+      var tooltip = Crafty.e('Writing')
+        .attr({x:box.x+box.w+5, y:y, h:24, size:10});
+      if (param.min !== undefined && param.max !== undefined) {
+        tooltip.string = '<span>'+param.min+' to '+param.max+'</span>';
+      } else if (param.min !== undefined) {
+        tooltip.string = '<span>greater than '+param.min+'</span>';
+      } else if (param.max !== undefined) {
+        tooltip.string = '<span>less than '+param.max+'</span>';
+      }
+      tooltip.w = Panels.param.x + Panels.param.w - (box.x + box.w) - 2*xMargin;
+    }
+    // Idea: do this in the css file
+    window.setTimeout(function() {
+      var tooltip = Crafty('Writing').get()[8];
+      var toolElem = tooltip._element;
+      toolElem.style.lineHeight = '24px';
+      var spanElem = toolElem.children[0];
+      spanElem.style.display = 'inline-block';
+      spanElem.style.verticalAlign = 'middle';
+      spanElem.style.lineHeight = 'normal';
+    }, 500);
     y += ySpace;
   }
   return y;
