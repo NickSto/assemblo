@@ -47,7 +47,7 @@ function makeUI() {
            w: 90, h: 30})
     .color('#CCA')
     .text('About')
-    .bind('Click', makeAbout);
+    .bind('Click', function() { window.location.hash = '#about'; });
   // The shift buttons
   Crafty.e('Button')
     .attr({x: Panels.head.x, y: Panels.head.y+10, w: 50, h: 30})
@@ -155,7 +155,6 @@ function makeParams(y, params, paramsOrder) {
       };
     y += ySpace;
   }
-  window.setTimeout(activateTerms, 100);
   return y;
 }
 
@@ -242,6 +241,7 @@ function constructPopup() {
   var popup = Crafty.e('Popup');
   popup.title.string = popupData.title;
   popup.body.string = popupData.body;
+  // Kludge, because setting body.w in the 'Popup' init doesn't work.
   popup.body.w = popup.w - 2*popup.margin;
   if (popupData.media) {
     var media = popupData.media;
@@ -265,94 +265,9 @@ function constructPopup() {
     popup.body.y = popup.media.y + popup.media.h + popup.margin;
   }
   //TODO: resize the popup after X milliseconds based on text's actual size.
-  popup.h = popupData.h;
-}
-
-
-// Link text marked up as glossary terms
-function activateTerms() {
-  var terms = document.getElementsByClassName('term');
-  for (var i = 0; i < terms.length; i++) {
-    if (terms[i].onclick !== undefined) {
-      terms[i].onclick = define;
-    }
-  }
-}
-
-
-function activateElement(node) {
-  if (node.nodeName === 'A' && node.classList.contains('term')) {
-    node.onclick = define;
-  }
-}
-
-
-// Create a pop-up box giving a glossary definition for a term.
-function define() {
-  var term = this.attributes['data-term'].value;
-  var termEntry = GLOSSARY[term];
-  if (termEntry === undefined) {
-    return;
-  }
-  // var popups = Crafty('Popup').get();
-  // for (var i = 0; i < popups.length; i++) {
-  //   popups[i].destroy();
-  // }
-  var popup = Crafty.e('Popup');
-  popup.title.string = termEntry.title;
-  if (termEntry.video !== undefined) {
-    popup.addMedia('video', termEntry.video, 480, 300);
-    popup.media.center('x');
-  }
-  popup.body.string = termEntry.text;
-  popup.body.w = popup.w - 2*popup.margin;
-}
-
-
-// Show the About page popup.
-function makeAbout() {
-  var about = Crafty.e('Popup');
-  about.title.string = 'About Assemblo';
-  about.addMedia('image', 'assets/logo.png');
-  // Place the image in the upper right, adjust body text position to match.
-  //TODO: Replace x positioning kludge with one based on detected image size.
-  about.media.x = about.x + about.w - 356;
-  about.media.y = about.y + about.margin;
-  about.body.y = about.media.y + about.media.h + about.margin;
-  about.body.string = ABOUT;
-  about.body.w = about.w - 2*about.margin;
-  if (typeof MutationObserver === 'function') {
-    var mutationProcessor = function(mutation) {
-      var nodes = mutation.addedNodes;
-      for (var i = 0; i < nodes.length; i++) {
-        activateElement(nodes[i]);
-      }
-    };
-    var observer = new MutationObserver(function(mutations) {
-      mutations.forEach(mutationProcessor);
-    });
-    var textElem = about.body._element;
-    observer.observe(textElem, {childList:true});
-    //TODO: observer.disconnect() at some point?
-  } else {
-    window.setTimeout(activateTerms, 200);
-    window.setTimeout(activateTerms, 1000);
-  }
-}
-
-
-function makeApplications() {
-  var apps = Crafty.e('Popup');
-  apps.title.string = 'Genome Assembly: What is it good for?';
-  apps.body.string = APPLICATIONS;
-  apps.body.w = apps.w - 2*apps.margin;
-  apps.h = apps.y + 530;
-  //TODO: Figure out why closeButton's height keeps changing when apps.h does.
-  apps.closeButton.h = 18;
-  //TODO: Set activateTerms to fire when the text is actually loaded, instead
-  //      of this kludge.
-  window.setTimeout(activateTerms, 200);
-  window.setTimeout(activateTerms, 1000);
+  //TODO: Figure out why assigning to popup.h messes up things like title.h
+  //      and closeButton.h.
+  popup._h = popupData.h;
 }
 
 
