@@ -110,7 +110,7 @@ function makeParamPanel() {
   y += 13;
   // Title/logo
   Crafty.e('Writing, Mouse')
-    .attr({x:param.x+8, y:y, string:'Assemblo', size:21, color:'#6600CC'})
+    .attr({string:'Assemblo', x:param.x+8, y:y, size:21, color:'#6600CC'})
     .css('cursor', 'pointer')
     .bind('Click', function() { window.location.hash = '#about'; });
   // Make success indicator
@@ -118,8 +118,9 @@ function makeParamPanel() {
   y += 90;
   // Parameters section header
   Crafty.e('Writing')
-    .attr({x:param.x+8, y:y, string:'Parameters', size:14});
-  y += 25;
+    .attr({string:'Sequencing Parameters', x:param.x+8, y:y, size:14})
+    .w = param.w - 2*12;
+  y += 40;
   y = makeParams(y, PARAMS, PARAMS_ORDER);
   param.h = y - param.y;
   drawPanel(param);
