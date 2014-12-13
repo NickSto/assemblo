@@ -245,9 +245,7 @@ Crafty.c('Popup', {
     this.closeButton.z = Z.popup;
     // this.closeButton.bind('Click', function() { this._parent.destroy(); });
     this.closeButton._element.onclick = function(event) {
-      var craftyId = parseInt(event.target.id.slice(3));
-      var closeButton = Crafty(craftyId);
-      closeButton._parent.destroy();
+      window.location.hash = '';
     };
     this.attach(this.closeButton);
     // Add the title
