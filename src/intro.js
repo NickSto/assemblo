@@ -32,6 +32,13 @@ function startVideo() {
     .replace('<span id="intro"></span>')
     .css('border', '1px solid #DDD')
     .center('x');
+  // Skip by clicking close button
+  video.closeButton = Crafty.e('Image, 2D, DOM, Mouse')
+    .attr({x:video.x+video.w-14, y:video.y-16})
+    .image('img/closeIcon.png')
+    .css('cursor', 'pointer')
+    .bind('Click', runIntroAnimation);
+  video.attach(video.closeButton);
   // Fall back to local video file.
   var localFallback = function() {
     if (document.getElementsByTagName('iframe').length === 0) {
