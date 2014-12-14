@@ -153,29 +153,19 @@ function makeParams(y, params, paramsOrder) {
       y += lineHeight;
     }
     var box = Crafty.e('Input')
-      .attr({w:40, x:Panels.param.x+10, y:y})
+      .attr({w:40, h:hBox, x:Panels.param.x+10, y:y})
       .attr({id:'param_'+paramId, value:Game[paramId], width:wBox});
     box._element.addEventListener('keyup', newGameOnEnter);
     // Input box tooltip
     if (param.min !== undefined || param.max !== undefined) {
-      var tip;
       if (param.min !== undefined && param.max !== undefined) {
-        tip = param.min+' to '+param.max;
+        box.tip = param.min+' to '+param.max;
       } else if (param.min !== undefined) {
-        tip = 'greater than '+param.min;
+        box.tip = 'greater than '+param.min;
       } else if (param.max !== undefined) {
-        tip = 'less than '+param.max;
+        box.tip = 'less than '+param.max;
       }
-      var tooltip = Crafty.e('HTML')
-        .attr({x:box.x+box.w+5, y:y, h:hBox,
-               w:Panels.param.x+Panels.param.w-(box.x+box.w)-2*xMargin});
-      var span = document.createElement('span');
-      span.innerHTML = tip;
-      span.style.font = '9px sans-serif';
-      // This, along with the .center entry in index.css, vertically centers it.
-      span.className = 'center';
-      tooltip._element.style.lineHeight = hBox+'px';
-      tooltip._element.appendChild(span);
+      box.tooltip.w = Panels.param.x+Panels.param.w-(box.x+box.w)-2*xMargin;
     }
     y += ySpace;
   }

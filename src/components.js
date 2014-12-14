@@ -326,6 +326,10 @@ Crafty.c('Input', {
       get: function() { return this._html; },
       set: function(html) { this.setHtml(html); },
     });
+    Object.defineProperty(this, 'tip', {
+      get: function() { return this._tip; },
+      set: function(tip) { this.setTooltip(tip); },
+    });
     this.update();
   },
   // Make setters and getters for the HTML attributes so the HTML is updated
@@ -368,6 +372,29 @@ Crafty.c('Input', {
     }
     this._html += '>';
     this.replace(this._html);
+  },
+  setTooltip: function(tip) {
+    this.tooltip = Crafty.e('HTML')
+      .attr({x:this.x+this.w, y:this.y, h:this.h, w:this.w});
+    this.tooltip._element.className = this.tooltip._element.className+' tooltip';
+    var span = document.createElement('span');
+    span.innerHTML = tip;
+    span.style.font = '9px sans-serif';
+    // This, along with the entry in index.css, vertically centers it.
+    span.className = 'vert-center';
+    this.tooltip._element.style.lineHeight = this.h+'px';
+    this.tooltip._element.appendChild(span);
+    // The value of this.h (of the 'Input' entity) doesn't behave well.
+    // You'll usually have to set the .h property manually.
+    Object.defineProperty(this.tooltip, 'h', {
+      get: function() { return this._h; },
+      set: function(h) {
+        this._h = h;
+        this._element.style.lineHeight = h+'px';
+      },
+    });
+    this.attach(this.tooltip);
+    this._tip = tip;
   },
 });
 

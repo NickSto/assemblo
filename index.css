@@ -10,7 +10,7 @@ a.popup {
 /* Part of system to vertically center text. Also requires the line-height of
  * the enclosing <div> to be the same as its height.
  */
-.center {
+.vert-center {
   display: inline-block;
   vertical-align: middle;
   line-height: normal;
