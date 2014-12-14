@@ -324,10 +324,25 @@ function makeYoutubeVideo(videoId, elementId, width, height, onEnd) {
 
 
 // Load a Youtube video using the embed API.
+// Currently supported eventHandlers are onError and onEnd.
 // The API requires onYouTubeIframeAPIReady to be global.
 var onYouTubeIframeAPIReady;
-function makeYoutubeVideo(videoId, elementId, width, height, onEnd) {
+function makeYoutubeVideo(videoId, elementId, width, height, eventHandlers) {
   var player;
+  // Build object listing event handlers.
+  var events = {};
+  if (eventHandlers) {
+    if (eventHandlers.onError) {
+      events.onError = eventHandlers.onError;
+    }
+    if (eventHandlers.onEnd) {
+      events.onStateChange = function(event) {
+        if (event.data === YT.PlayerState.ENDED) {
+          eventHandlers.onEnd();
+        }
+      };
+    }
+  }
   onYouTubeIframeAPIReady = function() {
     player = new YT.Player(elementId, {
       width: width,
@@ -335,13 +350,7 @@ function makeYoutubeVideo(videoId, elementId, width, height, onEnd) {
       videoId: videoId,
       playerVars: {autoplay: 1, autohide: 1, modestbranding: 1, showinfo: 0,
                    theme: 'light'},
-      events: {
-        onStateChange: function(event) {
-          if (onEnd && event.data === YT.PlayerState.ENDED) {
-            onEnd();
-          }
-        },
-      },
+      events: events,
     });
   }
   // Load Youtube's API if it hasn't been loaded already

@@ -32,14 +32,19 @@ function startVideo() {
     .replace('<span id="intro"></span>')
     .css('border', '1px solid #DDD')
     .center('x');
-  makeYoutubeVideo(media.embed, 'intro', media.w, media.h, runIntroAnimation);
-  // Fall back to local file
-  if (document.getElementsByTagName('iframe').length === 0) {
-    console.log('Youtube embed failed!');
-    video.replace("<video id='intro' autoplay src='"+media.url+"'></video>");
-    var videoElement = document.getElementById('intro');
-    videoElement.addEventListener('ended', runIntroAnimation);
+  // Fall back to local video file.
+  var localFallback = function() {
+    if (document.getElementsByTagName('iframe').length === 0) {
+      console.log('Youtube embed failed!');
+      video.replace("<video id='intro' autoplay src='"+media.url+"'></video>");
+      var videoElement = document.getElementById('intro');
+      videoElement.addEventListener('ended', runIntroAnimation);
+    }
   }
+  makeYoutubeVideo(media.embed, 'intro', media.w, media.h,
+                   {onEnd: runIntroAnimation, onError: localFallback});
+  // Give the Youtube player 1.5 seconds to work until falling back.
+  window.setTimeout(localFallback, 1000);
 }
 
 function runIntroAnimation() {
