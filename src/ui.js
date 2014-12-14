@@ -323,6 +323,41 @@ function makeYoutubeVideo(videoId, elementId, width, height, onEnd) {
 }
 
 
+// Load a Youtube video using the embed API.
+// The API requires onYouTubeIframeAPIReady to be global.
+var onYouTubeIframeAPIReady;
+function makeYoutubeVideo(videoId, elementId, width, height, onEnd) {
+  var player;
+  onYouTubeIframeAPIReady = function() {
+    player = new YT.Player(elementId, {
+      width: width,
+      height: height,
+      videoId: videoId,
+      playerVars: {autoplay: 1, autohide: 1, modestbranding: 1, showinfo: 0,
+                   theme: 'light'},
+      events: {
+        onStateChange: function(event) {
+          if (onEnd && event.data === YT.PlayerState.ENDED) {
+            onEnd();
+          }
+        },
+      },
+    });
+  }
+  // Load Youtube's API if it hasn't been loaded already
+  if (document.getElementById('youtube') === null) {
+    var script = document.createElement('script');
+    script.src = "https://www.youtube.com/iframe_api";
+    script.id = 'youtube';
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(script, firstScriptTag);
+  } else {
+    onYouTubeIframeAPIReady();
+  }
+  return player;
+}
+
+
 // Shift all reads "shiftDist" pixels
 function shift(shiftDist) {
   var reads = Crafty('Read').get();
