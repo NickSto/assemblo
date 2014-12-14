@@ -24,13 +24,22 @@ var INTRO_TIMING = {
 function startVideo() {
   window.clearTimeout(Game.timeout);
   makeUI();
-  Crafty.e('Video')
-   .attr({w:640, h:400, y:Panels.main.y-(Game.cell/2)})
-   .append("<video id='intro' autoplay src='assets/intro.mp4'></video>")
-   .center('x')
-   .css('border', '1px solid #DDD');
-  var video = document.getElementById('intro');
-  video.addEventListener('ended', runIntroAnimation);
+  var media = POPUPS['intro'].media;
+  // Add video with Youtube embed
+  var video = Crafty.e('Video')
+    .attr({y:Panels.main.y-(Game.cell/2),
+           w:media.w, h:media.h})
+    .replace('<span id="intro"></span>')
+    .css('border', '1px solid #DDD')
+    .center('x');
+  makeYoutubeVideo(media.embed, 'intro', media.w, media.h, runIntroAnimation);
+  // Fall back to local file
+  if (document.getElementsByTagName('iframe').length === 0) {
+    console.log('Youtube embed failed!');
+    video.replace("<video id='intro' autoplay src='"+media.url+"'></video>");
+    var videoElement = document.getElementById('intro');
+    videoElement.addEventListener('ended', runIntroAnimation);
+  }
 }
 
 function runIntroAnimation() {

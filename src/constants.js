@@ -149,6 +149,13 @@ var POPUPS = {
       'between it and any real genome that exists in nature!',
   },
   // Special pages
+  intro: {
+    media: {
+      url: 'assets/intro.mp4',
+      embed: 'GS9z9O8nbC4',
+      w: 640, h: 400,
+    },
+  },
   about: {
     title: 'About Assemblo',
     h: 400,

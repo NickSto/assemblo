@@ -286,6 +286,42 @@ function constructPopup() {
   popup._h = popupData.h;
 }
 
+// var entity = Crafty.e('HTML').attr({x:300, y:100, w:480, h:360});
+// entity.replace('<span id="player"></span>');
+// makeYoutubeVideo('GS9z9O8nbC4', 'player');
+
+var onYouTubeIframeAPIReady;
+function makeYoutubeVideo(videoId, elementId, width, height, onEnd) {
+  var player;
+  onYouTubeIframeAPIReady = function() {
+    player = new YT.Player(elementId, {
+      width: width,
+      height: height,
+      videoId: videoId,
+      playerVars: {autohide: 1, modestbranding: 1, showinfo: 0, theme: 'light'},
+      events: {
+        onReady: function(event) { event.target.playVideo(); },
+        onStateChange: function(event) {
+          if (onEnd && event.data === YT.PlayerState.ENDED) {
+            onEnd();
+          }
+        },
+      },
+    });
+  }
+  // Load Youtube's API if it hasn't been loaded already
+  if (document.getElementById('youtube') === null) {
+    var script = document.createElement('script');
+    script.src = "https://www.youtube.com/iframe_api";
+    script.id = 'youtube';
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(script, firstScriptTag);
+  } else {
+    onYouTubeIframeAPIReady();
+  }
+  return player;
+}
+
 
 // Shift all reads "shiftDist" pixels
 function shift(shiftDist) {
