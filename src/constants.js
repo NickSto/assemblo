@@ -160,7 +160,7 @@ var POPUPS = {
     title: 'About Assemblo',
     h: 400,
     media: {
-      url: 'assets/logo.png', type: 'image',
+      url: 'assets/logo.png', type: 'img',
       w: 300, h: 133, x: 345, y: 0,
     },
     body: 'Assemblo was created to teach the public about <a class="popup" '+

@@ -268,8 +268,8 @@ Crafty.c('Popup', {
   },
   // Add an image or video above the popup text.
   addMedia: function(type, url, width, height) {
-    console.assert(type === 'video' || type === 'image',
-                   'Error: Media type must be "video" or "image".');
+    console.assert(type === 'video' || type === 'img',
+                   'Error: Media type must be "video" or "img".');
     this.media = Crafty.e(capitalize(type))
       .attr({x:this.x+this.margin, y:this.title.y+this.title.h+this.margin});
     // Add the HTML element for the media.
@@ -277,7 +277,7 @@ Crafty.c('Popup', {
       this.media
         .append('<video autoplay controls src="'+url+'"></video>')
         .css('border', '1px solid '+this.linesColor);
-    } else if (type === 'image') {
+    } else if (type === 'img') {
       this.media
         .append('<img src="'+url+'"></img>');
     }
@@ -435,7 +435,7 @@ Crafty.c('Video', {
   }
 });
 
-Crafty.c('Image', {
+Crafty.c('Img', {
   init: function() {
     this.requires('Media');
   }
