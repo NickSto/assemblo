@@ -376,6 +376,7 @@ Crafty.c('Input', {
   setTooltip: function(tip) {
     this.tooltip = Crafty.e('HTML')
       .attr({x:this.x+this.w, y:this.y, h:this.h, w:this.w});
+    this.tooltip.visible = false;
     this.tooltip._element.className = this.tooltip._element.className+' tooltip';
     var span = document.createElement('span');
     span.innerHTML = tip;
@@ -384,8 +385,8 @@ Crafty.c('Input', {
     span.className = 'vert-center';
     this.tooltip._element.style.lineHeight = this.h+'px';
     this.tooltip._element.appendChild(span);
-    // The value of this.h (of the 'Input' entity) doesn't behave well.
-    // You'll usually have to set the .h property manually.
+    // The value of this.h (of the 'Input' entity) is the height of the Crafty
+    // entity, not the actual <input> element. So setting later is needed.
     Object.defineProperty(this.tooltip, 'h', {
       get: function() { return this._h; },
       set: function(h) {
@@ -393,6 +394,10 @@ Crafty.c('Input', {
         this._element.style.lineHeight = h+'px';
       },
     });
+    // Show tooltip on mouseover
+    this.addComponent('Mouse');
+    this.bind('MouseOver', function() { this.tooltip.visible = true; });
+    this.bind('MouseOut', function() { this.tooltip.visible = false; });
     this.attach(this.tooltip);
     this._tip = tip;
   },

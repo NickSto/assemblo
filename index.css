@@ -15,3 +15,8 @@ a.popup {
   vertical-align: middle;
   line-height: normal;
 }
+
+.tooltip {
+  border: 2px solid #CCCC29;
+  padding: 2px;
+}
