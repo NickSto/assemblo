@@ -52,7 +52,7 @@ var POPUPS = {
     title: 'Read',
     h: 480,
     media: {
-      url: 'assets/readlength.mp4', type: 'video',
+      url: 'video/readlength.mp4', type: 'video',
       w: 480, h: 300, align: 'center',
     },
     body: 'A read is a short sequence of DNA created by a sequencing machine. '+
@@ -64,7 +64,7 @@ var POPUPS = {
     title: 'Depth',
     h: 510,
     media: {
-      url: 'assets/depth.mp4', type: 'video',
+      url: 'video/depth.mp4', type: 'video',
       w: 480, h: 300, align: 'center',
     },
     body: 'The average number of <a class="popup term" href="#read">reads</a> '+
@@ -79,7 +79,7 @@ var POPUPS = {
     title: 'Error',
     h: 490,
     media: {
-      url: 'assets/error.mp4', type: 'video',
+      url: 'video/error.mp4', type: 'video',
       w: 480, h: 300, align: 'center',
     },
     body: 'A mistake made by a sequencing machine when sequencing DNA. To a '+
@@ -92,7 +92,7 @@ var POPUPS = {
     title: 'SNP',
     h: 550,
     media: {
-      url: 'assets/snp.mp4', type: 'video',
+      url: 'video/snp.mp4', type: 'video',
       w: 480, h: 300, align: 'center',
     },
     body: 'Short for Single Nucleotide Polymorphism, which means that a given '+
@@ -109,7 +109,7 @@ var POPUPS = {
     title: 'Population size',
     h: 435,
     media: {
-      url: 'assets/population.mp4', type: 'video',
+      url: 'video/population.mp4', type: 'video',
       w: 480, h: 300, align: 'center',
     },
     body: 'The number of people the sequence reads are coming from.',
@@ -118,7 +118,7 @@ var POPUPS = {
     title: 'Genome',
     h: 530,
     media: {
-      url: 'assets/genomesize.mp4', type: 'video',
+      url: 'video/genomesize.mp4', type: 'video',
       w: 480, h: 300, align: 'center',
     },
     body: 'A genome is a copy of all the DNA used to make an organism. You, '+
@@ -151,7 +151,7 @@ var POPUPS = {
   // Special pages
   intro: {
     media: {
-      url: 'assets/intro.mp4',
+      url: 'video/intro.mp4',
       embed: 'GS9z9O8nbC4',
       w: 640, h: 400,
     },
@@ -160,7 +160,7 @@ var POPUPS = {
     title: 'About Assemblo',
     h: 400,
     media: {
-      url: 'assets/logo.png', type: 'img',
+      url: 'img/logo.png', type: 'img',
       w: 300, h: 133, x: 345, y: 0,
     },
     body: 'Assemblo was created to teach the public about <a class="popup" '+
