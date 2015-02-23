@@ -217,7 +217,7 @@ var POPUPS = {
   },
   howto: {
     title: 'How To Play',
-    h: 580,
+    h: 660,
     body: '<p>Assemblo was created to teach the public about <a class="popup" '+
       'href="#genome">genome</a> assembly, a necessary first step for any '+
       'genomics application. This interactive game demonstrates the process '+
