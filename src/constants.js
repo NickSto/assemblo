@@ -215,4 +215,43 @@ var POPUPS = {
       'pressure medicine. Although not yet perfect, genome sequencing is the '+
       'future of medicine, and it all begins with a well-assembled genome.',
   },
+  howto: {
+    title: 'How To Play',
+    h: 580,
+    body: '<p>Assemblo was created to teach the public about <a class="popup" '+
+      'href="#genome">genome</a> assembly, a necessary first step for any '+
+      'genomics application. This interactive game demonstrates the process '+
+      'of <a class="popup" href="#denovo">de novo</a> assembly, the most '+
+      'common method to create a <a class="popup" href="#reference">reference'+
+      '</a> genome. To play, follow these simple steps:'+
+      '<ol>'+
+        '<li>Press “New Game.” You should now see your playing pieces at the '+
+          'bottom of the screen. These are called reads, which are short '
+          'stretches of a DNA sequence.</li>'+
+        '<li>Drag the reads to the grid in the playing screen. There should '+
+          'be one row in the grid for each read.</li>'+
+        '<li>Rearrange the reads in the grid to create a single consensus '+
+          'sequence, which is shown at the top of the screen (you should see '+
+          'it changing as you move the reads around). You’ll need to take '+
+          'advantage of overlaps in the sequence and unique patterns in the '+
+          'reads, much like a de novo assembly computer program!</li>'+
+        '<li>When the red X on the left of the screen (under the word '+
+          'Assemblo) turns into a green checkmark, you’re done! That means '+
+          'you have correctly de novo assembled your first sequence.</li>'+
+      '</ol>'+
+      '<p>If that was too easy for you and you’re ready for a real '+
+      'challenge, you can increase the difficulty by changing the sequencing '+
+      'parameters on the left side.  This can be done by typing a number into '+
+      'the dialog boxes. Try increasing or decreasing the read length first '+
+      'and see which one makes the sequence assembly easier! The other '+
+      'parameters can also be changed to create an even more challenging '+
+      'game, and to explore some real-life difficulties that come with de '+
+      'novo assembly of real DNA sequences.'+
+      '<p>If you’d like to learn more about the applications of genome '+
+      'assembly, <a class="popup" href="#applications">click here</a>. If you '+
+      'want to give us feedback on Assemblo (please do!) <a target="_blank" '+
+      'href="https://docs.google.com/forms/d/1g7CHvc35_7inTc3osvIHqtAX6f_'+
+      'AwsWCWQB4QZTf5lI/viewform">click here</a> to take a short survey about '+
+      'how we can improve the Assemblo game.',
+  }
 };
