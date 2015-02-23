@@ -1,7 +1,7 @@
 'use strict';
-/* global Crafty, Game, GAME_WIDTH, GAME_HEIGHT, PARAMS,
-          PARAMS_ORDER, GLOSSARY, ABOUT, APPLICATIONS, drawGrid, calcConsensus,
-          makeConsensus, restartGame, startVideo, snap, makeSuccessIndicator */
+/* global Crafty, Game, GAME_WIDTH, GAME_HEIGHT, PARAMS, PARAMS_ORDER, POPUPS,
+          drawGrid, calcConsensus, makeConsensus, restartGame, startVideo, snap,
+          makeSuccessIndicator */
 /* exported Panels, makeUI, drawPanel, drawLine, readParameters */
 
 

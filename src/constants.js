@@ -225,8 +225,8 @@ var POPUPS = {
       'common method to create a <a class="popup" href="#reference">reference'+
       '</a> genome. To play, follow these simple steps:'+
       '<ol>'+
-        '<li>Press “New Game.” You should now see your playing pieces at the '+
-          'bottom of the screen. These are called reads, which are short '
+        '<li>Press "New Game." You should now see your playing pieces at the '+
+          'bottom of the screen. These are called reads, which are short '+
           'stretches of a DNA sequence.</li>'+
         '<li>Drag the reads to the grid in the playing screen. There should '+
           'be one row in the grid for each read.</li>'+
