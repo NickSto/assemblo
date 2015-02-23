@@ -232,14 +232,14 @@ var POPUPS = {
           'be one row in the grid for each read.</li>'+
         '<li>Rearrange the reads in the grid to create a single consensus '+
           'sequence, which is shown at the top of the screen (you should see '+
-          'it changing as you move the reads around). You’ll need to take '+
+          'it changing as you move the reads around). You\'ll need to take '+
           'advantage of overlaps in the sequence and unique patterns in the '+
           'reads, much like a de novo assembly computer program!</li>'+
         '<li>When the red X on the left of the screen (under the word '+
-          'Assemblo) turns into a green checkmark, you’re done! That means '+
+          'Assemblo) turns into a green checkmark, you\'re done! That means '+
           'you have correctly de novo assembled your first sequence.</li>'+
       '</ol>'+
-      '<p>If that was too easy for you and you’re ready for a real '+
+      '<p>If that was too easy for you and you\'re ready for a real '+
       'challenge, you can increase the difficulty by changing the sequencing '+
       'parameters on the left side.  This can be done by typing a number into '+
       'the dialog boxes. Try increasing or decreasing the read length first '+
@@ -247,7 +247,7 @@ var POPUPS = {
       'parameters can also be changed to create an even more challenging '+
       'game, and to explore some real-life difficulties that come with de '+
       'novo assembly of real DNA sequences.'+
-      '<p>If you’d like to learn more about the applications of genome '+
+      '<p>If you\'d like to learn more about the applications of genome '+
       'assembly, <a class="popup" href="#applications">click here</a>. If you '+
       'want to give us feedback on Assemblo (please do!) <a target="_blank" '+
       'href="https://docs.google.com/forms/d/1g7CHvc35_7inTc3osvIHqtAX6f_'+
