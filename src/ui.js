@@ -38,9 +38,16 @@ function makeUI() {
   // Intro
   Crafty.e('Button')
     .attr({x: Panels.head.x+215, y: Panels.head.y+10, w: 70, h: 30})
-    .color('#ACC')
+    .color('#ACA')
     .text('Intro')
     .bind('Click', startVideo);
+  // Lost?
+  Crafty.e('Button')
+    .attr({x: Panels.head.x+Panels.head.w-240, y: Panels.head.y+10,
+           w: 80, h: 30})
+    .color('#ACC')
+    .text('Lost?')
+    .bind('Click', function() { window.location.hash = '#howto'; });
   // About
   Crafty.e('Button')
     .attr({x: Panels.head.x+Panels.head.w-150, y: Panels.head.y+10,
