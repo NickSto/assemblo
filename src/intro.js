@@ -35,7 +35,7 @@ function startVideo() {
   // Skip by clicking close button
   video.closeButton = Crafty.e('Image, 2D, DOM, Mouse')
     .attr({x:video.x+video.w-14, y:video.y-16})
-    .image('img/closeIcon.png')
+    .image('img/closeIcon.png?via=js')
     .css('cursor', 'pointer')
     .bind('Click', runIntroAnimation);
   video.attach(video.closeButton);
@@ -43,7 +43,7 @@ function startVideo() {
   var localFallback = function() {
     if (document.getElementsByTagName('iframe').length === 0) {
       console.log('Youtube embed failed!');
-      video.replace("<video id='intro' autoplay src='"+media.url+"'></video>");
+      video.replace("<video id='intro' autoplay src='"+media.url+"?via=js'></video>");
       var videoElement = document.getElementById('intro');
       videoElement.addEventListener('ended', runIntroAnimation);
     }

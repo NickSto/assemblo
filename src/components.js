@@ -275,11 +275,11 @@ Crafty.c('Popup', {
     // Add the HTML element for the media.
     if (type === 'video') {
       this.media
-        .append('<video autoplay controls src="'+url+'"></video>')
+        .append('<video autoplay controls src="'+url+'?via=js"></video>')
         .css('border', '1px solid '+this.linesColor);
     } else if (type === 'img') {
       this.media
-        .append('<img src="'+url+'"></img>');
+        .append('<img src="'+url+'?via=js"></img>');
     }
     this.media.z = Z.popup;
     // Set the height and width, either as given in arguments or detected from
