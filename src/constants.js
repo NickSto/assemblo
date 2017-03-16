@@ -153,7 +153,7 @@ var POPUPS = {
     h: 400,
     media: {
       url: 'img/logo.png', type: 'img',
-      w: 300, h: 133, x: 345, y: 0,
+      w: 300, h: 133, x: 320, y: 0,
     },
     body: 'Assemblo was created to teach the public about <a class="popup term" '+
       'data-frag="genome">genome</a> assembly, a necessary first step for any genomics '+

@@ -242,16 +242,29 @@ Crafty.c('Popup', {
       .color(this.fillColor)
       .css('border', '1px solid '+this.linesColor)
       .text('X');
-    this.closeButton.z = Z.popup;
+    this.closeButton.z = Z.popup+1;
     // this.closeButton.bind('Click', function() { this._parent.destroy(); });
     this.closeButton._element.addEventListener('click', function(event) {
+      window.location.hash = '';
+    });
+    this.attach(this.closeButton);
+    // Add a back button
+    this.backButton = Crafty.e('Button')
+      .textFont({size: '16px'})
+      .textColor(this.linesColor)
+      .attr({x:this.x+this.w-44-this.margin, y:this.y+this.margin, w:18, h:18})
+      .color(this.fillColor)
+      .css('border', '1px solid '+this.linesColor)
+      .text('<');
+    this.backButton.z = Z.popup+2;
+    this.backButton._element.addEventListener('click', function(event) {
       if (window.history.state && window.history.state.first) {
         window.location.hash = '';
       } else {
         window.history.back();
       }
     });
-    this.attach(this.closeButton);
+    this.attach(this.backButton);
     // Add the title
     this.title = Crafty.e('Writing')
       .attr({x:this.x+this.margin, y:this.y+this.margin,
