@@ -229,7 +229,7 @@ Crafty.c('Popup', {
     this.requires('2D, DOM, Color')
       .attr(Panels.popup);
     this.linesColor = '#424236';
-    this.fillColor = '#EEC';
+    this.fillColor = '#cce0ff';
     this.color(this.fillColor);
     this.z = Z.popup;
     this.css('border', '1px solid '+this.linesColor);
