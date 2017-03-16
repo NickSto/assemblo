@@ -10,27 +10,27 @@ var GAME_HEIGHT = 751;
 var PARAMS = {
   readLength: {
     default:8, type:'int', min:2,
-    text:'<a class="popup term" href="#read">read</a> length',
+    text:'<a class="popup term" data-frag="read">read</a> length',
   },
   depth: {
     default:2.8, type:'float', min:1.0,
-    text:'sequencing', line2: '<a class="popup term" href="#depth">depth</a>',
+    text:'sequencing', line2: '<a class="popup term" data-frag="depth">depth</a>',
   },
   errorRate: {
     default:0.0, type:'float', min:0.0, max:1.0,
-    text:'<a class="popup term" href="#error">error</a> rate',
+    text:'<a class="popup term" data-frag="error">error</a> rate',
   },
   snpRate: {
     default:0.0, type:'float', min:0.0, max:1.0,
-    text:'<a class="popup term" href="#snp">SNP</a> rate',
+    text:'<a class="popup term" data-frag="snp">SNP</a> rate',
   },
   popSize: {
     default:1, type:'int', min:1,
-    text:'<a class="popup term" href="#popSize">population</a> size',
+    text:'<a class="popup term" data-frag="popSize">population</a> size',
   },
   genomeLength: {
     default:20, type:'int', min:10, max: 75,
-    text:'<a class="popup term" href="#genome">genome</a> length',
+    text:'<a class="popup term" data-frag="genome">genome</a> length',
   },
 };
 // This determines which parameters show up in the interface, and in what order.
@@ -56,8 +56,8 @@ var POPUPS = {
       w: 480, h: 300, align: 'center',
     },
     body: 'A read is a short sequence of DNA created by a sequencing machine. They can differ in '+
-      'length depending on the machine, which can complicate <a class="popup term" href="#genome">'+
-      'genome</a> assembly (try it out by changing read length in the game!).',
+      'length depending on the machine, which can complicate <a class="popup term" '+
+      'data-frag="genome">genome</a> assembly (try it out by changing read length in the game!).',
   },
   depth: {
     title: 'Depth',
@@ -66,12 +66,12 @@ var POPUPS = {
       url: 'video/depth.mp4', type: 'video',
       w: 480, h: 300, align: 'center',
     },
-    body: 'The average number of <a class="popup term" href="#read">reads</a> covering each DNA '+
-      'nucleotide in the <a class="popup term" href="#genome">genome</a>. Increasing the '+
+    body: 'The average number of <a class="popup term" data-frag="read">reads</a> covering each '+
+      'DNA nucleotide in the <a class="popup term" data-frag="genome">genome</a>. Increasing the '+
       'sequencing depth makes it easier to assemble a genome and account for '+
-      '<a class="popup term" href="#error">errors</a>! You can calculate the number of reads your '+
-      'sequencing machine needs to generate to reach a particular depth with this formula: Depth '+
-      '= Reads * ReadLength / GenomeLength.',
+      '<a class="popup term" data-frag="error">errors</a>! You can calculate the number of reads '+
+      'your sequencing machine needs to generate to reach a particular depth with this formula: '+
+      'Depth = Reads * ReadLength / GenomeLength.',
   },
   error: {
     title: 'Error',
@@ -81,7 +81,7 @@ var POPUPS = {
       w: 480, h: 300, align: 'center',
     },
     body: 'A mistake made by a sequencing machine when sequencing DNA. To a person looking at a '+
-      'DNA sequence, a sequencing error will look like a <a class="popup term" href="#snp">SNP'+
+      'DNA sequence, a sequencing error will look like a <a class="popup term" data-frag="snp">SNP'+
       '</a>, but the two are completely different! To see how sequencing error can complicate an '+
       'assembly, try increasing the error rate before playing your next Assemblo game.',
   },
@@ -95,7 +95,7 @@ var POPUPS = {
     body: 'Short for Single Nucleotide Polymorphism, which means that a given DNA sequence '+
       'differs from an (almost) identical DNA sequence at a single position. In sequence data, '+
       'SNPs can come when a population (more than 1 cell type, person, dog, etc)  is sequenced. '+
-      'Most <a class="popup term" href="#reference">reference</a> genomes, such as the human '+
+      'Most <a class="popup term" data-frag="reference">reference</a> genomes, such as the human '+
       'genome, are actually assembled from a population. Although some SNPs in certain genes have '+
       'been associated with certain diseases, the majority of SNPs are not harmful at all and are '+
       'just a source of genetic variation.',
@@ -126,16 +126,16 @@ var POPUPS = {
   denovo: {
     title: '<em>De novo</em> assembly',
     h: 175,
-    body: 'Sequencing and assembly of a <a class="popup term" href="#genome">genome</a> without '+
-      'knowing beforehand how it goes together. Examples of <em>de novo</em> assemblers (besides '+
-      'Assemblo!) include: SSAKE, SHARCGS, VCAKE, Newbler, Celera Assembler, Euler, Velvet, '+
-      'ABySS, AllPaths, and SOAPdenovo.',
+    body: 'Sequencing and assembly of a <a class="popup term" data-frag="genome">genome</a> '+
+      'without knowing beforehand how it goes together. Examples of <em>de novo</em> assemblers '+
+      '(besides Assemblo!) include: SSAKE, SHARCGS, VCAKE, Newbler, Celera Assembler, Euler, '+
+      'Velvet, ABySS, AllPaths, and SOAPdenovo.',
   },
   reference: {
     title: 'Reference genome',
     h: 200,
-    body: 'An already assembled <a class="popup term" href="#genome">genome</a> that is used to '+
-      'represent an organism\'s set of genes. An assembled reference genome is used as a '+
+    body: 'An already assembled <a class="popup term" data-frag="genome">genome</a> that is used '+
+      'to represent an organism\'s set of genes. An assembled reference genome is used as a '+
       'comparison for other applications of genome sequencing. Sometimes these are assembled from '+
       'a population of individuals, in which case there can be differences between it and any '+
       'real genome that exists in nature!',
@@ -155,17 +155,18 @@ var POPUPS = {
       url: 'img/logo.png', type: 'img',
       w: 300, h: 133, x: 345, y: 0,
     },
-    body: 'Assemblo was created to teach the public about <a class="popup" href="#genome">genome'+
-      '</a> assembly, a necessary first step for any genomics application. This interactive game '+
-      'demonstrates the process of <a class="popup" href="#denovo"><em>de novo</em> assembly</a>, '+
-      'the most common method to create a <a class="popup" href="#reference">reference</a> '+
-      'genome. To play, simply press "New Game" and slide the <a class="popup" href="#read">reads'+
-      '</a> in the bottom half of the screen to create an assembled sequence, shown at the top of '+
-      'the screen. You know you\'ve assembled the sequence correctly when you see a green check! '+
-      'If you want to increase the difficulty, try changing the parameters on the right side. To '+
-      'learn more about the applications of genome assembly, <a class="popup" '+
-      'href="#applications">click here</a>. If you want to give us feedback on Assemblo (please '+
-      'do!) <a target="_blank" href="https://docs.google.com/forms/d/1g7CHvc35_7inTc3osvIHqtAX6f_'+
+    body: 'Assemblo was created to teach the public about <a class="popup term" '+
+      'data-frag="genome">genome</a> assembly, a necessary first step for any genomics '+
+      'application. This interactive game demonstrates the process of <a class="popup term" '+
+      'data-frag="denovo"><em>de novo</em> assembly</a>, the most common method to create a '+
+      '<a class="popup term" data-frag="reference">reference</a> genome. To play, simply press '+
+      '"New Game" and slide the <a class="popup term" data-frag="read">reads</a> in the bottom '+
+      'half of the screen to create an assembled sequence, shown at the top of the screen. You '+
+      'know you\'ve assembled the sequence correctly when you see a green check! If you want to '+
+      'increase the difficulty, try changing the parameters on the right side. To learn more '+
+      'about the applications of genome assembly, <a class="popup term" data-frag="applications">'+
+      'click here</a>. If you want to give us feedback on Assemblo (please do!) '+
+      '<a target="_blank" href="https://docs.google.com/forms/d/1g7CHvc35_7inTc3osvIHqtAX6f_'+
       'AwsWCWQB4QZTf5lI/viewform">click here</a> to take a short survey about how we can improve '+
       'the Assemblo game.',
   },
@@ -173,8 +174,8 @@ var POPUPS = {
     title: 'Genome Assembly: What is it good for?',
     h: 580,
     body: 'Genome assembly opens up countless possibilities for the real-world applications of '+
-      'genomics. With a well-assembled <a class="popup" href="#reference">reference genome</a>, '+
-      'we can: <ul>'+
+      'genomics. With a well-assembled <a class="popup term" data-frag="reference">reference '+
+      'genome</a>, we can: <ul>'+
         '<li>sequence microbes (such as bacteria and viruses) to better understand drug '+
         'resistance to create treatments</li>'+
         '<li>map cancer genomes to a reference to try to narrow down a cancer-causing mutation in '+
@@ -201,11 +202,12 @@ var POPUPS = {
   howto: {
     title: 'How To Play',
     h: 660,
-    body: '<p>Assemblo was created to teach the public about <a class="popup" href="#genome">'+
-      'genome</a> assembly, a necessary first step for any genomics application. This interactive '+
-      'game demonstrates the process of <a class="popup" href="#denovo">de novo</a> assembly, the '+
-      'most common method to create a <a class="popup" href="#reference">reference</a> genome. To '+
-      'play, follow these simple steps:<ol>'+
+    body: '<p>Assemblo was created to teach the public about <a class="popup term" '+
+      'data-frag="genome">genome</a> assembly, a necessary first step for any genomics '+
+      'application. This interactive game demonstrates the process of <a class="popup term" '+
+      'data-frag="denovo">de novo</a> assembly, the most common method to create a '+
+      '<a class="popup term" data-frag="reference">reference</a> genome. To play, follow these '+
+      'simple steps:<ol>'+
         '<li>Press "New Game." You should now see your playing pieces at the bottom of the '+
         'screen. These are called reads, which are short stretches of a DNA sequence.</li>'+
         '<li>Drag the reads to the grid in the playing screen. There should be one row in the '+
@@ -224,9 +226,9 @@ var POPUPS = {
       'can also be changed to create an even more challenging game, and to explore some real-'+
       'life difficulties that come with de novo assembly of real DNA sequences.'+
       '<p>If you\'d like to learn more about the applications of genome assembly, '+
-      '<a class="popup" href="#applications">click here</a>. If you want to give us feedback on '+
-      'Assemblo (please do!) <a target="_blank" href="https://docs.google.com/forms/d/1g7CHvc35_'+
-      '7inTc3osvIHqtAX6f_AwsWCWQB4QZTf5lI/viewform">click here</a> to take a short survey about '+
-      'how we can improve the Assemblo game.',
+      '<a class="popup term" data-frag="applications">click here</a>. If you want to give us '+
+      'feedback on Assemblo (please do!) <a target="_blank" href="https://docs.google.com/forms/d/'+
+      '1g7CHvc35_7inTc3osvIHqtAX6f_AwsWCWQB4QZTf5lI/viewform">click here</a> to take a short '+
+      'survey about how we can improve the Assemblo game.',
   }
 };

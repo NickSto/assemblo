@@ -77,6 +77,8 @@ function makeUI() {
   Game.consensus = makeConsensus(Game.genomeLength);
   // Monitor the URL's fragment identifier, launch popups on change
   window.addEventListener('hashchange', constructPopup);
+  // I don't know why this doesn't work if you run it immediately.
+  window.setTimeout(linkTerms, 250);
 }
 
 
@@ -178,6 +180,25 @@ function makeParams(y, params, paramsOrder) {
     y += ySpace;
   }
   return y;
+}
+
+
+// If we use a regular <a href="#term"> and there's a <base> path defined on the page, that will
+// cause a navigation to the <base> url. This can be avoided if we navigate to the #term in
+// Javascript.
+function linkTerms() {
+  var terms = document.querySelectorAll('.term');
+  for (var i = 0; i < terms.length; i++) {
+    var term = terms[i];
+    if (term.dataset.linked === undefined) {
+      term.dataset.linked = true;
+      term.addEventListener('click', function(event) {
+        if (this.dataset.frag !== undefined) {
+          window.location.hash = this.dataset.frag;
+        }
+      });
+    }
+  }
 }
 
 
@@ -292,6 +313,7 @@ function constructPopup() {
   //TODO: Figure out why assigning to popup.h messes up things like title.h
   //      and closeButton.h.
   popup._h = popupData.h;
+  window.setTimeout(linkTerms, 250);
 }
 
 
