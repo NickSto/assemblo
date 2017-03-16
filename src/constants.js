@@ -55,10 +55,9 @@ var POPUPS = {
       url: 'video/readlength.mp4', type: 'video',
       w: 480, h: 300, align: 'center',
     },
-    body: 'A read is a short sequence of DNA created by a sequencing machine. '+
-      'They can differ in length depending on the machine, which can '+
-      'complicate <a class="popup term" href="#genome">genome</a> assembly '+
-      '(try it out by changing read length in the game!).',
+    body: 'A read is a short sequence of DNA created by a sequencing machine. They can differ in '+
+      'length depending on the machine, which can complicate <a class="popup term" href="#genome">'+
+      'genome</a> assembly (try it out by changing read length in the game!).',
   },
   depth: {
     title: 'Depth',
@@ -67,13 +66,12 @@ var POPUPS = {
       url: 'video/depth.mp4', type: 'video',
       w: 480, h: 300, align: 'center',
     },
-    body: 'The average number of <a class="popup term" href="#read">reads</a> '+
-      'covering each DNA nucleotide in the <a class="popup term" '+
-      'href="#genome">genome</a>. Increasing the sequencing depth makes it '+
-      'easier to assemble a genome and account for <a class="popup term" '+
-      'href="#error">errors</a>! You can calculate the number of reads your '+
-      'sequencing machine needs to generate to reach a particular depth with '+
-      'this formula: Depth = Reads * ReadLength / GenomeLength.',
+    body: 'The average number of <a class="popup term" href="#read">reads</a> covering each DNA '+
+      'nucleotide in the <a class="popup term" href="#genome">genome</a>. Increasing the '+
+      'sequencing depth makes it easier to assemble a genome and account for '+
+      '<a class="popup term" href="#error">errors</a>! You can calculate the number of reads your '+
+      'sequencing machine needs to generate to reach a particular depth with this formula: Depth '+
+      '= Reads * ReadLength / GenomeLength.',
   },
   error: {
     title: 'Error',
@@ -82,11 +80,10 @@ var POPUPS = {
       url: 'video/error.mp4', type: 'video',
       w: 480, h: 300, align: 'center',
     },
-    body: 'A mistake made by a sequencing machine when sequencing DNA. To a '+
-      'person looking at a DNA sequence, a sequencing error will look like a '+
-      '<a class="popup term" href="#snp">SNP</a>, but the two are completely '+
-      'different! To see how sequencing error can complicate an assembly, try '+
-      'increasing the error rate before playing your next Assemblo game.',
+    body: 'A mistake made by a sequencing machine when sequencing DNA. To a person looking at a '+
+      'DNA sequence, a sequencing error will look like a <a class="popup term" href="#snp">SNP'+
+      '</a>, but the two are completely different! To see how sequencing error can complicate an '+
+      'assembly, try increasing the error rate before playing your next Assemblo game.',
   },
   snp: {
     title: 'SNP',
@@ -95,15 +92,13 @@ var POPUPS = {
       url: 'video/snp.mp4', type: 'video',
       w: 480, h: 300, align: 'center',
     },
-    body: 'Short for Single Nucleotide Polymorphism, which means that a given '+
-      'DNA sequence differs from an (almost) identical DNA sequence at a '+
-      'single position. In sequence data, SNPs can come when a population '+
-      '(more than 1 cell type, person, dog, etc)  is sequenced. Most <a '+
-      'class="popup term" href="#reference">reference</a> genomes, such as '+
-      'the human genome, are actually assembled from a population. Although '+
-      'some SNPs in certain genes have been associated with certain diseases, '+
-      'the majority of SNPs are not harmful at all and are just a source of '+
-      'genetic variation.',
+    body: 'Short for Single Nucleotide Polymorphism, which means that a given DNA sequence '+
+      'differs from an (almost) identical DNA sequence at a single position. In sequence data, '+
+      'SNPs can come when a population (more than 1 cell type, person, dog, etc)  is sequenced. '+
+      'Most <a class="popup term" href="#reference">reference</a> genomes, such as the human '+
+      'genome, are actually assembled from a population. Although some SNPs in certain genes have '+
+      'been associated with certain diseases, the majority of SNPs are not harmful at all and are '+
+      'just a source of genetic variation.',
   },
   popSize: {
     title: 'Population size',
@@ -121,32 +116,29 @@ var POPUPS = {
       url: 'video/genomesize.mp4', type: 'video',
       w: 480, h: 300, align: 'center',
     },
-    body: 'A genome is a copy of all the DNA used to make an organism. You, '+
-      'if you\'re a human, have two copies of your genome - one from your mom '+
-      'and one from your dad. Genomes come in all different sizes (the human '+
-      'genome is a whopping 3.3 <strong>billion</strong> nucleotides in '+
-      'length!) and longer genomes are typically harder to assemble, usually '+
-      'because there are more pieces in these puzzles. Try this out by '+
-      'increasing or decreasing the size of the genome in Assemblo.',
+    body: 'A genome is a copy of all the DNA used to make an organism. You, if you\'re a human, '+
+      'have two copies of your genome - one from your mom and one from your dad. Genomes come in '+
+      'all different sizes (the human genome is a whopping 3.3 <strong>billion</strong> '+
+      'nucleotides in length!) and longer genomes are typically harder to assemble, usually '+
+      'because there are more pieces in these puzzles. Try this out by increasing or decreasing '+
+      'the size of the genome in Assemblo.',
   },
   denovo: {
     title: '<em>De novo</em> assembly',
     h: 175,
-    body: 'Sequencing and assembly of a <a class="popup term" href="#genome">'+
-      'genome</a> without knowing beforehand how it goes together. Examples '+
-      'of <em>de novo</em> assemblers (besides Assemblo!) include: SSAKE, '+
-      'SHARCGS, VCAKE, Newbler, Celera Assembler, Euler, Velvet, ABySS, '+
-      'AllPaths, and SOAPdenovo.',
+    body: 'Sequencing and assembly of a <a class="popup term" href="#genome">genome</a> without '+
+      'knowing beforehand how it goes together. Examples of <em>de novo</em> assemblers (besides '+
+      'Assemblo!) include: SSAKE, SHARCGS, VCAKE, Newbler, Celera Assembler, Euler, Velvet, '+
+      'ABySS, AllPaths, and SOAPdenovo.',
   },
   reference: {
     title: 'Reference genome',
     h: 200,
-    body: 'An already assembled <a class="popup term" href="#genome">genome'+
-      '</a> that is used to represent an organism\'s set of genes. An '+
-      'assembled reference genome is used as a comparison for other '+
-      'applications of genome sequencing. Sometimes these are assembled from '+
-      'a population of individuals, in which case there can be differences '+
-      'between it and any real genome that exists in nature!',
+    body: 'An already assembled <a class="popup term" href="#genome">genome</a> that is used to '+
+      'represent an organism\'s set of genes. An assembled reference genome is used as a '+
+      'comparison for other applications of genome sequencing. Sometimes these are assembled from '+
+      'a population of individuals, in which case there can be differences between it and any '+
+      'real genome that exists in nature!',
   },
   // Special pages
   intro: {
@@ -163,95 +155,78 @@ var POPUPS = {
       url: 'img/logo.png', type: 'img',
       w: 300, h: 133, x: 345, y: 0,
     },
-    body: 'Assemblo was created to teach the public about <a class="popup" '+
-      'href="#genome">genome</a> assembly, a necessary first step for any '+
-      'genomics application. This interactive game demonstrates the process '+
-      'of <a class="popup" href="#denovo"><em>de novo</em> assembly</a>, the '+
-      'most common method to create a <a class="popup" href="#reference">'+
-      'reference</a> genome. To play, simply press "New Game" and slide the '+
-      '<a class="popup" href="#read">reads</a> in the bottom half of the '+
-      'screen to create an assembled sequence, shown at the top of the '+
-      'screen. You know you\'ve assembled the sequence correctly when you see '+
-      'a green check! If you want to increase the difficulty, try changing '+
-      'the parameters on the right side. To learn more about the applications '+
-      'of genome assembly, <a class="popup" href="#applications">click here'+
-      '</a>. If you want to give us feedback on Assemblo (please do!) '+
-      '<a target="_blank" href="https://docs.google.com/forms/d/1g7CHvc35_'+
-      '7inTc3osvIHqtAX6f_AwsWCWQB4QZTf5lI/viewform">click here</a> to take a '+
-      'short survey about how we can improve the Assemblo game.',
+    body: 'Assemblo was created to teach the public about <a class="popup" href="#genome">genome'+
+      '</a> assembly, a necessary first step for any genomics application. This interactive game '+
+      'demonstrates the process of <a class="popup" href="#denovo"><em>de novo</em> assembly</a>, '+
+      'the most common method to create a <a class="popup" href="#reference">reference</a> '+
+      'genome. To play, simply press "New Game" and slide the <a class="popup" href="#read">reads'+
+      '</a> in the bottom half of the screen to create an assembled sequence, shown at the top of '+
+      'the screen. You know you\'ve assembled the sequence correctly when you see a green check! '+
+      'If you want to increase the difficulty, try changing the parameters on the right side. To '+
+      'learn more about the applications of genome assembly, <a class="popup" '+
+      'href="#applications">click here</a>. If you want to give us feedback on Assemblo (please '+
+      'do!) <a target="_blank" href="https://docs.google.com/forms/d/1g7CHvc35_7inTc3osvIHqtAX6f_'+
+      'AwsWCWQB4QZTf5lI/viewform">click here</a> to take a short survey about how we can improve '+
+      'the Assemblo game.',
   },
   applications: {
     title: 'Genome Assembly: What is it good for?',
     h: 580,
-    body: 'Genome assembly opens up countless possibilities for the real-'+
-      'world applications of genomics. With a well-assembled '+
-      '<a class="popup" href="#reference">reference genome</a>, we can: <ul>'+
-      '<li>sequence microbes (such as bacteria and viruses) to better '+
-        'understand drug resistance to create treatments</li>'+
-      '<li>map cancer genomes to a reference to try to narrow down a cancer-'+
-        'causing mutation in a gene</li>'+
-      '<li>improve disease and genetic-disorder screening of newborns in '+
-        'order to avoid delaying treatment</li>'+
-      '<li>determine a person\'s response to certain drugs (called '+
-        'pharmacogenomics)</li>'+
-      '<li>use well-studied genetic markers to assess a person\'s risk for '+
-        'certain diseases (for a cool story on how a scientist used his '+
-        'genome sequence to discover his risk for diabetes and then track the '+
-        'development of his disease, read <a target="_blank" href="http://'+
-        'news.sciencemag.org/biology/2012/03/examining-his-own-body-stanford-'+
-        'geneticist-stops-diabetes-its-tracks">Dr. Michael Snyder\'s '+
-        'story</a>).'+
-      '</ul>Genome assembly and sequencing is awesome, right? It can tell us '+
-      'everything we want to know about ourselves, right? Wrong (kind of). As '+
-      'much as sequencing your genome may be able to tell you if you\'re at a '+
-      'higher risk for diabetes, or why your body doesn\'t process a certain '+
-      'medicine well, there are plenty of things we don\'t know about the '+
-      'human genome. Due to repetitive elements and other hard-to-sequence '+
-      'spots, the human reference genome isn\'t complete. Also, scientists '+
-      'currently still know very little about how to interpret a lot of '+
-      'genome sequence data. James Watson, one of the discoverers of the '+
-      'structure of DNA, had his genome sequenced and found nothing more '+
-      'interesting than a gene that makes him more sensitive to blood '+
-      'pressure medicine. Although not yet perfect, genome sequencing is the '+
-      'future of medicine, and it all begins with a well-assembled genome.',
+    body: 'Genome assembly opens up countless possibilities for the real-world applications of '+
+      'genomics. With a well-assembled <a class="popup" href="#reference">reference genome</a>, '+
+      'we can: <ul>'+
+        '<li>sequence microbes (such as bacteria and viruses) to better understand drug '+
+        'resistance to create treatments</li>'+
+        '<li>map cancer genomes to a reference to try to narrow down a cancer-causing mutation in '+
+        'a gene</li>'+
+        '<li>improve disease and genetic-disorder screening of newborns in order to avoid '+
+        'delaying treatment</li>'+
+        '<li>determine a person\'s response to certain drugs (called pharmacogenomics)</li>'+
+        '<li>use well-studied genetic markers to assess a person\'s risk for certain diseases '+
+        '(for a cool story on how a scientist used his genome sequence to discover his risk for '+
+        'diabetes and then track the development of his disease, read <a target="_blank" '+
+        'href="http://news.sciencemag.org/biology/2012/03/examining-his-own-body-stanford-'+
+        'geneticist-stops-diabetes-its-tracks">Dr. Michael Snyder\'s story</a>).'+
+      '</ul>Genome assembly and sequencing is awesome, right? It can tell us everything we want '+
+      'to know about ourselves, right? Wrong (kind of). As much as sequencing your genome may be '+
+      'able to tell you if you\'re at a higher risk for diabetes, or why your body doesn\'t '+
+      'process a certain medicine well, there are plenty of things we don\'t know about the human '+
+      'genome. Due to repetitive elements and other hard-to-sequence spots, the human reference '+
+      'genome isn\'t complete. Also, scientists currently still know very little about how to '+
+      'interpret a lot of genome sequence data. James Watson, one of the discoverers of the '+
+      'structure of DNA, had his genome sequenced and found nothing more interesting than a gene '+
+      'that makes him more sensitive to blood pressure medicine. Although not yet perfect, genome '+
+      'sequencing is the future of medicine, and it all begins with a well-assembled genome.',
   },
   howto: {
     title: 'How To Play',
     h: 660,
-    body: '<p>Assemblo was created to teach the public about <a class="popup" '+
-      'href="#genome">genome</a> assembly, a necessary first step for any '+
-      'genomics application. This interactive game demonstrates the process '+
-      'of <a class="popup" href="#denovo">de novo</a> assembly, the most '+
-      'common method to create a <a class="popup" href="#reference">reference'+
-      '</a> genome. To play, follow these simple steps:'+
-      '<ol>'+
-        '<li>Press "New Game." You should now see your playing pieces at the '+
-          'bottom of the screen. These are called reads, which are short '+
-          'stretches of a DNA sequence.</li>'+
-        '<li>Drag the reads to the grid in the playing screen. There should '+
-          'be one row in the grid for each read.</li>'+
-        '<li>Rearrange the reads in the grid to create a single consensus '+
-          'sequence, which is shown at the top of the screen (you should see '+
-          'it changing as you move the reads around). You\'ll need to take '+
-          'advantage of overlaps in the sequence and unique patterns in the '+
-          'reads, much like a de novo assembly computer program!</li>'+
-        '<li>When the red X on the left of the screen (under the word '+
-          'Assemblo) turns into a green checkmark, you\'re done! That means '+
-          'you have correctly de novo assembled your first sequence.</li>'+
-      '</ol>'+
-      '<p>If that was too easy for you and you\'re ready for a real '+
-      'challenge, you can increase the difficulty by changing the sequencing '+
-      'parameters on the left side.  This can be done by typing a number into '+
-      'the dialog boxes. Try increasing or decreasing the read length first '+
-      'and see which one makes the sequence assembly easier! The other '+
-      'parameters can also be changed to create an even more challenging '+
-      'game, and to explore some real-life difficulties that come with de '+
-      'novo assembly of real DNA sequences.'+
-      '<p>If you\'d like to learn more about the applications of genome '+
-      'assembly, <a class="popup" href="#applications">click here</a>. If you '+
-      'want to give us feedback on Assemblo (please do!) <a target="_blank" '+
-      'href="https://docs.google.com/forms/d/1g7CHvc35_7inTc3osvIHqtAX6f_'+
-      'AwsWCWQB4QZTf5lI/viewform">click here</a> to take a short survey about '+
+    body: '<p>Assemblo was created to teach the public about <a class="popup" href="#genome">'+
+      'genome</a> assembly, a necessary first step for any genomics application. This interactive '+
+      'game demonstrates the process of <a class="popup" href="#denovo">de novo</a> assembly, the '+
+      'most common method to create a <a class="popup" href="#reference">reference</a> genome. To '+
+      'play, follow these simple steps:<ol>'+
+        '<li>Press "New Game." You should now see your playing pieces at the bottom of the '+
+        'screen. These are called reads, which are short stretches of a DNA sequence.</li>'+
+        '<li>Drag the reads to the grid in the playing screen. There should be one row in the '+
+        'grid for each read.</li>'+
+        '<li>Rearrange the reads in the grid to create a single consensus sequence, which is '+
+        'shown at the top of the screen (you should see it changing as you move the reads '+
+        'around). You\'ll need to take advantage of overlaps in the sequence and unique patterns '+
+        'in the reads, much like a de novo assembly computer program!</li>'+
+        '<li>When the red X on the left of the screen (under the word Assemblo) turns into a '+
+        'green checkmark, you\'re done! That means you have correctly de novo assembled your '+
+        'first sequence.</li>'+
+      '</ol><p>If that was too easy for you and you\'re ready for a real challenge, you can '+
+      'increase the difficulty by changing the sequencing parameters on the left side.  This can '+
+      'be done by typing a number into the dialog boxes. Try increasing or decreasing the read '+
+      'length first and see which one makes the sequence assembly easier! The other parameters '+
+      'can also be changed to create an even more challenging game, and to explore some real-'+
+      'life difficulties that come with de novo assembly of real DNA sequences.'+
+      '<p>If you\'d like to learn more about the applications of genome assembly, '+
+      '<a class="popup" href="#applications">click here</a>. If you want to give us feedback on '+
+      'Assemblo (please do!) <a target="_blank" href="https://docs.google.com/forms/d/1g7CHvc35_'+
+      '7inTc3osvIHqtAX6f_AwsWCWQB4QZTf5lI/viewform">click here</a> to take a short survey about '+
       'how we can improve the Assemblo game.',
   }
 };
