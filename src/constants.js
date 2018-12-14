@@ -150,25 +150,31 @@ var POPUPS = {
   },
   about: {
     title: 'About Assemblo',
-    h: 400,
+    h: 500,
     media: {
       url: 'img/logo.png', type: 'img',
       w: 300, h: 133, x: 320, y: 0,
     },
-    body: 'Assemblo was created to teach the public about <a class="popup term" '+
+    body: '<p>Assemblo was created to teach the public about <a class="popup term" '+
       'data-frag="genome">genome</a> assembly, a necessary first step for any genomics '+
       'application. This interactive game demonstrates the process of <a class="popup term" '+
       'data-frag="denovo"><em>de novo</em> assembly</a>, the most common method to create a '+
-      '<a class="popup term" data-frag="reference">reference</a> genome. To play, simply press '+
-      '"New Game" and slide the <a class="popup term" data-frag="read">reads</a> in the bottom '+
-      'half of the screen to create an assembled sequence, shown at the top of the screen. You '+
-      'know you\'ve assembled the sequence correctly when you see a green check! If you want to '+
-      'increase the difficulty, try changing the parameters on the right side. To learn more '+
-      'about the applications of genome assembly, <a class="popup term" data-frag="applications">'+
-      'click here</a>. If you want to give us feedback on Assemblo (please do!) '+
-      '<a target="_blank" href="https://docs.google.com/forms/d/1g7CHvc35_7inTc3osvIHqtAX6f_'+
-      'AwsWCWQB4QZTf5lI/viewform">click here</a> to take a short survey about how we can improve '+
-      'the Assemblo game.',
+      '<a class="popup term" data-frag="reference">reference</a> genome.</p>'+
+      '<p>To play, simply press "New Game" and slide the <a class="popup term" data-frag="read">'+
+      'reads</a> in the bottom half of the screen to create an assembled sequence, shown at the '+
+      'top of the screen. You know you\'ve assembled the sequence correctly when you see a green '+
+      'check! If you want to increase the difficulty, try changing the parameters on the right '+
+      'side.</p>'+
+      '<p>To learn more about the applications of genome assembly, <a class="popup term" '+
+      'data-frag="applications">click here</a>. If you want to give us feedback on Assemblo '+
+      '(please do!) <a target="_blank" href='+
+      '"https://docs.google.com/forms/d/1g7CHvc35_7inTc3osvIHqtAX6f_AwsWCWQB4QZTf5lI/viewform">'+
+      'click here</a> to take a short survey about how we can improve the Assemblo game.</p>'+
+      '<p>Assemblo was created in 2014 by <a target="_blank" href="https://nstoler.com">'+
+      'Nick Stoler</a>, <a target="_blank" href="http://sites.psu.edu/zachfuller/">Zach Fuller</a>'+
+      ', and <a target="_blank" href="https://sites.psu.edu/theodoramaravegias/">'+
+      'Theodora Maravegias</a>. It\'s open source (GPLv2) and available <a target="_blank" '+
+      'href="https://github.com/NickSto/assemblo">here</a>.</p>',
   },
   applications: {
     title: 'Genome Assembly: What is it good for?',
